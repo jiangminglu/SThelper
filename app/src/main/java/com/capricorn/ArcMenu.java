@@ -86,6 +86,8 @@ public class ArcMenu extends RelativeLayout {
     }
 
     public void resetBgView() {
+        mHintView.startAnimation(createHintSwitchAnimation(mArcLayout.isExpanded()));
+        mArcLayout.switchState(true);
     }
 
     private void applyAttrs(AttributeSet attrs) {

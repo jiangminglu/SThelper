@@ -13,14 +13,14 @@
         android:padding="20.0dip">
 
         <LinearLayout
-            android:id="@id/register_input_tel_alert"
+            android:id="@+id/register_input_tel_alert"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1.0"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@id/register_input_tel_alert_index"
+                android:id="@+id/register_input_tel_alert_index"
                 android:layout_width="22.0dip"
                 android:layout_height="22.0dip"
                 android:layout_marginRight="4.0dip"
@@ -31,7 +31,7 @@
                 android:textSize="14.0sp" />
 
             <TextView
-                android:id="@id/register_input_tel_alert_content"
+                android:id="@+id/register_input_tel_alert_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="输入手机号"
@@ -40,14 +40,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@id/register_input_code_alert"
+            android:id="@+id/register_input_code_alert"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1.0"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@id/register_input_code_alert_index"
+                android:id="@+id/register_input_code_alert_index"
                 android:layout_width="22.0dip"
                 android:layout_height="22.0dip"
                 android:layout_marginRight="4.0dip"
@@ -58,7 +58,7 @@
                 android:textSize="14.0sp" />
 
             <TextView
-                android:id="@id/register_input_code_alert_content"
+                android:id="@+id/register_input_code_alert_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="输入验证码"
@@ -67,14 +67,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@id/register_input_password_alert"
+            android:id="@+id/register_input_password_alert"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1.0"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@id/register_input_password_alert_index"
+                android:id="@+id/register_input_password_alert_index"
                 android:layout_width="22.0dip"
                 android:layout_height="22.0dip"
                 android:layout_marginRight="4.0dip"
@@ -85,7 +85,7 @@
                 android:textSize="14.0sp" />
 
             <TextView
-                android:id="@id/register_input_password_alert_content"
+                android:id="@+id/register_input_password_alert_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="输入密码"
@@ -95,7 +95,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@id/register_input_tel_layout"
+        android:id="@+id/register_input_tel_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -114,7 +114,7 @@
                 android:src="@mipmap/icon_login_tel" />
 
             <EditText
-                android:id="@id/register_username_et"
+                android:id="@+id/register_username_et"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="10.0dip"
@@ -137,7 +137,7 @@
             android:textSize="12.0sp" />
 
         <Button
-            android:id="@id/register_input_tel_btn"
+            android:id="@+id/register_input_tel_btn"
             android:layout_width="fill_parent"
             android:layout_height="50.0dip"
             android:layout_marginLeft="60.0dip"
@@ -148,7 +148,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@id/register_input_code_layout"
+        android:id="@+id/register_input_code_layout"
         android:layout_width="fill_parent"
         android:layout_height="60.0dip"
         android:background="@drawable/login_input_frame"
@@ -158,7 +158,7 @@
         android:visibility="gone">
 
         <EditText
-            android:id="@id/register_code_et"
+            android:id="@+id/register_code_et"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginLeft="10.0dip"
@@ -170,7 +170,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@id/register_input_password_layout"
+        android:id="@+id/register_input_password_layout"
         android:layout_width="fill_parent"
         android:layout_height="60.0dip"
         android:background="@drawable/login_input_frame"
@@ -180,7 +180,7 @@
         android:visibility="gone">
 
         <EditText
-            android:id="@id/register_password_et"
+            android:id="@+id/register_password_et"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginLeft="10.0dip"

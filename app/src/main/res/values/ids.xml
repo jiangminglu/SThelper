@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <item name="selected_view" type="id"/>
+    <item name="arc_menu_item_shi" type="id"></item>
+    <item name="arc_menu_item_yin" type="id"></item>
+    <item name="arc_menu_item_stone" type="id"></item>
+    <item name="arc_menu_item_hui" type="id"></item>
+</resources>

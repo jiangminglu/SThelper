@@ -21,7 +21,7 @@
             android:src="@mipmap/icon_login_tel" />
 
         <EditText
-            android:id="@id/login_username_et"
+            android:id="@+id/login_username_et"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginLeft="10.0dip"
@@ -46,7 +46,7 @@
             android:src="@mipmap/icon_login_password" />
 
         <EditText
-            android:id="@id/login_password_et"
+            android:id="@+id/login_password_et"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginLeft="10.0dip"
@@ -57,7 +57,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@id/goto_register"
+        android:id="@+id/goto_register"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20.0dip"
@@ -68,7 +68,7 @@
         android:textSize="14.0sp" />
 
     <Button
-        android:id="@id/login_btn"
+        android:id="@+id/login_btn"
         android:layout_width="fill_parent"
         android:layout_height="50.0dip"
         android:layout_gravity="center_horizontal"

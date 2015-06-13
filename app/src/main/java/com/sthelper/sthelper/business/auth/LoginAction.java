@@ -1,18 +1,48 @@
 package com.sthelper.sthelper.business.auth;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.business.BaseAction;
 
-public class LoginAction extends Activity {
+public class LoginAction extends BaseAction {
+
+    private Button loginBt;
+    private EditText passwordEt;
+    private TextView registerTv;
+    private EditText usernameEt;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_action2);
+        setContentView(R.layout.activity_login_action);
+        init();
+    }
+
+    private void init() {
+        this.usernameEt = ((EditText) findViewById(R.id.login_username_et));
+        this.passwordEt = ((EditText) findViewById(R.id.login_password_et));
+        this.registerTv = ((TextView) findViewById(R.id.goto_register));
+        this.registerTv.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View paramAnonymousView) {
+                Intent localIntent = new Intent();
+                localIntent.setClass(LoginAction.this, RegisterAction.class);
+                LoginAction.this.startActivity(localIntent);
+            }
+        });
+        this.loginBt = ((Button) findViewById(R.id.login_btn));
+        this.loginBt.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View paramAnonymousView) {
+            }
+        });
     }
 
     @Override

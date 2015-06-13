@@ -20,7 +20,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@id/menu_user"
+            android:id="@+id/menu_user"
             android:layout_width="fill_parent"
             android:layout_height="60.0dip"
             android:layout_marginTop="40.0dip"
@@ -47,7 +47,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@id/menu_fav"
+            android:id="@+id/menu_fav"
             android:layout_width="fill_parent"
             android:layout_height="60.0dip"
             android:background="@drawable/menu_item_selector"
@@ -73,7 +73,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@id/menu_order"
+            android:id="@+id/menu_order"
             android:layout_width="fill_parent"
             android:layout_height="60.0dip"
             android:background="@drawable/menu_item_selector"
@@ -99,7 +99,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@id/menu_account"
+            android:id="@+id/menu_account"
             android:layout_width="fill_parent"
             android:layout_height="60.0dip"
             android:background="@drawable/menu_item_selector"
@@ -125,7 +125,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@id/menu_invite"
+            android:id="@+id/menu_invite"
             android:layout_width="fill_parent"
             android:layout_height="60.0dip"
             android:background="@drawable/menu_item_selector"
@@ -159,7 +159,7 @@
         android:gravity="center_horizontal">
 
         <TextView
-            android:id="@id/menu_feedback"
+            android:id="@+id/menu_feedback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -168,7 +168,7 @@
             android:textSize="18.0sp" />
 
         <TextView
-            android:id="@id/menu_setting"
+            android:id="@+id/menu_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

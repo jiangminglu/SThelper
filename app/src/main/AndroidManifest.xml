@@ -28,6 +28,10 @@
             android:label="@string/title_activity_register_action"
             android:screenOrientation="portrait"
             android:theme="@style/actionTheme" />
+        <activity
+            android:name=".business.food.FoodStoreListAction"
+            android:label="@string/title_activity_food_store_list_action" >
+        </activity>
     </application>
 
 </manifest>

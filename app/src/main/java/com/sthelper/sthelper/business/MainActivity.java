@@ -17,9 +17,10 @@ import com.capricorn.ArcMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.business.auth.LoginAction;
+import com.sthelper.sthelper.business.food.FoodStoreListAction;
 
-public class MainActivity extends Activity {
-    private static final int[] ITEM_DRAWABLES = {R.mipmap.icon_hui, R.mipmap.icon_yin, R.mipmap.icon_stone, R.mipmap.icon_shi};
+public class MainActivity extends BaseAction {
+    private static final int[] ITEM_DRAWABLES = {R.mipmap.icon_shi, R.mipmap.icon_yin, R.mipmap.icon_stone, R.mipmap.icon_hui};
     public float density;
     private ArcMenu goArcMenu;
     private SlidingMenu menu;
@@ -47,10 +48,18 @@ public class MainActivity extends Activity {
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         public void onClick(View paramAnonymousView) {
-            if (paramAnonymousView.getId() == R.id.login_btn) {
-                Intent localIntent = new Intent();
-                localIntent.setClass(MainActivity.this, LoginAction.class);
-                MainActivity.this.startActivity(localIntent);
+            int id = paramAnonymousView.getId();
+            switch (id) {
+                case R.id.menu_user:
+                    Intent localIntent = new Intent();
+                    localIntent.setClass(MainActivity.this, LoginAction.class);
+                    MainActivity.this.startActivity(localIntent);
+                    break;
+                case 100:
+                    Intent intent = new Intent();
+                    intent.setClass(mActivity, FoodStoreListAction.class);
+                    startActivity(intent);
+                    break;
             }
         }
     };
@@ -61,14 +70,13 @@ public class MainActivity extends Activity {
         int i = ITEM_DRAWABLES.length;
         for (int j = 0; j < i; j++) {
             ImageView localImageView = new ImageView(this);
+            localImageView.setId(100 + j);
             localImageView.setImageResource(ITEM_DRAWABLES[j]);
-            this.goArcMenu.addItem(localImageView, new View.OnClickListener() {
-                public void onClick(View paramAnonymousView) {
-                    MainActivity.this.goArcMenu.resetBgView();
-                }
-            });
+            this.goArcMenu.addItem(localImageView, onClickListener);
         }
+
         this.slidLayout.findViewById(R.id.menu_user).setOnClickListener(this.onClickListener);
+
     }
 
     private void initScreenWH() {
