@@ -21,23 +21,22 @@ import com.sthelper.sthelper.business.food.FoodStoreListAction;
 
 public class MainActivity extends BaseAction {
     private static final int[] ITEM_DRAWABLES = {R.mipmap.icon_shi, R.mipmap.icon_yin, R.mipmap.icon_stone, R.mipmap.icon_hui};
-    public float density;
     private ArcMenu goArcMenu;
     private SlidingMenu menu;
-    public int screenH = 0;
-    public int screenW = 0;
+
     private View slidLayout;
 
     public void onCreate(Bundle paramBundle) {
         super.onCreate(paramBundle);
         setContentView(R.layout.activity_main);
-        initScreenWH();
+        getActionBar().hide();
+
         this.menu = new SlidingMenu(this);
         this.menu.setMode(SlidingMenu.LEFT);
         this.menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         this.menu.setShadowWidth(0);
         this.menu.setShadowDrawable(null);
-        this.menu.setBehindOffset(this.screenW / 2);
+        this.menu.setBehindOffset(app.screenW / 2);
         this.menu.attachToActivity(this, SlidingMenu.LEFT);
         this.menu.setFadeEnabled(true);
         this.menu.setFadeDegree(0.5F);
@@ -79,14 +78,7 @@ public class MainActivity extends BaseAction {
 
     }
 
-    private void initScreenWH() {
-        Display display = getWindowManager().getDefaultDisplay();
-        Point localPoint = new Point();
-        display.getSize(localPoint);
-        this.screenH = localPoint.y;
-        this.screenW = localPoint.x;
-        this.density = getResources().getDisplayMetrics().density;
-    }
+
 
     public void onBackPressed() {
         if (this.goArcMenu.isExpanded()) {

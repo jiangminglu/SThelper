@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.SApp;
 
 public class BaseAction extends Activity {
     public Activity mActivity;
     public ActionBar actionBar;
+    public SApp app;
 
     private void initActionBar() {
         actionBar = getActionBar();
@@ -26,12 +28,13 @@ public class BaseAction extends Activity {
     public void onCreate(Bundle paramBundle) {
         setTheme(R.style.actionTheme);
         this.mActivity = this;
+        this.app = (SApp) getApplication();
         super.onCreate(paramBundle);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        if(item.getItemId() == android.R.id.home){
             finish();
         }
         return super.onOptionsItemSelected(item);

@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.bean.FoodStoreBean;
@@ -23,6 +27,7 @@ public class FoodStoreListAction extends BaseAction {
     private ArrayList<FoodStoreBean> list;
     private FoodStoreListAdapter adapter;
 
+    private PopupWindow typePop, flavorPop;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,11 +39,39 @@ public class FoodStoreListAction extends BaseAction {
     }
 
     private void init() {
+        initTypePop();
         list = new ArrayList<FoodStoreBean>();
 
         adapter = new FoodStoreListAdapter(list, mActivity);
         listView = (SListView) findViewById(R.id.food_store_listview);
         listView.setAdapter(adapter);
+
+
+        findViewById(R.id.food_store_all_type).setOnClickListener(onClickListener);
+
+
+    }
+
+    private void initTypePop() {
+        final LinearLayout rootView = (LinearLayout) getLayoutInflater().inflate(R.layout.food_pop_layout, null);
+        typePop = new PopupWindow(rootView, app.screenW, getResources().getDimensionPixelSize(R.dimen.food_store_h));
+        typePop.setOutsideTouchable(true);
+        final int count = rootView.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View item = rootView.getChildAt(i);
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    for (int j = 0; j < count; j++) {
+                        RelativeLayout item = (RelativeLayout) rootView.getChildAt(j);
+                        item.getChildAt(1).setVisibility(View.GONE);
+                    }
+                    View imageView = ((RelativeLayout) (view)).getChildAt(1);
+                    imageView.setVisibility(View.VISIBLE);
+                    typePop.dismiss();
+                }
+            });
+        }
     }
 
     private void loadData() {
@@ -64,4 +97,18 @@ public class FoodStoreListAction extends BaseAction {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (view.getId() == R.id.food_store_all_type) {
+                if (typePop == null) initTypePop();
+                if (typePop.isShowing()) {
+                    typePop.dismiss();
+                } else {
+                    typePop.showAsDropDown(view);
+                }
+            }
+        }
+    };
 }
