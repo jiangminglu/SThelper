@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60.0dip"
+        android:layout_marginTop="40.0dip"
+        android:background="@drawable/login_input_frame"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="18.0dip">
+
+        <ImageView
+            android:layout_width="21.0dip"
+            android:layout_height="36.0dip"
+            android:src="@mipmap/icon_login_tel" />
+
+        <EditText
+            android:id="@id/login_username_et"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10.0dip"
+            android:background="@null"
+            android:hint="请输入您的手机号码"
+            android:textCursorDrawable="@null"
+            android:textSize="16.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60.0dip"
+        android:layout_marginTop="10.0dip"
+        android:background="@drawable/login_input_frame"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="18.0dip">
+
+        <ImageView
+            android:layout_width="21.0dip"
+            android:layout_height="36.0dip"
+            android:src="@mipmap/icon_login_password" />
+
+        <EditText
+            android:id="@id/login_password_et"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10.0dip"
+            android:background="@null"
+            android:hint="请输入您的手机号码"
+            android:textCursorDrawable="@null"
+            android:textSize="16.0sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@id/goto_register"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20.0dip"
+        android:gravity="center|right"
+        android:paddingRight="20.0dip"
+        android:text="立即注册"
+        android:textColor="#fffc6b00"
+        android:textSize="14.0sp" />
+
+    <Button
+        android:id="@id/login_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="60.0dip"
+        android:layout_marginRight="60.0dip"
+        android:layout_marginTop="40.0dip"
+        android:background="@drawable/yellow_btn_selector"
+        android:text="确认登陆" />
+</LinearLayout>

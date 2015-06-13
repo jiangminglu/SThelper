@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@mipmap/main_bg">
+
+    <ImageView
+        android:layout_width="140.0dip"
+        android:layout_height="60.0dip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60.0dip"
+        android:background="@mipmap/main_left_logo" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100.0dip"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@id/menu_user"
+            android:layout_width="fill_parent"
+            android:layout_height="60.0dip"
+            android:layout_marginTop="40.0dip"
+            android:background="@drawable/menu_item_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:padding="12.0dip">
+
+            <ImageView
+                android:layout_width="28.0dip"
+                android:layout_height="28.0dip"
+                android:src="@drawable/main_menu_left_user_selector" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8.0dip"
+                android:layout_marginLeft="42.0dip"
+                android:gravity="bottom|center|left"
+                android:text="用户登录"
+                android:textColor="@drawable/main_menu_left_text_selcetor"
+                android:textSize="18.0sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@id/menu_fav"
+            android:layout_width="fill_parent"
+            android:layout_height="60.0dip"
+            android:background="@drawable/menu_item_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:padding="12.0dip">
+
+            <ImageView
+                android:layout_width="28.0dip"
+                android:layout_height="28.0dip"
+                android:src="@drawable/main_menu_left_fav_selector" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8.0dip"
+                android:layout_marginLeft="42.0dip"
+                android:gravity="bottom|center|left"
+                android:text="我的收藏"
+                android:textColor="@drawable/main_menu_left_text_selcetor"
+                android:textSize="18.0sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@id/menu_order"
+            android:layout_width="fill_parent"
+            android:layout_height="60.0dip"
+            android:background="@drawable/menu_item_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:padding="12.0dip">
+
+            <ImageView
+                android:layout_width="28.0dip"
+                android:layout_height="28.0dip"
+                android:src="@drawable/main_menu_left_order_selector" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8.0dip"
+                android:layout_marginLeft="42.0dip"
+                android:gravity="bottom|center|left"
+                android:text="我的订单"
+                android:textColor="@drawable/main_menu_left_text_selcetor"
+                android:textSize="18.0sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@id/menu_account"
+            android:layout_width="fill_parent"
+            android:layout_height="60.0dip"
+            android:background="@drawable/menu_item_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:padding="12.0dip">
+
+            <ImageView
+                android:layout_width="28.0dip"
+                android:layout_height="28.0dip"
+                android:src="@drawable/main_menu_left_account_selector" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8.0dip"
+                android:layout_marginLeft="42.0dip"
+                android:gravity="bottom|center|left"
+                android:text="我的账户"
+                android:textColor="@drawable/main_menu_left_text_selcetor"
+                android:textSize="18.0sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@id/menu_invite"
+            android:layout_width="fill_parent"
+            android:layout_height="60.0dip"
+            android:background="@drawable/menu_item_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:padding="12.0dip">
+
+            <ImageView
+                android:layout_width="28.0dip"
+                android:layout_height="28.0dip"
+                android:src="@drawable/main_menu_left_invite_selector" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8.0dip"
+                android:layout_marginLeft="42.0dip"
+                android:gravity="bottom|center|left"
+                android:text="邀请好友"
+                android:textColor="@drawable/main_menu_left_text_selcetor"
+                android:textSize="18.0sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="12.0dip"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@id/menu_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="反馈"
+            android:textColor="#ff884210"
+            android:textSize="18.0sp" />
+
+        <TextView
+            android:id="@id/menu_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="60.0dip"
+            android:layout_marginRight="12.0dip"
+            android:text="设置"
+            android:textColor="#ff884210"
+            android:textSize="18.0sp" />
+    </RelativeLayout>
+</RelativeLayout>
