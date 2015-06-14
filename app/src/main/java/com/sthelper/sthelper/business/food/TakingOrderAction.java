@@ -1,5 +1,7 @@
 package com.sthelper.sthelper.business.food;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -7,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -38,6 +41,8 @@ public class TakingOrderAction extends BaseAction {
     private ArrayList<GoodsItemBean> list;
     private GoodsItemAdapter adapter = null;
 
+    private Dialog detailDialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +64,20 @@ public class TakingOrderAction extends BaseAction {
         rightListView = (SListView) findViewById(R.id.store_goods_item_listview);
         adapter = new GoodsItemAdapter(list, mActivity);
         rightListView.setAdapter(adapter);
+        rightListView.setOnItemClickListener(onItemClickListener);
+        storeImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(mActivity, StoreInfoAction.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void initDialog() {
+        detailDialog = new Dialog(mActivity, R.style.full_dialog);
+        detailDialog.setContentView(R.layout.goods_item_detail_layout);
     }
 
     private void loadData() {
@@ -73,7 +92,7 @@ public class TakingOrderAction extends BaseAction {
         for (int i = 0; i < 8; i++) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             TextView textView = new TextView(mActivity);
-            textView.setPadding(0,24,0,24);
+            textView.setPadding(0, 24, 0, 24);
             textView.setText("大饼");
             textView.setGravity(Gravity.CENTER);
             textView.setTextSize(16);
@@ -116,4 +135,14 @@ public class TakingOrderAction extends BaseAction {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            if (detailDialog == null) {
+                initDialog();
+            }
+            detailDialog.show();
+        }
+    };
 }

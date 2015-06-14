@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="AppTheme" parent="@android:style/Theme.Light" />
+
     <style name="actionTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+
+    <style name="full_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:background">#ffffff</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>
