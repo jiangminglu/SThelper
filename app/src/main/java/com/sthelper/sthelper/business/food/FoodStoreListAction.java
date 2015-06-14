@@ -1,10 +1,12 @@
 package com.sthelper.sthelper.business.food;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -45,7 +47,7 @@ public class FoodStoreListAction extends BaseAction {
         adapter = new FoodStoreListAdapter(list, mActivity);
         listView = (SListView) findViewById(R.id.food_store_listview);
         listView.setAdapter(adapter);
-
+        listView.setOnItemClickListener(onItemClickListener);
 
         findViewById(R.id.food_store_all_type).setOnClickListener(onClickListener);
 
@@ -95,6 +97,16 @@ public class FoodStoreListAction extends BaseAction {
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == android.R.id.home) {
+            if (typePop != null && typePop.isShowing()) {
+                typePop.dismiss();
+                return true;
+            }
+            if (flavorPop != null && flavorPop.isShowing()) {
+                flavorPop.dismiss();
+                return true;
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -111,4 +123,27 @@ public class FoodStoreListAction extends BaseAction {
             }
         }
     };
+    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Intent intent = new Intent();
+            intent.setClass(mActivity,StoreInfoAction.class);
+            intent.putExtra("bean",list.get(i));
+            startActivity(intent);
+        }
+    };
+
+    @Override
+    public void onBackPressed() {
+        if (typePop != null && typePop.isShowing()) {
+            typePop.dismiss();
+            return;
+        }
+        if (flavorPop != null && flavorPop.isShowing()) {
+            flavorPop.dismiss();
+            return;
+        }
+
+        super.onBackPressed();
+    }
 }

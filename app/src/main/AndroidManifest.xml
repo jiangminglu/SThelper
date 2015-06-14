@@ -5,9 +5,9 @@
     android:versionName="st" >
 
     <application
+        android:name=".SApp"
         android:allowBackup="true"
         android:icon="@mipmap/app_logo"
-        android:name=".SApp"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.NoActionBar" >
         <activity
@@ -32,6 +32,18 @@
         <activity
             android:name=".business.food.FoodStoreListAction"
             android:label="@string/title_activity_food_store_list_action" >
+        </activity>
+        <activity
+            android:name=".business.food.StoreInfoAction"
+            android:label="@string/title_activity_store_info_action"
+            android:parentActivityName=".business.BaseAction" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sthelper.sthelper.business.BaseAction" />
+        </activity>
+        <activity
+            android:name=".business.food.TakingOrderAction"
+            android:label="@string/title_activity_taking_order_action" >
         </activity>
     </application>
 

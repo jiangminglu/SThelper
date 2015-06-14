@@ -9,8 +9,12 @@
     android:paddingTop="12dp">
 
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="95dp" />
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/main_item_bg1"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="12dp"
+        />
 
     <LinearLayout
         android:layout_width="wrap_content"

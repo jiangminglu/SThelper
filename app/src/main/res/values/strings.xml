@@ -12,4 +12,6 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="title_activity_food_store_list_action">FoodStoreListAction</string>
+    <string name="title_activity_store_info_action">StoreInfoAction</string>
+    <string name="title_activity_taking_order_action">TakingOrderAction</string>
 </resources>
