@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -69,19 +70,37 @@ public class TakingOrderAction extends BaseAction {
         adapter.notifyDataSetChanged();
 
 
-        for(int i = 0; i<8; i++){
+        for (int i = 0; i < 8; i++) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.topMargin = 10;
-            params.bottomMargin = 10;
             TextView textView = new TextView(mActivity);
+            textView.setPadding(0,24,0,24);
             textView.setText("大饼");
             textView.setGravity(Gravity.CENTER);
             textView.setTextSize(16);
             textView.setTextColor(Color.BLACK);
-            storeGoodsListContent.addView(textView,params);
+            textView.setLayoutParams(params);
+            storeGoodsListContent.addView(textView);
+            textView.setOnClickListener(onClickListener);
         }
 
     }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            int count = storeGoodsListContent.getChildCount();
+            for (int i = 0; i < count; i++) {
+                TextView item = (TextView) storeGoodsListContent.getChildAt(i);
+                item.setBackgroundResource(R.drawable.goods_item_normal);
+                item.setTextColor(Color.BLACK);
+            }
+
+            TextView textView = (TextView) view;
+            textView.setBackgroundResource(R.drawable.goods_item_pressed);
+            textView.setTextColor(Color.parseColor("#d9681d"));
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
