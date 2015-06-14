@@ -127,7 +127,7 @@ public class FoodStoreListAction extends BaseAction {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent = new Intent();
-            intent.setClass(mActivity,StoreInfoAction.class);
+            intent.setClass(mActivity,TakingOrderAction.class);
             intent.putExtra("bean",list.get(i));
             startActivity(intent);
         }
