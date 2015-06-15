@@ -46,6 +46,8 @@ public class ArcMenu extends RelativeLayout {
 
     private ImageView mHintView;
 
+    private View bgView;
+
     public ArcMenu(Context context) {
         super(context);
         init(context);
@@ -61,6 +63,7 @@ public class ArcMenu extends RelativeLayout {
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         li.inflate(R.layout.arc_menu, this);
 
+        bgView = findViewById(R.id.contor_bgview);
         mArcLayout = (ArcLayout) findViewById(R.id.item_layout);
 
         final ViewGroup controlLayout = (ViewGroup) findViewById(R.id.control_layout);
@@ -70,15 +73,37 @@ public class ArcMenu extends RelativeLayout {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (mArcLayout.isExpanded()) {
+                        bgView.setVisibility(INVISIBLE);
+                    } else {
+                        bgView.setVisibility(VISIBLE);
+                    }
                     mHintView.startAnimation(createHintSwitchAnimation(mArcLayout.isExpanded()));
                     mArcLayout.switchState(true);
+
                 }
 
                 return false;
             }
         });
+        bgView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetView();
+            }
+        });
 
         mHintView = (ImageView) findViewById(R.id.control_hint);
+    }
+
+    private void resetView() {
+        if (mArcLayout.isExpanded()) {
+            bgView.setVisibility(INVISIBLE);
+        } else {
+            bgView.setVisibility(VISIBLE);
+        }
+        mHintView.startAnimation(createHintSwitchAnimation(mArcLayout.isExpanded()));
+        mArcLayout.switchState(true);
     }
 
     public boolean isExpanded() {
@@ -86,8 +111,7 @@ public class ArcMenu extends RelativeLayout {
     }
 
     public void resetBgView() {
-        mHintView.startAnimation(createHintSwitchAnimation(mArcLayout.isExpanded()));
-        mArcLayout.switchState(true);
+        resetView();
     }
 
     private void applyAttrs(AttributeSet attrs) {
