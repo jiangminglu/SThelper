@@ -45,6 +45,14 @@
             android:name=".business.food.TakingOrderAction"
             android:label="@string/title_activity_taking_order_action" >
         </activity>
+        <activity
+            android:name=".business.FavorableAction"
+            android:label="@string/title_activity_favorable_action"
+            android:parentActivityName=".business.BaseAction" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sthelper.sthelper.business.BaseAction" />
+        </activity>
     </application>
 
 </manifest>

@@ -14,4 +14,5 @@
     <string name="title_activity_food_store_list_action">FoodStoreListAction</string>
     <string name="title_activity_store_info_action">StoreInfoAction</string>
     <string name="title_activity_taking_order_action">TakingOrderAction</string>
+    <string name="title_activity_favorable_action">FavorableAction</string>
 </resources>

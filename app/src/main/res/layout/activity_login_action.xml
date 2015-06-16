@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#ffffffff"
@@ -76,5 +75,6 @@
         android:layout_marginRight="60.0dip"
         android:layout_marginTop="40.0dip"
         android:background="@drawable/yellow_btn_selector"
-        android:text="确认登陆" />
+        android:text="确认登陆"
+        android:textColor="#ffffff" />
 </LinearLayout>

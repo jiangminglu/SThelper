@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -35,6 +36,7 @@ public class FoodStoreListAction extends BaseAction {
     private ArrayList<FoodStoreBean> list;
     private FoodStoreListAdapter adapter;
 
+    private ImageView hotImg;
     private View bottomLayout;
     private PopupWindow typePop, flavorPop;
 
@@ -58,15 +60,18 @@ public class FoodStoreListAction extends BaseAction {
         initTypePop();
         list = new ArrayList<FoodStoreBean>();
 
-        adapter = new FoodStoreListAdapter(list, mActivity);
+        adapter = new FoodStoreListAdapter(list, mActivity, currentType);
         listView = (SListView) findViewById(R.id.food_store_listview);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);
 
+        hotImg = (ImageView) findViewById(R.id.food_store_hot_img);
         bottomLayout = findViewById(R.id.food_store_bottom_layout);
         if (currentType == TYPE_SHI) {
+            hotImg.setBackgroundResource(R.mipmap.icon_store_hot);
             bottomLayout.setBackgroundColor(getResources().getColor(R.color.app_default_actionbar_bg));
         } else {
+            hotImg.setBackgroundResource(R.mipmap.icon_store_hot_blue);
             bottomLayout.setBackgroundColor(getResources().getColor(R.color.app_blue_actionbar_bg));
         }
         findViewById(R.id.food_store_all_type).setOnClickListener(onClickListener);
@@ -78,7 +83,13 @@ public class FoodStoreListAction extends BaseAction {
         typePop.setOutsideTouchable(true);
         final int count = rootView.getChildCount();
         for (int i = 0; i < count; i++) {
-            View item = rootView.getChildAt(i);
+            RelativeLayout item = (RelativeLayout) rootView.getChildAt(i);
+            if (currentType == 100) {
+                item.getChildAt(1).setBackgroundResource(R.mipmap.icon_check_yellow);
+            } else if (currentType == 101) {
+                item.getChildAt(1).setBackgroundResource(R.mipmap.icon_check_blue);
+            }
+
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

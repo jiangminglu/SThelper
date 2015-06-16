@@ -58,8 +58,6 @@ public class GoodsItemAdapter extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder) view.getTag();
         }
-
-
         return view;
     }
 

@@ -66,6 +66,11 @@ public class MainActivity extends BaseAction {
                     intent.setClass(mActivity, FoodStoreListAction.class);
                     startActivity(intent);
                     break;
+                case 103:
+                    intent = new Intent();
+                    intent.setClass(mActivity, FavorableAction.class);
+                    startActivity(intent);
+                    break;
             }
         }
     };

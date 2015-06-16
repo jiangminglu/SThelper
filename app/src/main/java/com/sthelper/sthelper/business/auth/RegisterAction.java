@@ -1,6 +1,5 @@
 package com.sthelper.sthelper.business.auth;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,6 +25,7 @@ public class RegisterAction extends BaseAction {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_action);
+        initActionBar("注册");
         init();
         updateLayout();
     }
@@ -49,8 +49,8 @@ public class RegisterAction extends BaseAction {
             this.alertLayout1.findViewById(R.id.register_input_tel_alert_index).setBackgroundResource(R.drawable.yellow_circle);
             ((TextView) this.alertLayout1.findViewById(R.id.register_input_tel_alert_content)).setTextColor(Color.parseColor("#fc7b00"));
 
-            this.alertLayout2.findViewById(R.id.register_input_password_alert_index).setBackgroundResource(R.drawable.gray_circle);
-            ((TextView) this.alertLayout2.findViewById(R.id.register_input_password_alert_content)).setTextColor(Color.parseColor("#c0c0c0"));
+            this.alertLayout2.findViewById(R.id.register_input_code_alert_index).setBackgroundResource(R.drawable.gray_circle);
+            ((TextView) this.alertLayout2.findViewById(R.id.register_input_code_alert_content)).setTextColor(Color.parseColor("#c0c0c0"));
 
             this.alertLayout3.findViewById(R.id.register_input_password_alert_index).setBackgroundResource(R.drawable.gray_circle);
             ((TextView) this.alertLayout3.findViewById(R.id.register_input_password_alert_content)).setTextColor(Color.parseColor("#c0c0c0"));
@@ -66,8 +66,8 @@ public class RegisterAction extends BaseAction {
             this.alertLayout1.findViewById(R.id.register_input_tel_alert_index).setBackgroundResource(R.drawable.yellow_circle);
             ((TextView) this.alertLayout1.findViewById(R.id.register_input_tel_alert_content)).setTextColor(Color.parseColor("#fc7b00"));
 
-            this.alertLayout2.findViewById(R.id.register_input_password_alert_index).setBackgroundResource(R.drawable.yellow_circle);
-            ((TextView) this.alertLayout2.findViewById(R.id.register_input_password_alert_content)).setTextColor(Color.parseColor("#fc7b00"));
+            this.alertLayout2.findViewById(R.id.register_input_code_alert_index).setBackgroundResource(R.drawable.yellow_circle);
+            ((TextView) this.alertLayout2.findViewById(R.id.register_input_code_alert_content)).setTextColor(Color.parseColor("#fc7b00"));
 
             this.alertLayout3.findViewById(R.id.register_input_password_alert_index).setBackgroundResource(R.drawable.gray_circle);
             ((TextView) this.alertLayout3.findViewById(R.id.register_input_password_alert_content)).setTextColor(Color.parseColor("#c0c0c0"));
@@ -80,8 +80,8 @@ public class RegisterAction extends BaseAction {
             this.alertLayout1.findViewById(R.id.register_input_tel_alert_index).setBackgroundResource(R.drawable.yellow_circle);
             ((TextView) this.alertLayout1.findViewById(R.id.register_input_tel_alert_content)).setTextColor(Color.parseColor("#fc7b00"));
 
-            this.alertLayout2.findViewById(R.id.register_input_password_alert_index).setBackgroundResource(R.drawable.yellow_circle);
-            ((TextView) this.alertLayout2.findViewById(R.id.register_input_password_alert_content)).setTextColor(Color.parseColor("#fc7b00"));
+            this.alertLayout2.findViewById(R.id.register_input_code_alert_index).setBackgroundResource(R.drawable.yellow_circle);
+            ((TextView) this.alertLayout2.findViewById(R.id.register_input_code_alert_content)).setTextColor(Color.parseColor("#fc7b00"));
 
             this.alertLayout3.findViewById(R.id.register_input_password_alert_index).setBackgroundResource(R.drawable.yellow_circle);
             ((TextView) this.alertLayout3.findViewById(R.id.register_input_password_alert_content)).setTextColor(Color.parseColor("#fc7b00"));
@@ -91,7 +91,6 @@ public class RegisterAction extends BaseAction {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_register_action, menu);
         return true;
     }
@@ -105,6 +104,10 @@ public class RegisterAction extends BaseAction {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            if(index<2){
+                index++;
+                updateLayout();
+            }
             return true;
         }
 
