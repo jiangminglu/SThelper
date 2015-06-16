@@ -40,12 +40,16 @@
 
             <RatingBar
                 android:id="@+id/store_rating"
-                style="@android:style/Widget.Holo.RatingBar.Small"
+                style="@style/yellowRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/store_name"
                 android:layout_below="@id/store_name"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="4"
+                android:stepSize="4" />
 
             <ScrollView
                 android:layout_width="match_parent"

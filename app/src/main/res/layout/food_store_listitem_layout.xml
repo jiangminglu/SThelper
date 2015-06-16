@@ -41,7 +41,11 @@
 
             <RatingBar
                 android:id="@+id/food_store_listitem_rating"
-                style="@android:style/Widget.Holo.RatingBar.Small"
+                style="@style/yellowRatingBar"
+                android:numStars="5"
+                android:rating="4"
+                android:stepSize="4"
+                android:isIndicator="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

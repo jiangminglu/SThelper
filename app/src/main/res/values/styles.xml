@@ -34,4 +34,12 @@
         <item name="android:displayOptions">useLogo</item>
 
     </style>
+
+
+    <!-- 自定义ratingbar -->
+    <style name="yellowRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/yellow_rating_bar</item>
+        <item name="android:minHeight">38px</item>
+        <item name="android:maxHeight">38px</item>
+    </style>
 </resources>
