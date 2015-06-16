@@ -76,6 +76,7 @@
         android:layout_marginTop="44dp" />
 
     <LinearLayout
+        android:id="@+id/food_store_bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"

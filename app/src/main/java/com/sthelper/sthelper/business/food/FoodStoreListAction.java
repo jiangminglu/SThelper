@@ -2,6 +2,8 @@ package com.sthelper.sthelper.business.food;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,10 +27,15 @@ import java.util.ArrayList;
 public class FoodStoreListAction extends BaseAction {
 
 
+    public static int TYPE_SHI = 100;
+    public static int TYPE_YIN = 101;
+
+    public int currentType = 100;
     private SListView listView;
     private ArrayList<FoodStoreBean> list;
     private FoodStoreListAdapter adapter;
 
+    private View bottomLayout;
     private PopupWindow typePop, flavorPop;
 
     @Override
@@ -36,6 +43,13 @@ public class FoodStoreListAction extends BaseAction {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_store_list_action);
         initActionBar("店铺列表");
+
+        currentType = getIntent().getIntExtra("type", 100);
+        if (currentType == TYPE_SHI) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_default_actionbar_bg)));
+        } else {
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_blue_actionbar_bg)));
+        }
         init();
         loadData();
     }
@@ -49,9 +63,13 @@ public class FoodStoreListAction extends BaseAction {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);
 
+        bottomLayout = findViewById(R.id.food_store_bottom_layout);
+        if (currentType == TYPE_SHI) {
+            bottomLayout.setBackgroundColor(getResources().getColor(R.color.app_default_actionbar_bg));
+        } else {
+            bottomLayout.setBackgroundColor(getResources().getColor(R.color.app_blue_actionbar_bg));
+        }
         findViewById(R.id.food_store_all_type).setOnClickListener(onClickListener);
-
-
     }
 
     private void initTypePop() {
@@ -127,8 +145,8 @@ public class FoodStoreListAction extends BaseAction {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent = new Intent();
-            intent.setClass(mActivity,TakingOrderAction.class);
-            intent.putExtra("bean",list.get(i));
+            intent.setClass(mActivity, TakingOrderAction.class);
+            intent.putExtra("bean", list.get(i));
             startActivity(intent);
         }
     };

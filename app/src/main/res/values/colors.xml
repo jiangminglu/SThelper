@@ -3,4 +3,5 @@
     <color name="app_default_bg">#fff2f2f2</color>
     <color name="app_default_line_bg">#e6e6e6</color>
     <color name="app_default_actionbar_bg">#e16c1a</color>
+    <color name="app_blue_actionbar_bg">#03bfa5</color>
 </resources>

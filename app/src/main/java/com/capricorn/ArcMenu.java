@@ -195,6 +195,7 @@ public class ArcMenu extends RelativeLayout {
         for (int i = 0; i < itemCount; i++) {
             View item = mArcLayout.getChildAt(i);
             item.clearAnimation();
+            bgView.setVisibility(INVISIBLE);
         }
 
         mArcLayout.switchState(false);

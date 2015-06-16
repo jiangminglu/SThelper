@@ -56,6 +56,13 @@ public class MainActivity extends BaseAction {
                     break;
                 case 100:
                     Intent intent = new Intent();
+                    intent.putExtra("type", 100);
+                    intent.setClass(mActivity, FoodStoreListAction.class);
+                    startActivity(intent);
+                    break;
+                case 101:
+                    intent = new Intent();
+                    intent.putExtra("type", 101);
                     intent.setClass(mActivity, FoodStoreListAction.class);
                     startActivity(intent);
                     break;
@@ -77,7 +84,6 @@ public class MainActivity extends BaseAction {
         this.slidLayout.findViewById(R.id.menu_user).setOnClickListener(this.onClickListener);
 
     }
-
 
 
     public void onBackPressed() {
