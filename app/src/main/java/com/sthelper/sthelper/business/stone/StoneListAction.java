@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.business.BaseAction;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class StoneListAction extends BaseAction {
+public class StoneListAction extends BaseAction implements View.OnClickListener {
 
     private ListView sortListView;
     private SideBar sideBar;
@@ -36,6 +35,7 @@ public class StoneListAction extends BaseAction {
     private CharacterParser characterParser;
     private List<SortModel> SourceDateList;
 
+    private TextView type1, type2, currentType;
     /**
      * 根据拼音来排列ListView里面的数据类
      */
@@ -49,12 +49,18 @@ public class StoneListAction extends BaseAction {
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_stone_actionbar_bg)));
         init();
     }
-    private void init(){
+
+    private void init() {
 
         //实例化汉字转拼音类
         characterParser = CharacterParser.getInstance();
 
         pinyinComparator = new PinyinComparator();
+
+        type1 = (TextView) findViewById(R.id.stone_list_type1);
+        type2 = (TextView) findViewById(R.id.stone_list_type2);
+        type1.setOnClickListener(this);
+        type2.setOnClickListener(this);
 
         sideBar = (SideBar) findViewById(R.id.sidrbar);
         dialog = (TextView) findViewById(R.id.dialog);
@@ -67,7 +73,7 @@ public class StoneListAction extends BaseAction {
             public void onTouchingLetterChanged(String s) {
                 //该字母首次出现的位置
                 int position = adapter.getPositionForSection(s.charAt(0));
-                if(position != -1){
+                if (position != -1) {
                     sortListView.setSelection(position);
                 }
 
@@ -81,7 +87,7 @@ public class StoneListAction extends BaseAction {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Intent intent = new Intent();
-                intent.setClass(mActivity,StoneItemInfoAction.class);
+                intent.setClass(mActivity, StoneItemListAction.class);
                 startActivity(intent);
             }
         });
@@ -97,7 +103,7 @@ public class StoneListAction extends BaseAction {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(mActivity,PublishStoneAction.class);
+                intent.setClass(mActivity, PublishStoneAction.class);
                 startActivity(intent);
             }
         });
@@ -105,13 +111,14 @@ public class StoneListAction extends BaseAction {
 
     /**
      * 为ListView填充数据
+     *
      * @param date
      * @return
      */
-    private List<SortModel> filledData(String [] date){
+    private List<SortModel> filledData(String[] date) {
         List<SortModel> mSortList = new ArrayList<SortModel>();
 
-        for(int i=0; i<date.length; i++){
+        for (int i = 0; i < date.length; i++) {
             SortModel sortModel = new SortModel();
             sortModel.setName(date[i]);
             //汉字转换成拼音
@@ -119,9 +126,9 @@ public class StoneListAction extends BaseAction {
             String sortString = pinyin.substring(0, 1).toUpperCase();
 
             // 正则表达式，判断首字母是否是英文字母
-            if(sortString.matches("[A-Z]")){
+            if (sortString.matches("[A-Z]")) {
                 sortModel.setSortLetters(sortString.toUpperCase());
-            }else{
+            } else {
                 sortModel.setSortLetters("#");
             }
 
@@ -151,5 +158,16 @@ public class StoneListAction extends BaseAction {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == type1) {
+            type1.setBackgroundResource(R.drawable.stone_type);
+            type2.setBackground(null);
+        } else if (view == type2) {
+            type2.setBackgroundResource(R.drawable.stone_type);
+            type1.setBackground(null);
+        }
     }
 }

@@ -8,37 +8,47 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="44dp"
+        android:background="#ffffff"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/stone_list_type1"
             android:layout_width="0dp"
-            android:clickable="true"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/stone_type"
+            android:clickable="true"
             android:gravity="center"
-            android:textColor="@drawable/stone_list_item_type_txt_selector"
             android:text="大理石"
+            android:textColor="@drawable/stone_list_item_type_txt_selector"
             android:textSize="16sp" />
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/app_default_line_bg" />
 
         <TextView
             android:id="@+id/stone_list_type2"
             android:layout_width="0dp"
-            android:clickable="true"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="大理石"
-            android:textColor="@drawable/stone_list_item_type_txt_selector"
+            android:background="#ffffff"
+            android:clickable="true"
             android:gravity="center"
+            android:text="花岗岩"
+            android:textColor="@drawable/stone_list_item_type_txt_selector"
             android:textSize="16sp" />
 
     </LinearLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="44dp"
         android:layout_marginBottom="44dp"
-        >
+        android:layout_marginTop="44dp">
 
         <ListView
             android:id="@+id/stone_listview"
@@ -64,18 +74,18 @@
             android:layout_height="fill_parent"
             android:layout_gravity="right|center" />
     </FrameLayout>
+
     <Button
         android:id="@+id/stone_list_public"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:text="发布石材"
-        android:gravity="center"
-        android:textColor="#ffffff"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:textSize="16sp"
-        android:layout_alignParentBottom="true"
         android:background="@color/app_stone_actionbar_bg"
-        />
+        android:gravity="center"
+        android:text="发布石材"
+        android:textColor="#ffffff"
+        android:textSize="16sp" />
 
 </RelativeLayout>

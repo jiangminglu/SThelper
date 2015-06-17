@@ -1,18 +1,25 @@
 package com.sthelper.sthelper.business.stone;
 
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.business.BaseAction;
 
-public class StoneInfoAction extends Activity {
+public class StoneInfoAction extends BaseAction {
+
+    ViewPager viewPager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stone_info_action);
+        initActionBar("白岩石");
+        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_stone_actionbar_bg)));
     }
 
     @Override

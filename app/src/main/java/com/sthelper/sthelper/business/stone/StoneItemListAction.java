@@ -1,7 +1,10 @@
 package com.sthelper.sthelper.business.stone;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.bean.StoneItemBean;
@@ -10,7 +13,7 @@ import com.sthelper.sthelper.business.adapter.StoneItemAdapter;
 
 import java.util.ArrayList;
 
-public class StoneItemInfoAction extends BaseAction {
+public class StoneItemListAction extends BaseAction {
 
     public ArrayList<StoneItemBean> list;
     public ListView listView;
@@ -31,6 +34,7 @@ public class StoneItemInfoAction extends BaseAction {
         adapter = new StoneItemAdapter(list, mActivity);
         listView = (ListView) findViewById(R.id.stone_item_listview);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(onItemClickListener);
     }
 
     private void loadData() {
@@ -40,5 +44,13 @@ public class StoneItemInfoAction extends BaseAction {
         }
         adapter.notifyDataSetChanged();
     }
+    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Intent intent = new Intent();
+            intent.setClass(mActivity,StoneInfoAction.class);
+            startActivity(intent);
+        }
+    };
 
 }
