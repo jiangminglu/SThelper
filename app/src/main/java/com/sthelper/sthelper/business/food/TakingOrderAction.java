@@ -3,6 +3,7 @@ package com.sthelper.sthelper.business.food;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -34,13 +35,14 @@ public class TakingOrderAction extends BaseAction {
 
     private FoodStoreBean bean;
     private ImageView storeImg;
-    private RatingBar storeRate;
+    private RatingBar storeRate, yelloRate, blueRate;
     private TextView storeNameTv;
     private LinearLayout storeGoodsListContent;
     private SListView rightListView;
     private ArrayList<GoodsItemBean> list;
     private GoodsItemAdapter adapter = null;
 
+    private int type = 100;
     private Dialog detailDialog;
 
     @Override
@@ -48,7 +50,14 @@ public class TakingOrderAction extends BaseAction {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taking_order_action);
         initActionBar("老川菜");
+        type = getIntent().getIntExtra("type", 100);
         bean = (FoodStoreBean) getIntent().getSerializableExtra("bean");
+
+        if (type == 100) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_default_actionbar_bg)));
+        } else {
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_blue_actionbar_bg)));
+        }
         init();
         loadData();
     }
@@ -59,7 +68,22 @@ public class TakingOrderAction extends BaseAction {
 
         storeImg = (ImageView) findViewById(R.id.store_pic);
         storeNameTv = (TextView) findViewById(R.id.store_name);
-        storeRate = (RatingBar) findViewById(store_rating);
+        yelloRate = (RatingBar) findViewById(store_rating);
+        blueRate = (RatingBar) findViewById(R.id.store_rating_blue);
+
+        if (type == 100) {
+            blueRate.setVisibility(View.GONE);
+            yelloRate.setVisibility(View.VISIBLE);
+            storeRate = yelloRate;
+            storeNameTv.setTextColor(Color.parseColor("#d85b00"));
+        } else {
+
+            blueRate.setVisibility(View.VISIBLE);
+            yelloRate.setVisibility(View.GONE);
+            storeRate = blueRate;
+            storeNameTv.setTextColor(getResources().getColor(R.color.app_blue_actionbar_bg));
+        }
+
         storeGoodsListContent = (LinearLayout) findViewById(R.id.store_goods_content);
         rightListView = (SListView) findViewById(R.id.store_goods_item_listview);
         adapter = new GoodsItemAdapter(list, mActivity);

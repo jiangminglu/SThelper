@@ -42,4 +42,13 @@
         <item name="android:minHeight">38px</item>
         <item name="android:maxHeight">38px</item>
     </style>
+
+
+    <!-- 自定义ratingbar -->
+    <style name="blueRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/blue_rating_bar</item>
+        <item name="android:minHeight">38px</item>
+        <item name="android:maxHeight">38px</item>
+    </style>
+
 </resources>

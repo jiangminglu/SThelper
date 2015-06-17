@@ -50,6 +50,19 @@
                 android:numStars="5"
                 android:rating="4"
                 android:stepSize="4" />
+            <RatingBar
+                android:id="@+id/store_rating_blue"
+                style="@style/blueRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/store_name"
+                android:layout_below="@id/store_name"
+                android:layout_marginTop="4dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:visibility="gone"
+                android:rating="4"
+                android:stepSize="4" />
 
             <ScrollView
                 android:layout_width="match_parent"

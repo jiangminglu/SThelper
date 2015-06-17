@@ -18,6 +18,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.business.food.FoodStoreListAction;
+import com.sthelper.sthelper.business.stone.StoneListAction;
 
 public class MainActivity extends BaseAction {
     private static final int[] ITEM_DRAWABLES = {R.mipmap.icon_shi, R.mipmap.icon_yin, R.mipmap.icon_stone, R.mipmap.icon_hui};
@@ -64,6 +65,11 @@ public class MainActivity extends BaseAction {
                     intent = new Intent();
                     intent.putExtra("type", 101);
                     intent.setClass(mActivity, FoodStoreListAction.class);
+                    startActivity(intent);
+                    break;
+                case 102:
+                    intent = new Intent();
+                    intent.setClass(mActivity, StoneListAction.class);
                     startActivity(intent);
                     break;
                 case 103:

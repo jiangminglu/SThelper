@@ -158,6 +158,7 @@ public class FoodStoreListAction extends BaseAction {
             Intent intent = new Intent();
             intent.setClass(mActivity, TakingOrderAction.class);
             intent.putExtra("bean", list.get(i));
+            intent.putExtra("type",currentType);
             startActivity(intent);
         }
     };

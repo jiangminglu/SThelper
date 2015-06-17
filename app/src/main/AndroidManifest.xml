@@ -53,6 +53,26 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sthelper.sthelper.business.BaseAction" />
         </activity>
+        <activity
+            android:name=".business.stone.StoneListAction"
+            android:label="@string/title_activity_stone_list_action"
+            android:parentActivityName=".business.BaseAction" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sthelper.sthelper.business.BaseAction" />
+        </activity>
+        <activity
+            android:name=".business.stone.PublishStoneAction"
+            android:label="@string/title_activity_publish_stone_action" >
+        </activity>
+        <activity
+            android:name=".business.stone.StoneItemInfoAction"
+            android:label="@string/title_activity_stone_item_info_action" >
+        </activity>
+        <activity
+            android:name=".business.stone.StoneInfoAction"
+            android:label="@string/title_activity_stone_info_action" >
+        </activity>
     </application>
 
 </manifest>

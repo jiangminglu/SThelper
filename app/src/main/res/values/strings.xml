@@ -15,4 +15,8 @@
     <string name="title_activity_store_info_action">StoreInfoAction</string>
     <string name="title_activity_taking_order_action">TakingOrderAction</string>
     <string name="title_activity_favorable_action">FavorableAction</string>
+    <string name="title_activity_stone_list_action">StoneListAction</string>
+    <string name="title_activity_publish_stone_action">PublishStoneAction</string>
+    <string name="title_activity_stone_item_info_action">StoneItemInfoAction</string>
+    <string name="title_activity_stone_info_action">StoneInfoAction</string>
 </resources>
