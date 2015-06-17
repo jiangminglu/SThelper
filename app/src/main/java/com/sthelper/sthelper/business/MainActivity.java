@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -56,26 +57,52 @@ public class MainActivity extends BaseAction {
                     MainActivity.this.startActivity(localIntent);
                     break;
                 case 100:
-                    Intent intent = new Intent();
-                    intent.putExtra("type", 100);
-                    intent.setClass(mActivity, FoodStoreListAction.class);
-                    startActivity(intent);
+                    goArcMenu.resetBgView();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent();
+                            intent.putExtra("type", 100);
+                            intent.setClass(mActivity, FoodStoreListAction.class);
+                            startActivity(intent);
+                        }
+                    }, 150);
                     break;
                 case 101:
-                    intent = new Intent();
-                    intent.putExtra("type", 101);
-                    intent.setClass(mActivity, FoodStoreListAction.class);
-                    startActivity(intent);
+                    goArcMenu.resetBgView();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent();
+                            intent.putExtra("type", 101);
+                            intent.setClass(mActivity, FoodStoreListAction.class);
+                            startActivity(intent);
+                        }
+                    }, 150);
+
                     break;
                 case 102:
-                    intent = new Intent();
-                    intent.setClass(mActivity, StoneListAction.class);
-                    startActivity(intent);
+                    goArcMenu.resetBgView();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent();
+                            intent.setClass(mActivity, StoneListAction.class);
+                            startActivity(intent);
+                        }
+                    }, 200);
+
                     break;
                 case 103:
-                    intent = new Intent();
-                    intent.setClass(mActivity, FavorableAction.class);
-                    startActivity(intent);
+                    goArcMenu.resetBgView();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent();
+                            intent.setClass(mActivity, FavorableAction.class);
+                            startActivity(intent);
+                        }
+                    }, 200);
                     break;
             }
         }
