@@ -60,14 +60,14 @@
                 android:layout_marginTop="4dp"
                 android:isIndicator="true"
                 android:numStars="5"
-                android:visibility="gone"
                 android:rating="4"
                 android:stepSize="4" />
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/store_rating"
+                android:layout_margin="30dp"
+                android:layout_below="@id/store_name"
                 android:layout_marginTop="8dp">
 
                 <LinearLayout
@@ -138,6 +138,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/total_price"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_alignParentBottom="true"

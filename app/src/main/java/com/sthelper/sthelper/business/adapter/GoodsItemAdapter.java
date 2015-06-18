@@ -1,6 +1,7 @@
 package com.sthelper.sthelper.business.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,11 @@ public class GoodsItemAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
 
-    public GoodsItemAdapter(ArrayList<GoodsItemBean> list, Activity activity) {
+    private int type;
+    public GoodsItemAdapter(ArrayList<GoodsItemBean> list, Activity activity,int type) {
         this.list = list;
         this.activity = activity;
+        this.type = type;
         this.inflater = activity.getLayoutInflater();
     }
 
@@ -57,6 +60,11 @@ public class GoodsItemAdapter extends BaseAdapter {
             view.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) view.getTag();
+        }
+        if(type == 100){
+            viewHolder.priceTv.setTextColor(Color.parseColor("#d96a1d"));
+        }else if(type == 101){
+            viewHolder.priceTv.setTextColor(activity.getResources().getColor(R.color.app_blue_actionbar_bg));
         }
         return view;
     }

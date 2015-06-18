@@ -41,6 +41,7 @@ public class TakingOrderAction extends BaseAction {
     private SListView rightListView;
     private ArrayList<GoodsItemBean> list;
     private GoodsItemAdapter adapter = null;
+    private TextView totalPriceTv;
 
     private int type = 100;
     private Dialog detailDialog;
@@ -66,18 +67,20 @@ public class TakingOrderAction extends BaseAction {
 
         list = new ArrayList<GoodsItemBean>();
 
+        totalPriceTv = (TextView) findViewById(R.id.total_price);
         storeImg = (ImageView) findViewById(R.id.store_pic);
         storeNameTv = (TextView) findViewById(R.id.store_name);
         yelloRate = (RatingBar) findViewById(store_rating);
         blueRate = (RatingBar) findViewById(R.id.store_rating_blue);
 
         if (type == 100) {
+            totalPriceTv.setBackgroundResource(R.drawable.yellow_circle);
             blueRate.setVisibility(View.GONE);
             yelloRate.setVisibility(View.VISIBLE);
             storeRate = yelloRate;
             storeNameTv.setTextColor(Color.parseColor("#d85b00"));
         } else {
-
+            totalPriceTv.setBackgroundResource(R.drawable.blue_circle);
             blueRate.setVisibility(View.VISIBLE);
             yelloRate.setVisibility(View.GONE);
             storeRate = blueRate;
@@ -86,7 +89,7 @@ public class TakingOrderAction extends BaseAction {
 
         storeGoodsListContent = (LinearLayout) findViewById(R.id.store_goods_content);
         rightListView = (SListView) findViewById(R.id.store_goods_item_listview);
-        adapter = new GoodsItemAdapter(list, mActivity);
+        adapter = new GoodsItemAdapter(list, mActivity,type);
         rightListView.setAdapter(adapter);
         rightListView.setOnItemClickListener(onItemClickListener);
         storeImg.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +144,11 @@ public class TakingOrderAction extends BaseAction {
 
             TextView textView = (TextView) view;
             textView.setBackgroundResource(R.drawable.goods_item_pressed);
-            textView.setTextColor(Color.parseColor("#d9681d"));
+            if(type == 100){
+                textView.setTextColor(Color.parseColor("#d9681d"));
+            }else{
+                textView.setTextColor(getResources().getColor(R.color.app_blue_actionbar_bg));
+            }
         }
     };
 

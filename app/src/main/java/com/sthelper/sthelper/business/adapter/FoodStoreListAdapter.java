@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.sthelper.sthelper.R;
@@ -55,6 +56,20 @@ public class FoodStoreListAdapter extends BaseAdapter {
             viewHolder.payView = view.findViewById(R.id.food_store_pay_view);
             viewHolder.statusTv = (TextView) view.findViewById(R.id.food_store_listitem_status);
             viewHolder.remarkTv = (TextView) view.findViewById(R.id.food_store_listitem_time_remark);
+
+            RatingBar ratingBar = (RatingBar) view.findViewById(R.id.food_store_listitem_rating);
+            RatingBar ratingBar1 = (RatingBar) view.findViewById(R.id.food_store_listitem_rating1);
+
+            if(type == 100){
+                viewHolder.ratingBar = ratingBar;
+                ratingBar.setVisibility(View.VISIBLE);
+                ratingBar1.setVisibility(View.GONE);
+            }else if(type == 101){
+                viewHolder.ratingBar = ratingBar1;
+                ratingBar.setVisibility(View.GONE);
+                ratingBar1.setVisibility(View.VISIBLE);
+            }
+
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -77,5 +92,6 @@ public class FoodStoreListAdapter extends BaseAdapter {
         public View payView;
         public TextView statusTv;
         public TextView remarkTv;
+        public RatingBar ratingBar;
     }
 }

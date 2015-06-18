@@ -37,11 +37,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <RatingBar
                 android:id="@+id/food_store_listitem_rating"
                 style="@style/yellowRatingBar"
+                android:numStars="5"
+                android:rating="4"
+                android:stepSize="4"
+                android:isIndicator="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RatingBar
+                android:id="@+id/food_store_listitem_rating1"
+                style="@style/blueRatingBar"
                 android:numStars="5"
                 android:rating="4"
                 android:stepSize="4"
@@ -55,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="status"
+                android:layout_marginBottom="4dp"
                 android:textColor="#e5863c"
                 android:textSize="14sp" />
         </LinearLayout>
