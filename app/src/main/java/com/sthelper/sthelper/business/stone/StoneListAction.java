@@ -1,6 +1,7 @@
 package com.sthelper.sthelper.business.stone;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -164,9 +165,13 @@ public class StoneListAction extends BaseAction implements View.OnClickListener 
     public void onClick(View view) {
         if (view == type1) {
             type1.setBackgroundResource(R.drawable.stone_type);
+            type1.setTextColor(getResources().getColor(R.color.app_stone_actionbar_bg));
             type2.setBackground(null);
+            type2.setTextColor(Color.parseColor("#a0a0a0"));
         } else if (view == type2) {
             type2.setBackgroundResource(R.drawable.stone_type);
+            type2.setTextColor(getResources().getColor(R.color.app_stone_actionbar_bg));
+            type1.setTextColor(Color.parseColor("#a0a0a0"));
             type1.setBackground(null);
         }
     }
