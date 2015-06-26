@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_default_bg">
+
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="98dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:background="@mipmap/about_logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="190dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="水头助手是致力于服务水头地区的一款APP,范围涵盖了订餐，饮品，石材和优惠活动。为您的生活提供最贴心的服务。汇集最新优惠活动，让您享受最实惠的服务。"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+</RelativeLayout>

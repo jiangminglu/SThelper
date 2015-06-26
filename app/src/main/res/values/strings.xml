@@ -19,4 +19,6 @@
     <string name="title_activity_publish_stone_action">PublishStoneAction</string>
     <string name="title_activity_stone_item_info_action">StoneItemInfoAction</string>
     <string name="title_activity_stone_info_action">StoneInfoAction</string>
+    <string name="title_activity_account_action">AccountAction</string>
+    <string name="title_activity_about_action">AboutAction</string>
 </resources>

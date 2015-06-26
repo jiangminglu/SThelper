@@ -56,6 +56,11 @@ public class MainActivity extends BaseAction {
                     localIntent.setClass(MainActivity.this, LoginAction.class);
                     MainActivity.this.startActivity(localIntent);
                     break;
+                case R.id.menu_account:
+                    localIntent = new Intent();
+                    localIntent.setClass(MainActivity.this, AccountAction.class);
+                    MainActivity.this.startActivity(localIntent);
+                    break;
                 case 100:
                     goArcMenu.resetBgView();
                     new Handler().postDelayed(new Runnable() {
@@ -120,6 +125,7 @@ public class MainActivity extends BaseAction {
         }
 
         this.slidLayout.findViewById(R.id.menu_user).setOnClickListener(this.onClickListener);
+        this.slidLayout.findViewById(R.id.menu_account).setOnClickListener(this.onClickListener);
 
     }
 

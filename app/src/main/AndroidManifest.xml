@@ -73,6 +73,14 @@
             android:name=".business.stone.StoneInfoAction"
             android:label="@string/title_activity_stone_info_action" >
         </activity>
+        <activity
+            android:name=".business.AccountAction"
+            android:label="@string/title_activity_account_action" >
+        </activity>
+        <activity
+            android:name=".business.AboutAction"
+            android:label="@string/title_activity_about_action" >
+        </activity>
     </application>
 
 </manifest>
