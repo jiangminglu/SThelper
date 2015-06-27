@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import com.capricorn.ArcMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.sthelper.sthelper.FeedBackAction;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.business.food.FoodStoreListAction;
@@ -64,6 +65,11 @@ public class MainActivity extends BaseAction {
                 case R.id.menu_invite:
                     localIntent = new Intent();
                     localIntent.setClass(MainActivity.this, InviteAction.class);
+                    MainActivity.this.startActivity(localIntent);
+                    break;
+                case R.id.menu_feedback:
+                    localIntent = new Intent();
+                    localIntent.setClass(MainActivity.this, FeedBackAction.class);
                     MainActivity.this.startActivity(localIntent);
                     break;
                 case 100:
@@ -132,6 +138,7 @@ public class MainActivity extends BaseAction {
         this.slidLayout.findViewById(R.id.menu_user).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_account).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_invite).setOnClickListener(this.onClickListener);
+        this.slidLayout.findViewById(R.id.menu_feedback).setOnClickListener(this.onClickListener);
 
     }
 

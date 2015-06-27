@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_default_bg">
+
+    <TextView
+        android:id="@+id/feedback_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="尊敬的用户:"
+        android:textColor="@color/app_default_actionbar_bg" />
+
+    <TextView
+        android:id="@+id/feedback_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feedback_title"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="您好，欢迎来到水头助手意见反馈中心。如果您对我们的客户端有任何优化建议，请在下方留言。您的建议对我们有莫大的帮助，非常感谢！"
+        android:textColor="#999999" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:background="@color/app_default_line_bg" />
+
+        <Button
+            android:id="@+id/feedback_send"
+            android:layout_width="80dp"
+            android:layout_marginTop="3dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/app_default_actionbar_bg"
+            android:gravity="center"
+            android:text="发送"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:layout_toLeftOf="@id/feedback_send"
+            android:hint="请输入您的反馈意见"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</RelativeLayout>

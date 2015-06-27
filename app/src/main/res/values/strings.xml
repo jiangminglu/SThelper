@@ -22,4 +22,5 @@
     <string name="title_activity_account_action">AccountAction</string>
     <string name="title_activity_about_action">AboutAction</string>
     <string name="title_activity_invite_action">InviteAction</string>
+    <string name="title_activity_feed_back_action">FeedBackAction</string>
 </resources>

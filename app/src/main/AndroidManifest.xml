@@ -85,6 +85,10 @@
             android:name=".business.InviteAction"
             android:label="@string/title_activity_invite_action" >
         </activity>
+        <activity
+            android:name=".FeedBackAction"
+            android:label="@string/title_activity_feed_back_action" >
+        </activity>
     </application>
 
 </manifest>
