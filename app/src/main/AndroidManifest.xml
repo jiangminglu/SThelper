@@ -81,6 +81,10 @@
             android:name=".business.AboutAction"
             android:label="@string/title_activity_about_action" >
         </activity>
+        <activity
+            android:name=".business.InviteAction"
+            android:label="@string/title_activity_invite_action" >
+        </activity>
     </application>
 
 </manifest>
