@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        arc:childSize="60.0dip"
+        arc:childSize="70.0dip"
         arc:fromDegrees="270.0"
         arc:toDegrees="400.0" />
 </RelativeLayout>

@@ -1,9 +1,6 @@
 package com.sthelper.sthelper;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.sthelper.sthelper.business.BaseAction;
 

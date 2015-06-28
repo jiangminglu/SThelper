@@ -1,5 +1,7 @@
 package com.sthelper.sthelper.business;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ public class FavorableAction extends BaseAction {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorable_action);
         initActionBar("优惠活动");
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#7c4dff")));
         init();
 
         loadData();
