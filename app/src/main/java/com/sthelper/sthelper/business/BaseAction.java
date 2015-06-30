@@ -8,11 +8,13 @@ import android.view.MenuItem;
 
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.SApp;
+import com.sthelper.sthelper.view.BaseProcessDialog;
 
 public class BaseAction extends Activity {
     public Activity mActivity;
     public ActionBar actionBar;
     public SApp app;
+    public BaseProcessDialog processDialog;
 
     private void initActionBar() {
         actionBar = getActionBar();
@@ -31,6 +33,7 @@ public class BaseAction extends Activity {
         this.mActivity = this;
         this.app = (SApp) getApplication();
         super.onCreate(paramBundle);
+        processDialog = new BaseProcessDialog(this);
     }
 
     @Override

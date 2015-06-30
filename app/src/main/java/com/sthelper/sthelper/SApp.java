@@ -15,10 +15,15 @@ public class SApp extends Application {
     public int screenW = 0;
     public float density = 0f;
 
+    private static SApp app;
     @Override
     public void onCreate() {
         super.onCreate();
+        app = this;
         initScreenWH();
+    }
+    public static SApp getInstance(){
+        return  app;
     }
 
     private void initScreenWH() {

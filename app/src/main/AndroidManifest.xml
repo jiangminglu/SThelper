@@ -4,6 +4,7 @@
     android:versionCode="1"
     android:versionName="st" >
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".SApp"
         android:allowBackup="true"

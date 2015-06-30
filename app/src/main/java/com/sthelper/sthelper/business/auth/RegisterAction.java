@@ -5,10 +5,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.api.AuthApi;
 import com.sthelper.sthelper.business.BaseAction;
+import com.sthelper.sthelper.util.ToastUtil;
+import com.sthelper.sthelper.view.BaseProcessDialog;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RegisterAction extends BaseAction {
 
@@ -20,6 +33,7 @@ public class RegisterAction extends BaseAction {
     private View layout1;
     private View layout2;
     private View layout3;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,13 +118,34 @@ public class RegisterAction extends BaseAction {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            if(index<2){
+            if (index == 0) {
                 index++;
                 updateLayout();
+                EditText telEt = (EditText) findViewById(R.id.register_username_et);
+                getSMSCode(telEt.getText().toString());
             }
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getSMSCode(String mobile) {
+        processDialog.show();
+        AuthApi api = new AuthApi();
+        api.getVerifyCode(mobile, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                processDialog.dismiss();
+                ToastUtil.showToast("验证码已发送...");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                processDialog.dismiss();
+            }
+        });
     }
 }
