@@ -97,6 +97,7 @@
         android:id="@+id/register_input_tel_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <LinearLayout
@@ -141,6 +142,7 @@
             android:layout_height="50.0dip"
             android:layout_marginLeft="60.0dip"
             android:layout_marginRight="60.0dip"
+            android:visibility="gone"
             android:layout_marginTop="10.0dip"
             android:background="@drawable/blue_btn_selector"
             android:text="获取验证码"
@@ -164,7 +166,6 @@
             android:layout_marginLeft="10.0dip"
             android:background="@null"
             android:hint="请输入您的验证码"
-            android:inputType="number"
             android:textCursorDrawable="@null"
             android:textSize="16.0sp" />
     </LinearLayout>
@@ -172,21 +173,34 @@
     <LinearLayout
         android:id="@+id/register_input_password_layout"
         android:layout_width="fill_parent"
-        android:layout_height="60.0dip"
+        android:layout_height="wrap_content"
         android:background="@drawable/login_input_frame"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:paddingLeft="18.0dip"
-        android:visibility="gone">
-
+        >
+        <EditText
+            android:id="@+id/register_nickname_et"
+            android:layout_width="fill_parent"
+            android:layout_height="60.0dip"
+            android:layout_marginLeft="10.0dip"
+            android:background="@null"
+            android:hint="请输入昵称"
+            android:textCursorDrawable="@null"
+            android:textSize="16.0sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:layout_marginRight="10dp"
+            android:background="@color/app_default_line_bg"
+            />
         <EditText
             android:id="@+id/register_password_et"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="60.0dip"
             android:layout_marginLeft="10.0dip"
             android:background="@null"
             android:hint="请输入密码"
-            android:inputType="number"
             android:textCursorDrawable="@null"
             android:textSize="16.0sp" />
     </LinearLayout>

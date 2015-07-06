@@ -1,5 +1,6 @@
 package com.sthelper.sthelper.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.BinaryHttpResponseHandler;
@@ -16,7 +17,9 @@ public class BaseApi {
     private static final String MAIN_URL = "http://120.26.49.208/index.php";
     private static AsyncHttpClient client = new AsyncHttpClient();    //实例话对象
 
+    public static ObjectMapper mapper;
     static {
+        mapper = new ObjectMapper();
         client.setTimeout(11000);   //设置链接超时，如果不设置，默认为10s
     }
     public static void get(String path,String method, RequestParams params, JsonHttpResponseHandler res) {

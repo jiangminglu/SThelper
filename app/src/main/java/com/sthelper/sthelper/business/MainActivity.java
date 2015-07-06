@@ -1,17 +1,9 @@
 package com.sthelper.sthelper.business;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.capricorn.ArcMenu;
@@ -20,6 +12,7 @@ import com.sthelper.sthelper.FeedBackAction;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.business.food.FoodStoreListAction;
+import com.sthelper.sthelper.business.profile.AccountAction;
 import com.sthelper.sthelper.business.stone.StoneListAction;
 
 public class MainActivity extends BaseAction {

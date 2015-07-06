@@ -15,6 +15,7 @@ import com.loopj.android.http.RequestParams;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.api.AuthApi;
 import com.sthelper.sthelper.business.BaseAction;
+import com.sthelper.sthelper.util.SPUtil;
 import com.sthelper.sthelper.util.ToastUtil;
 import com.sthelper.sthelper.view.BaseProcessDialog;
 
@@ -34,6 +35,7 @@ public class RegisterAction extends BaseAction {
     private View layout2;
     private View layout3;
 
+    private String phone;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,12 +119,19 @@ public class RegisterAction extends BaseAction {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings) {//获取验证码
             if (index == 0) {
                 index++;
                 updateLayout();
                 EditText telEt = (EditText) findViewById(R.id.register_username_et);
-                getSMSCode(telEt.getText().toString());
+                phone = telEt.getText().toString();
+                getSMSCode(phone);
+            }else if(index == 1){//
+                index++;
+                updateLayout();
+
+            }else if(index == 2){
+                inputNickPassword();
             }
             return true;
         }
@@ -147,5 +156,50 @@ public class RegisterAction extends BaseAction {
                 processDialog.dismiss();
             }
         });
+    }
+
+    private void inputNickPassword(){
+        processDialog.show();
+        EditText nickEt = (EditText) findViewById(R.id.register_nickname_et);
+        EditText passEt = (EditText) findViewById(R.id.register_password_et);
+        EditText codeEt = (EditText) findViewById(R.id.register_code_et);
+
+        String code = codeEt.getText().toString();
+        String nickname = nickEt.getText().toString();
+        String password = passEt.getText().toString();
+
+        RequestParams params = new RequestParams();
+        params.put("account",phone);
+        params.put("password",password);
+        params.put("nickname",nickname);
+        params.put("code",code);
+        AuthApi authApi = new AuthApi();
+        authApi.complateRegister(params,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                processDialog.dismiss();
+                int ret = response.optInt("ret");
+                if(ret!=0){
+                    String error = response.optString("error");
+                    ToastUtil.showToast(error);
+                }else{
+                    JSONObject result = response.optJSONObject("result");
+                    int uid = result.optInt("uid");
+                    String token = response.optString("token");
+                    SPUtil.save("uid",uid);
+                    SPUtil.save("token",token);
+                    ToastUtil.showToast("注册成功");
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                processDialog.dismiss();
+            }
+        });
+
     }
 }

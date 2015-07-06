@@ -23,4 +23,6 @@
     <string name="title_activity_about_action">AboutAction</string>
     <string name="title_activity_invite_action">InviteAction</string>
     <string name="title_activity_feed_back_action">FeedBackAction</string>
+    <string name="title_activity_loading_action">LoadingAction</string>
+    <string name="title_activity_address_manager_action">AddressManagerAction</string>
 </resources>

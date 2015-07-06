@@ -4,7 +4,8 @@
     android:versionCode="1"
     android:versionName="st" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".SApp"
         android:allowBackup="true"
@@ -12,8 +13,9 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.NoActionBar" >
         <activity
-            android:name=".business.MainActivity"
-            android:label="@string/app_name" >
+            android:name=".business.main.LoadingAction"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -75,7 +77,7 @@
             android:label="@string/title_activity_stone_info_action" >
         </activity>
         <activity
-            android:name=".business.AccountAction"
+            android:name=".business.profile.AccountAction"
             android:label="@string/title_activity_account_action" >
         </activity>
         <activity
@@ -89,6 +91,14 @@
         <activity
             android:name=".FeedBackAction"
             android:label="@string/title_activity_feed_back_action" >
+        </activity>
+        <activity
+            android:name=".business.MainActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".business.profile.AddressManagerAction"
+            android:label="@string/title_activity_address_manager_action" >
         </activity>
     </application>
 
