@@ -100,6 +100,10 @@
             android:name=".business.profile.AddressManagerAction"
             android:label="@string/title_activity_address_manager_action" >
         </activity>
+        <activity
+            android:name=".business.profile.AddAddressAction"
+            android:label="@string/title_activity_add_address_action" >
+        </activity>
     </application>
 
 </manifest>

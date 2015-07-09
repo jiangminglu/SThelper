@@ -7,13 +7,23 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.capricorn.ArcMenu;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sthelper.sthelper.FeedBackAction;
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.api.BaseApi;
+import com.sthelper.sthelper.api.CommonApi;
+import com.sthelper.sthelper.bean.Busines;
 import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.business.food.FoodStoreListAction;
 import com.sthelper.sthelper.business.profile.AccountAction;
 import com.sthelper.sthelper.business.stone.StoneListAction;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 public class MainActivity extends BaseAction {
     private static final int[] ITEM_DRAWABLES = {R.mipmap.icon_shi, R.mipmap.icon_yin, R.mipmap.icon_stone, R.mipmap.icon_hui};
@@ -39,6 +49,13 @@ public class MainActivity extends BaseAction {
         this.slidLayout = getLayoutInflater().inflate(R.layout.slide_menu, null);
         this.menu.setMenu(this.slidLayout);
         init();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getBusinessList();
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -135,6 +152,32 @@ public class MainActivity extends BaseAction {
 
     }
 
+    private void getBusinessList(){
+        CommonApi api = new CommonApi();
+        api.getBusinessList(new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    JsonNode jsonNode = BaseApi.mapper.readTree(response.toString());
+                    if(jsonNode.path("ret").asInt() == 0){
+                        JsonNode businessNode = jsonNode.findParent("business");
+                        Busines busines = new Busines();
+                        busines.area_id = businessNode.findValue("area_id").asInt();
+                        busines.area_name = businessNode.findValue("area_name").asText();
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
 
     public void onBackPressed() {
         if (this.goArcMenu.isExpanded()) {

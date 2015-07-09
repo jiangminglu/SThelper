@@ -25,4 +25,5 @@
     <string name="title_activity_feed_back_action">FeedBackAction</string>
     <string name="title_activity_loading_action">LoadingAction</string>
     <string name="title_activity_address_manager_action">AddressManagerAction</string>
+    <string name="title_activity_add_address_action">AddAddressAction</string>
 </resources>

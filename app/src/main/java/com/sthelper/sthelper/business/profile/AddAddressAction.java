@@ -1,25 +1,35 @@
 package com.sthelper.sthelper.business.profile;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.business.BaseAction;
 
-public class AddressManagerAction extends BaseAction {
+public class AddAddressAction extends BaseAction {
+
+    private EditText nameEt, telEt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_address_manager_action);
-        initActionBar("管理收餐地址");
+        setContentView(R.layout.activity_add_address_action);
+        initActionBar("添加收餐人信息");
+        init();
     }
+
+    private void init() {
+        nameEt = (EditText) findViewById(R.id.add_address_name);
+        telEt = (EditText) findViewById(R.id.add_address_tel);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_address_manager_action, menu);
+        getMenuInflater().inflate(R.menu.menu_add_address_action, menu);
         return true;
     }
 
@@ -27,10 +37,9 @@ public class AddressManagerAction extends BaseAction {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Intent intent = new Intent();
-            intent.setClass(mActivity, AddressManagerAction.class);
-            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

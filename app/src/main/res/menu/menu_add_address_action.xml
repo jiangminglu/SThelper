@@ -1,8 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context="com.sthelper.sthelper.business.profile.AddressManagerAction">
+      tools:context="com.sthelper.sthelper.business.profile.AddAddressAction">
     <item
         android:id="@+id/action_settings"
-        android:showAsAction="always"
-        android:title="新增"/>
+        android:orderInCategory="100"
+        android:title="保存"/>
 </menu>
