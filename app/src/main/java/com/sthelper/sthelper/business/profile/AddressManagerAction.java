@@ -1,10 +1,13 @@
 package com.sthelper.sthelper.business.profile;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -48,6 +51,33 @@ public class AddressManagerAction extends BaseAction {
         list = new ArrayList<Address>();
         adapter = new AddressListAdapter(list, this);
         listView.setAdapter(adapter);
+        listView.setOnItemLongClickListener(onItemLongClickListener);
+    }
+
+    private AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            Address item = list.get(i);
+            initAlertDialog(item);
+            return true;
+        }
+    };
+
+    private void initAlertDialog(final Address item) {
+        new AlertDialog.Builder(this).setTitle("操作").setItems(
+                new String[]{"编辑", "删除"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        if (i == 0) {
+                            Intent intent = new Intent();
+                            intent.setClass(mActivity, AddAddressAction.class);
+                            intent.putExtra("bean", item);
+                            startActivity(intent);
+                        }
+                    }
+                }).show();
     }
 
     @Override
@@ -80,6 +110,7 @@ public class AddressManagerAction extends BaseAction {
                     if (jsonNode.get("ret").asInt() == 0) {
                         JsonNode result = jsonNode.get("result");
                         if (result.isArray()) {
+                            list.removeAll(list);
                             for (JsonNode item : result) {
                                 Address address = BaseApi.mapper.readValue(item.toString(), Address.class);
                                 list.add(address);
@@ -98,5 +129,9 @@ public class AddressManagerAction extends BaseAction {
                 processDialog.dismiss();
             }
         });
+    }
+
+    private void deleteAddress(Address item){
+
     }
 }

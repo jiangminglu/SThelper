@@ -16,7 +16,6 @@
             android:layout_width="18dp"
             android:layout_height="24dp"
             android:background="@mipmap/icon_address"
-            android:visibility="gone"
             />
 
         <TextView
@@ -63,5 +62,6 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
         android:background="@mipmap/address_more_icon"
+        android:visibility="gone"
         />
 </RelativeLayout>

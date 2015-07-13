@@ -29,6 +29,29 @@ public class ShopingApi extends BaseApi {
     }
 
     /**
+     * 编辑收货地址
+     *
+     * @param username
+     * @param mobile
+     * @param address
+     * @param httpResponseHandler
+     */
+    public void editAddressItem(int id, String username, String mobile, String address, JsonHttpResponseHandler httpResponseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("name", username);
+        params.put("mobile", mobile);
+        params.put("addr", address);
+        int uid = SPUtil.getInt("uid");
+        params.put("uid", uid);
+        params.put("addr_id",id);
+
+
+        params.put("area_id", SApp.getInstance().business.area_id);
+        params.put("business_id", SApp.getInstance().business.business_id);
+        get("User", "editaddr", params, httpResponseHandler);
+    }
+
+    /**
      * 获取用户订单列表
      *
      * @param httpResponseHandler
