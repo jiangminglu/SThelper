@@ -14,7 +14,8 @@ import com.sthelper.sthelper.FeedBackAction;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.api.BaseApi;
 import com.sthelper.sthelper.api.CommonApi;
-import com.sthelper.sthelper.bean.Busines;
+import com.sthelper.sthelper.bean.Area;
+import com.sthelper.sthelper.bean.Business;
 import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.business.food.FoodStoreListAction;
 import com.sthelper.sthelper.business.profile.AccountAction;
@@ -152,19 +153,31 @@ public class MainActivity extends BaseAction {
 
     }
 
-    private void getBusinessList(){
+    private void getBusinessList() {
         CommonApi api = new CommonApi();
-        api.getBusinessList(new JsonHttpResponseHandler(){
+        api.getBusinessList(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
                     JsonNode jsonNode = BaseApi.mapper.readTree(response.toString());
-                    if(jsonNode.path("ret").asInt() == 0){
+                    if (jsonNode.path("ret").asInt() == 0) {
                         JsonNode businessNode = jsonNode.findParent("business");
-                        Busines busines = new Busines();
+                        if (businessNode == null) return;
+                        Business busines = new Business();
                         busines.area_id = businessNode.findValue("area_id").asInt();
                         busines.area_name = businessNode.findValue("area_name").asText();
+                        busines.is_hot = businessNode.findValue("is_hot").asInt();
+                        busines.area_id = businessNode.findValue("area_id").asInt();
+                        busines.orderby = businessNode.findValue("orderby").asInt();
+
+                        app.business = busines;
+                        JsonNode areaNode = jsonNode.findParent("area");
+                        if (areaNode == null) return;
+                        Area area = new Area();
+                        area.area_id = areaNode.findValue("area_id").asInt();
+                        area.area_name = areaNode.findValue("area_name").asText();
+                        area.orderby = areaNode.findValue("orderby").asInt();
                     }
 
                 } catch (IOException e) {

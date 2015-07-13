@@ -44,19 +44,23 @@ public class AddressListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder = null;
-        if(view == null){
+        if (view == null) {
             viewHolder = new ViewHolder();
-            view = inflater.inflate(R.layout.address_item_layout,null);
-            viewHolder.nameTv= (TextView) view.findViewById(R.id.address_item_name);
+            view = inflater.inflate(R.layout.address_item_layout, null);
+            viewHolder.nameTv = (TextView) view.findViewById(R.id.address_item_name);
             viewHolder.telTv = (TextView) view.findViewById(R.id.address_item_tel);
             view.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolder) view.getTag();
         }
+        Address address = list.get(i);
+        viewHolder.telTv.setText(address.mobile);
+        viewHolder.nameTv.setText(address.name);
 
         return view;
     }
-    private static class ViewHolder{
-        public TextView nameTv,telTv;
+
+    private static class ViewHolder {
+        public TextView nameTv, telTv;
     }
 }

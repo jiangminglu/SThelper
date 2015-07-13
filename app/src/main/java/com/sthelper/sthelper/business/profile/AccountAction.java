@@ -39,6 +39,7 @@ public class AccountAction extends BaseAction implements View.OnClickListener {
         findViewById(R.id.about).setOnClickListener(this);
         findViewById(R.id.checkupdate).setOnClickListener(this);
         findViewById(R.id.callservice).setOnClickListener(this);
+        findViewById(R.id.address_manager_item).setOnClickListener(this);
     }
 
     @Override
@@ -52,29 +53,33 @@ public class AccountAction extends BaseAction implements View.OnClickListener {
             dialog.setTitle("检查版本更新");
             dialog.setMessage("正在检测新版本...");
             dialog.show();
-        }else if(view.getId() == R.id.callservice){
-            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+10086 ));
+        } else if (view.getId() == R.id.callservice) {
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + 10086));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } else if (view.getId() == R.id.address_manager_item) {
+            Intent intent = new Intent();
+            intent.setClass(mActivity, AddressManagerAction.class);
             startActivity(intent);
         }
     }
 
 
-    private void getUserInfo(){
+    private void getUserInfo() {
         int uid = SPUtil.getInt("uid");
         String token = SPUtil.getString("token");
-        if(uid<1)return;
+        if (uid < 1) return;
         processDialog.show();
         final UserApi api = new UserApi();
-        api.getUserInfo(uid,token,new JsonHttpResponseHandler(){
+        api.getUserInfo(uid, token, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 processDialog.dismiss();
                 try {
                     JsonNode node = BaseApi.mapper.readTree(response.toString());
-                    if(node.path("ret").asInt() == 0){
-                        UserInfo userInfo = BaseApi.mapper.readValue(node.findPath("userinfo").toString(),UserInfo.class);
+                    if (node.path("ret").asInt() == 0) {
+                        UserInfo userInfo = BaseApi.mapper.readValue(node.findPath("userinfo").toString(), UserInfo.class);
                         app.currentUserInfo = userInfo;
                         refreshUI();
                     }
@@ -91,13 +96,14 @@ public class AccountAction extends BaseAction implements View.OnClickListener {
             }
         });
     }
-    private void refreshUI(){
+
+    private void refreshUI() {
         ImageView avatarImg = (ImageView) findViewById(R.id.account_avatar);
         TextView nameTv = (TextView) findViewById(R.id.account_name);
         TextView slognTv = (TextView) findViewById(R.id.account_slogn);
 
-        if(app.currentUserInfo == null)return;
+        if (app.currentUserInfo == null) return;
         nameTv.setText(app.currentUserInfo.nickname);
-        ImageLoadUtil.getCircleAvatarImage(avatarImg,app.currentUserInfo.face);
+        ImageLoadUtil.getCircleAvatarImage(avatarImg, app.currentUserInfo.face);
     }
 }

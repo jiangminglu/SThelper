@@ -2,6 +2,8 @@ package com.sthelper.sthelper.api;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.sthelper.sthelper.SApp;
+import com.sthelper.sthelper.util.SPUtil;
 
 /**
  * Created by luffy on 15/7/7.
@@ -9,10 +11,33 @@ import com.loopj.android.http.RequestParams;
 public class ShopingApi extends BaseApi {
     /**
      * 添加地址
+     *
      * @param httpResponseHandler
      */
-    public void addAddressItem(JsonHttpResponseHandler httpResponseHandler){
+    public void addAddressItem(String username, String mobile, String address, JsonHttpResponseHandler httpResponseHandler) {
         RequestParams params = new RequestParams();
-        get("User","addressadd",params,httpResponseHandler);
+        params.put("name", username);
+        params.put("mobile", mobile);
+        params.put("addr", address);
+        int uid = SPUtil.getInt("uid");
+        params.put("uid", uid);
+
+
+        params.put("area_id", SApp.getInstance().business.area_id);
+        params.put("business_id", SApp.getInstance().business.business_id);
+        get("User", "addressadd", params, httpResponseHandler);
+    }
+
+    /**
+     * 获取用户订单列表
+     *
+     * @param httpResponseHandler
+     */
+    public void getAddressList(JsonHttpResponseHandler httpResponseHandler) {
+        RequestParams params = new RequestParams();
+        int uid = SPUtil.getInt("uid");
+        params.put("uid", uid);
+
+        get("User", "useraddr", params, httpResponseHandler);
     }
 }

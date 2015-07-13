@@ -3,6 +3,6 @@
       tools:context="com.sthelper.sthelper.business.profile.AddAddressAction">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:showAsAction="always"
         android:title="保存"/>
 </menu>

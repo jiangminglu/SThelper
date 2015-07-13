@@ -13,9 +13,10 @@
         >
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="26dp"
-            android:background="@mipmap/address_location_icon"
+            android:layout_width="18dp"
+            android:layout_height="24dp"
+            android:background="@mipmap/icon_address"
+            android:visibility="gone"
             />
 
         <TextView
@@ -39,8 +40,8 @@
         >
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="26dp"
+            android:layout_width="18dp"
+            android:layout_height="24dp"
             android:background="@mipmap/address_tel_icon"
             />
 

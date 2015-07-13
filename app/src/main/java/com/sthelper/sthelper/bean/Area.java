@@ -6,5 +6,5 @@ package com.sthelper.sthelper.bean;
 public class Area {
     public int orderby;//":"1",
     public int area_id;//":"1",
-    public int area_name;//":"水头地区"
+    public String area_name;//":"水头地区"
 }

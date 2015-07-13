@@ -12,6 +12,7 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.sthelper.sthelper.bean.Business;
 import com.sthelper.sthelper.bean.UserInfo;
 
 /**
@@ -23,6 +24,7 @@ public class SApp extends Application {
     public int screenW = 0;
     public float density = 0f;
     public UserInfo currentUserInfo;
+    public Business business;
     private static SApp app;
     public SharedPreferences preferences;
 

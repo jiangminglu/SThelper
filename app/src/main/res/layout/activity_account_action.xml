@@ -53,6 +53,7 @@
             android:background="@color/app_default_line_bg" />
 
         <LinearLayout
+            android:id="@+id/address_manager_item"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center_vertical"

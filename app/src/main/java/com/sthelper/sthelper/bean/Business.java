@@ -3,7 +3,7 @@ package com.sthelper.sthelper.bean;
 /**
  * Created by luffy on 15/7/8.
  */
-public class Busines {
+public class Business {
     public String business_name;//":"水头中心区域",
     public int business_id;//":"3",
     public int is_hot;//":"0",
