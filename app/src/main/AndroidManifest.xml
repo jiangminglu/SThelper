@@ -104,6 +104,14 @@
             android:name=".business.profile.AddAddressAction"
             android:label="@string/title_activity_add_address_action" >
         </activity>
+        <activity
+            android:name=".business.profile.BundleNewTelAction"
+            android:label="@string/title_activity_bundle_new_tel_action" >
+        </activity>
+        <activity
+            android:name=".business.profile.MyOrderListAction"
+            android:label="@string/title_activity_my_order_list_action" >
+        </activity>
     </application>
 
 </manifest>

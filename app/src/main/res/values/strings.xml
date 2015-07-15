@@ -26,4 +26,6 @@
     <string name="title_activity_loading_action">LoadingAction</string>
     <string name="title_activity_address_manager_action">AddressManagerAction</string>
     <string name="title_activity_add_address_action">AddAddressAction</string>
+    <string name="title_activity_bundle_new_tel_action">BundleNewTelAction</string>
+    <string name="title_activity_my_order_list_action">MyOrderListAction</string>
 </resources>

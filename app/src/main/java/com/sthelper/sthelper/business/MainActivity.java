@@ -19,6 +19,7 @@ import com.sthelper.sthelper.bean.Business;
 import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.business.food.FoodStoreListAction;
 import com.sthelper.sthelper.business.profile.AccountAction;
+import com.sthelper.sthelper.business.profile.MyOrderListAction;
 import com.sthelper.sthelper.business.stone.StoneListAction;
 
 import org.apache.http.Header;
@@ -66,6 +67,11 @@ public class MainActivity extends BaseAction {
                 case R.id.menu_user:
                     Intent localIntent = new Intent();
                     localIntent.setClass(MainActivity.this, LoginAction.class);
+                    MainActivity.this.startActivity(localIntent);
+                    break;
+                case R.id.menu_order:
+                    localIntent = new Intent();
+                    localIntent.setClass(MainActivity.this, MyOrderListAction.class);
                     MainActivity.this.startActivity(localIntent);
                     break;
                 case R.id.menu_account:
@@ -150,7 +156,7 @@ public class MainActivity extends BaseAction {
         this.slidLayout.findViewById(R.id.menu_account).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_invite).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_feedback).setOnClickListener(this.onClickListener);
-
+        this.slidLayout.findViewById(R.id.menu_order).setOnClickListener(this.onClickListener);
     }
 
     private void getBusinessList() {

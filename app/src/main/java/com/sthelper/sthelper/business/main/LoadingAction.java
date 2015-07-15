@@ -2,9 +2,11 @@ package com.sthelper.sthelper.business.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sthelper.sthelper.R;
@@ -21,6 +23,9 @@ public class LoadingAction extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_action);
+        View main = findViewById(R.id.loading_main);
+
+        main.setBackgroundColor(Color.argb(255, 246, 135, 7));
         init();
     }
 

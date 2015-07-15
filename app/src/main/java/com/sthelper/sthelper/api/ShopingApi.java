@@ -43,7 +43,7 @@ public class ShopingApi extends BaseApi {
         params.put("addr", address);
         int uid = SPUtil.getInt("uid");
         params.put("uid", uid);
-        params.put("addr_id",id);
+        params.put("addr_id", id);
 
 
         params.put("area_id", SApp.getInstance().business.area_id);
@@ -62,5 +62,20 @@ public class ShopingApi extends BaseApi {
         params.put("uid", uid);
 
         get("User", "useraddr", params, httpResponseHandler);
+    }
+
+    /**
+     * 删除收货地址
+     *
+     * @param addr_id
+     * @param httpResponseHandler
+     */
+    public void delelteAddress(int addr_id, JsonHttpResponseHandler httpResponseHandler) {
+        RequestParams params = new RequestParams();
+        int uid = SPUtil.getInt("uid");
+        params.put("uid", uid);
+        params.put("addr_id", addr_id);
+
+        get("User", "deleteaddr", params, httpResponseHandler);
     }
 }

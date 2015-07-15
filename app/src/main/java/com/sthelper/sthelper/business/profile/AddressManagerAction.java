@@ -18,6 +18,7 @@ import com.sthelper.sthelper.api.ShopingApi;
 import com.sthelper.sthelper.bean.Address;
 import com.sthelper.sthelper.business.BaseAction;
 import com.sthelper.sthelper.business.adapter.AddressListAdapter;
+import com.sthelper.sthelper.util.ToastUtil;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -75,6 +76,8 @@ public class AddressManagerAction extends BaseAction {
                             intent.setClass(mActivity, AddAddressAction.class);
                             intent.putExtra("bean", item);
                             startActivity(intent);
+                        } else if (i == 1) {
+                            deleteAddress(item);
                         }
                     }
                 }).show();
@@ -131,7 +134,26 @@ public class AddressManagerAction extends BaseAction {
         });
     }
 
-    private void deleteAddress(Address item){
+    private void deleteAddress(final Address item) {
+        processDialog.show();
+        ShopingApi api = new ShopingApi();
+        api.delelteAddress(item.addr_id, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                processDialog.dismiss();
+                if (response.optInt("ret") == 0) {
+                    ToastUtil.showToast("删除成功");
+                    list.remove(item);
+                    adapter.notifyDataSetChanged();
+                }
+            }
 
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                processDialog.dismiss();
+            }
+        });
     }
 }

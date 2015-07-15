@@ -40,6 +40,7 @@ public class AccountAction extends BaseAction implements View.OnClickListener {
         findViewById(R.id.checkupdate).setOnClickListener(this);
         findViewById(R.id.callservice).setOnClickListener(this);
         findViewById(R.id.address_manager_item).setOnClickListener(this);
+        findViewById(R.id.bundle_tel_layout).setOnClickListener(this);
     }
 
     @Override
@@ -60,6 +61,10 @@ public class AccountAction extends BaseAction implements View.OnClickListener {
         } else if (view.getId() == R.id.address_manager_item) {
             Intent intent = new Intent();
             intent.setClass(mActivity, AddressManagerAction.class);
+            startActivity(intent);
+        } else if (view.getId() == R.id.bundle_tel_layout) {
+            Intent intent = new Intent();
+            intent.setClass(mActivity, BundleNewTelAction.class);
             startActivity(intent);
         }
     }
