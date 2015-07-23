@@ -28,8 +28,8 @@ public class BaseApi {
 
     public static void get(String path, String method, RequestParams params, JsonHttpResponseHandler res) {
         initParam(params);
-        params.put("a", method);
         params.put("m", path);
+        params.put("a", method);
         client.get(MAIN_URL, params, res);
     }
 

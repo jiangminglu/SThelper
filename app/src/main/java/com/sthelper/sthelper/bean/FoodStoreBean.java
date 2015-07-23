@@ -75,7 +75,7 @@ public class FoodStoreBean implements Parcelable {
     public String card_photo;
     public String seo_keywords;
     public String bank;
-    public String shop_id;
+    public int shop_id;
     public String yuyue_total;
     public String cate_id;
     public String seo_title;
@@ -137,7 +137,7 @@ public class FoodStoreBean implements Parcelable {
         dest.writeString(this.card_photo);
         dest.writeString(this.seo_keywords);
         dest.writeString(this.bank);
-        dest.writeString(this.shop_id);
+        dest.writeInt(this.shop_id);
         dest.writeString(this.yuyue_total);
         dest.writeString(this.cate_id);
         dest.writeString(this.seo_title);
@@ -197,7 +197,7 @@ public class FoodStoreBean implements Parcelable {
         this.card_photo = in.readString();
         this.seo_keywords = in.readString();
         this.bank = in.readString();
-        this.shop_id = in.readString();
+        this.shop_id = in.readInt();
         this.yuyue_total = in.readString();
         this.cate_id = in.readString();
         this.seo_title = in.readString();

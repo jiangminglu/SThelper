@@ -16,44 +16,59 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.api.BaseApi;
+import com.sthelper.sthelper.api.FoodApi;
 import com.sthelper.sthelper.bean.FoodStoreBean;
+import com.sthelper.sthelper.bean.Goods;
+import com.sthelper.sthelper.bean.GoodsInfo;
 import com.sthelper.sthelper.bean.GoodsItemBean;
 import com.sthelper.sthelper.business.BaseAction;
+import com.sthelper.sthelper.business.CarAction;
 import com.sthelper.sthelper.business.adapter.GoodsItemAdapter;
 import com.sthelper.sthelper.view.SListView;
 
-import java.util.ArrayList;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.sthelper.sthelper.R.id.none;
 import static com.sthelper.sthelper.R.id.store_rating;
 
 /**
  * 下订单点菜
  */
 public class TakingOrderAction extends BaseAction {
-
-
     private FoodStoreBean bean;
     private ImageView storeImg;
     private RatingBar storeRate, yelloRate, blueRate;
     private TextView storeNameTv;
     private LinearLayout storeGoodsListContent;
     private SListView rightListView;
-    private ArrayList<GoodsItemBean> list;
+    private ArrayList<GoodsInfo> list;
     private GoodsItemAdapter adapter = null;
     private TextView totalPriceTv;
 
+    private ArrayList<Goods> goodsList;
     private int type = 100;
     private Dialog detailDialog;
+
+    private ArrayList<GoodsInfo> priceList = new ArrayList<GoodsInfo>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taking_order_action);
-        initActionBar("老川菜");
-        type = getIntent().getIntExtra("type", 100);
-        bean = (FoodStoreBean) getIntent().getSerializableExtra("bean");
 
+        type = getIntent().getIntExtra("type", 100);
+        bean = getIntent().getParcelableExtra("bean");
+        initActionBar(bean.shop_name);
         if (type == 100) {
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_default_actionbar_bg)));
         } else {
@@ -65,9 +80,11 @@ public class TakingOrderAction extends BaseAction {
 
     private void init() {
 
-        list = new ArrayList<GoodsItemBean>();
+        goodsList = new ArrayList<Goods>();
+        list = new ArrayList<GoodsInfo>();
 
         totalPriceTv = (TextView) findViewById(R.id.total_price);
+        totalPriceTv.setText("0￥");
         storeImg = (ImageView) findViewById(R.id.store_pic);
         storeNameTv = (TextView) findViewById(R.id.store_name);
         yelloRate = (RatingBar) findViewById(store_rating);
@@ -89,7 +106,7 @@ public class TakingOrderAction extends BaseAction {
 
         storeGoodsListContent = (LinearLayout) findViewById(R.id.store_goods_content);
         rightListView = (SListView) findViewById(R.id.store_goods_item_listview);
-        adapter = new GoodsItemAdapter(list, mActivity,type);
+        adapter = new GoodsItemAdapter(list, this, type);
         rightListView.setAdapter(adapter);
         rightListView.setOnItemClickListener(onItemClickListener);
         storeImg.setOnClickListener(new View.OnClickListener() {
@@ -100,27 +117,92 @@ public class TakingOrderAction extends BaseAction {
                 startActivity(intent);
             }
         });
+        totalPriceTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(mActivity, CarAction.class);
+                intent.putParcelableArrayListExtra("list",priceList);
+                intent.putExtra("type",type);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void initDialog() {
+    private void initDialog(GoodsInfo info) {
         detailDialog = new Dialog(mActivity, R.style.full_dialog);
-        detailDialog.setContentView(R.layout.goods_item_detail_layout);
+        View view = getLayoutInflater().inflate(R.layout.goods_item_detail_layout, null);
+        detailDialog.setContentView(view);
+        TextView itemNameTv = (TextView) view.findViewById(R.id.goods_item_name);
+        TextView itemContentTv = (TextView) view.findViewById(R.id.goods_item_desc);
+
+        itemNameTv.setText(info.title);
+        itemContentTv.setText(info.instructions);
+
     }
 
     private void loadData() {
+        processDialog.show();
+        FoodApi api = new FoodApi();
+        api.getShopGoodsList(bean.shop_id, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                processDialog.dismiss();
+                try {
+                    JsonNode node = BaseApi.mapper.readTree(response.toString());
+                    if (0 == node.path("ret").asInt()) {
+                        JsonNode result = node.path("result");
+                        JsonNode goodsNode = result.path("goods");
+                        JsonNode shopInfoNode = result.path("shopinfo");
+                        for (JsonNode item : goodsNode) {
+                            Goods goods = new Goods();
+                            goods.cate_name = item.path("cate_name").asText();
+                            goods.goodsinfo = new ArrayList<GoodsInfo>();
+                            JsonNode goodsInfoNode = item.path("goodsinfo");
+                            for (JsonNode bean : goodsInfoNode) {
+                                GoodsInfo info = new GoodsInfo();
+                                info.title = bean.path("title").asText();
+                                info.area_id = bean.path("area_id").asInt();
+                                info.business_id = bean.path("business_id").asInt();
+                                info.cate_id = bean.path("cate_id").asInt();
+                                info.goods_id = bean.path("goods_id").asInt();
+                                info.price = bean.path("price").asDouble();
+                                info.shop_id = bean.path("shop_id").asInt();
+                                info.photo = bean.path("photo").asText();
+                                info.instructions = bean.path("instructions").asText();
+                                goods.goodsinfo.add(info);
+                            }
+                            goodsList.add(goods);
+                        }
+                        initLeftView();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-        for (int i = 0; i < 20; i++) {
-            GoodsItemBean bean = new GoodsItemBean();
-            list.add(bean);
-        }
-        adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                processDialog.dismiss();
+            }
+        });
+    }
 
 
-        for (int i = 0; i < 8; i++) {
+    /**
+     * 刷新左边商品分类列表
+     */
+    private void initLeftView() {
+        storeGoodsListContent.removeAllViews();
+        for (int i = 0; i < goodsList.size(); i++) {
+            Goods goods = goodsList.get(i);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             TextView textView = new TextView(mActivity);
             textView.setPadding(0, 24, 0, 24);
-            textView.setText("大饼");
+            textView.setText(goods.cate_name);
             textView.setGravity(Gravity.CENTER);
             textView.setTextSize(16);
             textView.setTextColor(Color.BLACK);
@@ -128,10 +210,16 @@ public class TakingOrderAction extends BaseAction {
             storeGoodsListContent.addView(textView);
             textView.setOnClickListener(onClickListener);
         }
-
+        initRightList(goodsList.get(0).goodsinfo);
     }
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
+    private void initRightList(List<GoodsInfo> goodsInfoArrayList) {
+        list.removeAll(list);
+        list.addAll(goodsInfoArrayList);
+        adapter.notifyDataSetChanged();
+    }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
@@ -144,36 +232,37 @@ public class TakingOrderAction extends BaseAction {
 
             TextView textView = (TextView) view;
             textView.setBackgroundResource(R.drawable.goods_item_pressed);
-            if(type == 100){
+            if (type == 100) {
                 textView.setTextColor(Color.parseColor("#d9681d"));
-            }else{
+            } else {
                 textView.setTextColor(getResources().getColor(R.color.app_blue_actionbar_bg));
             }
         }
     };
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_taking_order_action, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            if (detailDialog == null) {
-                initDialog();
-            }
+            initDialog(list.get(i));
             detailDialog.show();
         }
     };
+
+    /**
+     * 加入到购物车
+     *
+     * @param position
+     */
+    public void add2Car(int position) {
+        GoodsInfo info = list.get(position);
+        priceList.add(info);
+        double price = 0;
+        for (GoodsInfo item : priceList) {
+            price += item.price;
+        }
+        totalPriceTv.setText("￥" + price);
+        TextView numTv = (TextView) findViewById(R.id.goods_num);
+        numTv.setText("已点" + priceList.size() + "件");
+    }
 }
+

@@ -60,7 +60,6 @@
         android:layout_margin="20dp"
         android:paddingTop="20dp"
         android:paddingBottom="30dp"
-        android:text="简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介"
         android:textColor="#dfdfdf" />
 
 </LinearLayout>

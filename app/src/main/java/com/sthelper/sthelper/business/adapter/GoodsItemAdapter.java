@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.bean.GoodsInfo;
 import com.sthelper.sthelper.bean.GoodsItemBean;
+import com.sthelper.sthelper.business.food.TakingOrderAction;
 
 import java.util.ArrayList;
 
@@ -19,12 +21,12 @@ import java.util.ArrayList;
  */
 public class GoodsItemAdapter extends BaseAdapter {
 
-    private ArrayList<GoodsItemBean> list;
-    private Activity activity;
+    private ArrayList<GoodsInfo> list;
+    private TakingOrderAction activity;
     private LayoutInflater inflater;
 
     private int type;
-    public GoodsItemAdapter(ArrayList<GoodsItemBean> list, Activity activity,int type) {
+    public GoodsItemAdapter(ArrayList<GoodsInfo> list, TakingOrderAction activity,int type) {
         this.list = list;
         this.activity = activity;
         this.type = type;
@@ -47,7 +49,7 @@ public class GoodsItemAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
 
         ViewHolder viewHolder = null;
 
@@ -66,6 +68,17 @@ public class GoodsItemAdapter extends BaseAdapter {
         }else if(type == 101){
             viewHolder.priceTv.setTextColor(activity.getResources().getColor(R.color.app_blue_actionbar_bg));
         }
+
+        GoodsInfo goodsInfo = list.get(i);
+        viewHolder.nameTv.setText(goodsInfo.title);
+        viewHolder.priceTv.setText(goodsInfo.price+"");
+        viewHolder.addImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.add2Car(i);
+            }
+        });
+
         return view;
     }
 
