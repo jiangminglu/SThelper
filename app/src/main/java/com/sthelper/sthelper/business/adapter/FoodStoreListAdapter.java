@@ -84,6 +84,11 @@ public class FoodStoreListAdapter extends BaseAdapter {
             viewHolder.statusTv.setTextColor(Color.parseColor("#00b290"));
             viewHolder.remarkTv.setTextColor(Color.parseColor("#00b290"));
         }
+
+        FoodStoreBean bean = list.get(i);
+        viewHolder.nameTv.setText(bean.shop_name);
+        viewHolder.ratingBar.setRating(bean.score);
+
         return view;
     }
 

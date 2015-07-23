@@ -14,12 +14,21 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.api.BaseApi;
+import com.sthelper.sthelper.api.FoodApi;
 import com.sthelper.sthelper.bean.FoodStoreBean;
 import com.sthelper.sthelper.business.BaseAction;
 import com.sthelper.sthelper.business.adapter.FoodStoreListAdapter;
+import com.sthelper.sthelper.util.ToastUtil;
 import com.sthelper.sthelper.view.SListView;
 
+import org.apache.http.Header;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -106,12 +115,45 @@ public class FoodStoreListAction extends BaseAction {
     }
 
     private void loadData() {
-        for (int i = 0; i < 10; i++) {
-            FoodStoreBean bean = new FoodStoreBean();
-            bean.name = "美食小楼" + i;
-            list.add(bean);
+        processDialog.show();
+        int cateId ;
+        if (currentType == TYPE_SHI) {
+            cateId = 1;
+        } else {
+            cateId = 71;
         }
-        adapter.notifyDataSetChanged();
+        FoodApi api = new FoodApi();
+        api.getFoodStoreList(1, cateId, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                processDialog.dismiss();
+                try {
+                    JsonNode node = BaseApi.mapper.readTree(response.toString());
+                    if (0 == node.path("ret").asInt()) {
+                        JsonNode result = node.path("result");
+                        if (result.isArray()) {
+                            for (JsonNode item : result) {
+                                FoodStoreBean bean = BaseApi.mapper.readValue(item.toString(), FoodStoreBean.class);
+                                list.add(bean);
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        String error = node.path("result").textValue();
+                        ToastUtil.showToast(error);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                processDialog.dismiss();
+            }
+        });
     }
 
     @Override
@@ -158,7 +200,7 @@ public class FoodStoreListAction extends BaseAction {
             Intent intent = new Intent();
             intent.setClass(mActivity, TakingOrderAction.class);
             intent.putExtra("bean", list.get(i));
-            intent.putExtra("type",currentType);
+            intent.putExtra("type", currentType);
             startActivity(intent);
         }
     };
