@@ -18,7 +18,7 @@ public class FoodApi extends BaseApi {
     public void getFoodStoreList(int page, int cateId, JsonHttpResponseHandler handler) {
         RequestParams params = new RequestParams();
         params.put("page", page);
-        params.put("cate_id", cateId);
+//        params.put("cate_id", cateId);
         get("Data", "getshops", params, handler);
     }
 

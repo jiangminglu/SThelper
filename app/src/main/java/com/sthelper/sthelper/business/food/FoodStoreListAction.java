@@ -15,6 +15,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.api.BaseApi;
@@ -135,8 +136,9 @@ public class FoodStoreListAction extends BaseAction {
                     if (0 == node.path("ret").asInt()) {
                         JsonNode result = node.path("result");
                         if (result.isArray()) {
+                            Gson gson = new Gson();
                             for (JsonNode item : result) {
-                                FoodStoreBean bean = BaseApi.mapper.readValue(item.toString(), FoodStoreBean.class);
+                                FoodStoreBean bean = gson.fromJson(item.toString(),FoodStoreBean.class);
                                 list.add(bean);
                             }
                             adapter.notifyDataSetChanged();
