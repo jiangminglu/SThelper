@@ -13,7 +13,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.sthelper.sthelper.bean.Business;
+import com.sthelper.sthelper.bean.GoodsInfo;
 import com.sthelper.sthelper.bean.UserInfo;
+
+import java.util.HashMap;
 
 /**
  * Created by luffy on 15/6/13.
@@ -27,6 +30,7 @@ public class SApp extends Application {
     public Business business;
     private static SApp app;
     public SharedPreferences preferences;
+    public HashMap<Integer, GoodsInfo> carGoodsMap = new HashMap<Integer, GoodsInfo>();
 
     @Override
     public void onCreate() {

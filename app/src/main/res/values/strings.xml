@@ -67,4 +67,5 @@
     <string name="oops">Oops</string>
     <string name="title_activity_my_fav_action">MyFavAction</string>
     <string name="title_activity_car_action">CarAction</string>
+    <string name="title_activity_verify_order_action">VerifyOrderAction</string>
 </resources>

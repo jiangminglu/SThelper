@@ -54,7 +54,8 @@
         </activity>
         <activity
             android:name=".business.food.TakingOrderAction"
-            android:label="@string/title_activity_taking_order_action" >
+            android:label="@string/title_activity_taking_order_action"
+            android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
             android:name=".business.FavorableAction"
@@ -127,6 +128,10 @@
         <activity
             android:name=".business.CarAction"
             android:label="@string/title_activity_car_action" >
+        </activity>
+        <activity
+            android:name=".business.food.VerifyOrderAction"
+            android:label="@string/title_activity_verify_order_action" >
         </activity>
     </application>
 

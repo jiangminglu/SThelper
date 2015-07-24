@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="80dp"
-              android:paddingTop="5dp"
-              android:padding="5dp"
-              android:background="@color/app_default_bg"
+              android:background="#ffffff"
               android:descendantFocusability="blocksDescendants"
               android:orientation="horizontal"
+              android:padding="5dp"
+              android:paddingTop="5dp"
     >
 
     <LinearLayout
@@ -42,9 +42,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
+            android:layout_marginTop="6dp"
             android:layout_toRightOf="@id/car_item_goods_img"
             android:text="sss"
             />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/car_item_goods_name"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/car_item_goods_img"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:id="@+id/car_goods_add_img"
+                android:layout_width="20dp"
+                android:layout_height="22dp"
+                android:background="@mipmap/car_goods_add_icon"
+                />
+
+            <TextView
+                android:id="@+id/car_goods_item_num"
+                android:layout_width="32dp"
+                android:layout_height="22dp"
+                android:background="@mipmap/car_goods_price_frame_icon"
+                android:gravity="center"
+                android:text="10"
+                android:textColor="#000000"
+                android:textSize="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/car_goods_del_img"
+                android:layout_width="20dp"
+                android:layout_height="22dp"
+                android:background="@mipmap/car_goods_del_icon"
+                />
+
+        </LinearLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -56,7 +94,7 @@
         >
 
         <TextView
-            android:id="@+id/car_item_goods_price"
+            android:id="@+id/car_item_goods_total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

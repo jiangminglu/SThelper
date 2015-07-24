@@ -21,6 +21,7 @@ import com.sthelper.sthelper.api.BaseApi;
 import com.sthelper.sthelper.api.FoodApi;
 import com.sthelper.sthelper.bean.FoodStoreBean;
 import com.sthelper.sthelper.business.BaseAction;
+import com.sthelper.sthelper.business.CarAction;
 import com.sthelper.sthelper.business.adapter.FoodStoreListAdapter;
 import com.sthelper.sthelper.util.ToastUtil;
 import com.sthelper.sthelper.view.SListView;
@@ -84,6 +85,7 @@ public class FoodStoreListAction extends BaseAction {
             bottomLayout.setBackgroundColor(getResources().getColor(R.color.app_blue_actionbar_bg));
         }
         findViewById(R.id.food_store_all_type).setOnClickListener(onClickListener);
+        findViewById(R.id.goto_car).setOnClickListener(onClickListener);
     }
 
     private void initTypePop() {
@@ -116,7 +118,7 @@ public class FoodStoreListAction extends BaseAction {
 
     private void loadData() {
         processDialog.show();
-        int cateId ;
+        int cateId;
         if (currentType == TYPE_SHI) {
             cateId = 1;
         } else {
@@ -191,6 +193,10 @@ public class FoodStoreListAction extends BaseAction {
                 } else {
                     typePop.showAsDropDown(view);
                 }
+            } else if (view.getId() == R.id.goto_car) {
+                Intent intent = new Intent();
+                intent.setClass(mActivity, CarAction.class);
+                startActivity(intent);
             }
         }
     };
@@ -217,5 +223,13 @@ public class FoodStoreListAction extends BaseAction {
         }
 
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+
+
+
+        super.onDestroy();
     }
 }

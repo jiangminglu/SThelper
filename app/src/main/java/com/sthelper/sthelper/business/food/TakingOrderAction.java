@@ -122,8 +122,8 @@ public class TakingOrderAction extends BaseAction {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(mActivity, CarAction.class);
-                intent.putParcelableArrayListExtra("list",priceList);
-                intent.putExtra("type",type);
+                intent.putParcelableArrayListExtra("list", priceList);
+                intent.putExtra("type", type);
                 startActivity(intent);
             }
         });
@@ -177,7 +177,7 @@ public class TakingOrderAction extends BaseAction {
                         }
                         initLeftView();
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

@@ -5,9 +5,75 @@
                 android:background="@color/app_default_bg"
                 tools:context="com.sthelper.sthelper.business.CarAction">
 
+
+    <RelativeLayout
+        android:id="@+id/car_goods_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="#50000000"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <CheckBox
+            android:id="@+id/car_goods_select_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="全选"
+            android:textColor="#cc000000"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/car_goods_price_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/car_goods_select_all"
+            android:text="共计"
+            android:textColor="#000000"
+            android:textSize="16sp"
+
+            />
+
+        <TextView
+            android:id="@+id/car_goods_all_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@id/car_goods_price_desc"
+            android:textColor="@color/app_default_actionbar_bg"
+            android:textSize="16sp"
+
+            />
+
+        <TextView
+            android:id="@+id/car_goods_start_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:background="@color/app_default_actionbar_bg"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:text="下单"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+
+            />
+
+    </RelativeLayout>
+
     <ListView
         android:id="@+id/car_goods_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"
+        android:layout_above="@id/car_goods_bottom_layout"></ListView>
+
 
 </RelativeLayout>

@@ -45,6 +45,8 @@ public class GoodsInfo implements Parcelable {
     public int shopcate_id;
     public String instructions;
     public String photo;
+    public boolean isSelect;
+    public int num;
 
     @Override
     public int describeContents() {
@@ -63,6 +65,8 @@ public class GoodsInfo implements Parcelable {
         dest.writeInt(this.shopcate_id);
         dest.writeString(this.instructions);
         dest.writeString(this.photo);
+        dest.writeByte(isSelect ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.num);
     }
 
     public GoodsInfo() {
@@ -79,6 +83,8 @@ public class GoodsInfo implements Parcelable {
         this.shopcate_id = in.readInt();
         this.instructions = in.readString();
         this.photo = in.readString();
+        this.isSelect = in.readByte() != 0;
+        this.num = in.readInt();
     }
 
     public static final Parcelable.Creator<GoodsInfo> CREATOR = new Parcelable.Creator<GoodsInfo>() {
