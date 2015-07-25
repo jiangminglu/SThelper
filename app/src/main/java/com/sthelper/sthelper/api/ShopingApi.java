@@ -78,4 +78,14 @@ public class ShopingApi extends BaseApi {
 
         get("User", "deleteaddr", params, httpResponseHandler);
     }
+
+    /**
+     * 提交订单
+     *
+     * @param params
+     * @param handler
+     */
+    public void submitOrder(RequestParams params, JsonHttpResponseHandler handler) {
+        get("User", "setorder", params, handler);
+    }
 }

@@ -35,9 +35,9 @@ public class GoodsInfo implements Parcelable {
      * commission : 0
      * cate_name : 鲜泡健康茶饮
      */
-    public String title;
+    public String product_name;
     public double price;
-    public int goods_id;
+    public int product_id;
     public int area_id;
     public int shop_id;
     public int cate_id;
@@ -55,9 +55,9 @@ public class GoodsInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.title);
+        dest.writeString(this.product_name);
         dest.writeDouble(this.price);
-        dest.writeInt(this.goods_id);
+        dest.writeInt(this.product_id);
         dest.writeInt(this.area_id);
         dest.writeInt(this.shop_id);
         dest.writeInt(this.cate_id);
@@ -74,9 +74,9 @@ public class GoodsInfo implements Parcelable {
     }
 
     protected GoodsInfo(Parcel in) {
-        this.title = in.readString();
+        this.product_name = in.readString();
         this.price = in.readDouble();
-        this.goods_id = in.readInt();
+        this.product_id = in.readInt();
         this.area_id = in.readInt();
         this.shop_id = in.readInt();
         this.cate_id = in.readInt();

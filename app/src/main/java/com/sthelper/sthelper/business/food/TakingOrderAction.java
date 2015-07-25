@@ -143,9 +143,10 @@ public class TakingOrderAction extends BaseAction {
         detailDialog.setContentView(view);
         TextView itemNameTv = (TextView) view.findViewById(R.id.goods_item_name);
         TextView itemContentTv = (TextView) view.findViewById(R.id.goods_item_desc);
-
-        itemNameTv.setText(info.title);
+        ImageView img = (ImageView) view.findViewById(R.id.goods_item_photo_img);
+        itemNameTv.setText(info.product_name);
         itemContentTv.setText(info.instructions);
+        ImageLoadUtil.getCommonImage(img,SApp.IMG_URL+info.photo);
 
     }
 
@@ -170,11 +171,11 @@ public class TakingOrderAction extends BaseAction {
                             JsonNode goodsInfoNode = item.path("goodsinfo");
                             for (JsonNode bean : goodsInfoNode) {
                                 GoodsInfo info = new GoodsInfo();
-                                info.title = bean.path("title").asText();
+                                info.product_name = bean.path("product_name").asText();
                                 info.area_id = bean.path("area_id").asInt();
                                 info.business_id = bean.path("business_id").asInt();
                                 info.cate_id = bean.path("cate_id").asInt();
-                                info.goods_id = bean.path("goods_id").asInt();
+                                info.product_id = bean.path("product_id").asInt();
                                 info.price = bean.path("price").asDouble();
                                 info.shop_id = bean.path("shop_id").asInt();
                                 info.photo = bean.path("photo").asText();
@@ -267,7 +268,7 @@ public class TakingOrderAction extends BaseAction {
         boolean flag = false;
         GoodsInfo goodsInfoIndex = null;
         for (GoodsInfo bean : priceList) {
-            if (bean.goods_id == info.goods_id) {
+            if (bean.product_id == info.product_id) {
                 flag = true;
                 goodsInfoIndex = bean;
                 break;

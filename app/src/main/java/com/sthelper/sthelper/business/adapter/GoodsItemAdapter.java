@@ -70,7 +70,7 @@ public class GoodsItemAdapter extends BaseAdapter {
         }
 
         GoodsInfo goodsInfo = list.get(i);
-        viewHolder.nameTv.setText(goodsInfo.title);
+        viewHolder.nameTv.setText(goodsInfo.product_name);
         viewHolder.priceTv.setText(goodsInfo.price+"");
         viewHolder.addImg.setOnClickListener(new View.OnClickListener() {
             @Override
