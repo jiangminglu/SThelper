@@ -62,7 +62,7 @@ public class FoodStoreListAdapter extends BaseAdapter {
             viewHolder.logoImg = (ImageView) view.findViewById(R.id.food_store_logo);
             RatingBar ratingBar = (RatingBar) view.findViewById(R.id.food_store_listitem_rating);
             RatingBar ratingBar1 = (RatingBar) view.findViewById(R.id.food_store_listitem_rating1);
-
+            viewHolder.timeDesc = (TextView) view.findViewById(R.id.food_store_listitem_time_desc);
             if(type == 100){
                 viewHolder.ratingBar = ratingBar;
                 ratingBar.setVisibility(View.VISIBLE);
@@ -92,7 +92,7 @@ public class FoodStoreListAdapter extends BaseAdapter {
         viewHolder.nameTv.setText(bean.shop_name);
         viewHolder.ratingBar.setRating(bean.score);
         ImageLoadUtil.getCommonImage(viewHolder.logoImg, SApp.IMG_URL+bean.photo);
-
+        viewHolder.timeDesc.setText(bean.business_time);
         if(bean.closed == 0){
             viewHolder.statusTv.setText("营业中");
         }else{
@@ -108,5 +108,6 @@ public class FoodStoreListAdapter extends BaseAdapter {
         public TextView remarkTv;
         public RatingBar ratingBar;
         public ImageView logoImg;
+        public TextView timeDesc;
     }
 }

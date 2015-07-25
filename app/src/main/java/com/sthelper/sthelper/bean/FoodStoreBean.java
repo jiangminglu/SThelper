@@ -120,6 +120,9 @@ public class FoodStoreBean implements Parcelable {
     public String extension;
     public String card_date;
 
+    public FoodStoreBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -183,9 +186,6 @@ public class FoodStoreBean implements Parcelable {
         dest.writeString(this.card_date);
     }
 
-    public FoodStoreBean() {
-    }
-
     protected FoodStoreBean(Parcel in) {
         this.tel = in.readString();
         this.score = in.readInt();
@@ -243,7 +243,7 @@ public class FoodStoreBean implements Parcelable {
         this.card_date = in.readString();
     }
 
-    public static final Parcelable.Creator<FoodStoreBean> CREATOR = new Parcelable.Creator<FoodStoreBean>() {
+    public static final Creator<FoodStoreBean> CREATOR = new Creator<FoodStoreBean>() {
         public FoodStoreBean createFromParcel(Parcel source) {
             return new FoodStoreBean(source);
         }

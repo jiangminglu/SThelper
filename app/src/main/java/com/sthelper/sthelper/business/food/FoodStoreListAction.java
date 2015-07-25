@@ -1,8 +1,6 @@
 package com.sthelper.sthelper.business.food;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;

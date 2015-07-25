@@ -10,11 +10,25 @@
         android:orientation="vertical"
         >
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:text="添加地址"
+            android:id="@+id/add_address"
+            android:gravity="center"
+            android:visibility="gone"
+
+            />
+
         <RelativeLayout
+            android:id="@+id/address_layout"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="#ffffff"
             android:padding="4dp"
+            android:visibility="invisible"
             >
 
             <LinearLayout
@@ -23,6 +37,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
+
                 >
 
                 <ImageView
@@ -37,7 +52,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
                     android:gravity="center_vertical"
-                    android:text="sss"
                     android:textColor="#848484"
                     android:textSize="14sp"/>
             </LinearLayout>
@@ -63,7 +77,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
                     android:gravity="center_vertical"
-                    android:text="sss"
                     android:textColor="#848484"
                     android:textSize="14sp"/>
             </LinearLayout>
