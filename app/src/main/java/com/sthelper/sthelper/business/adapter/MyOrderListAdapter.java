@@ -4,9 +4,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.sthelper.sthelper.R;
-import com.sthelper.sthelper.bean.Order;
+import com.sthelper.sthelper.bean.OrderItem;
 
 import java.util.ArrayList;
 
@@ -16,18 +17,19 @@ import java.util.ArrayList;
 public class MyOrderListAdapter extends BaseAdapter {
 
 
-    private ArrayList<Order> list;
-
+    private ArrayList<OrderItem> list;
+    private int status;
     private Context context;
 
-    public MyOrderListAdapter(ArrayList<Order> list, Context context) {
+    public MyOrderListAdapter(int status,ArrayList<OrderItem> list, Context context) {
         this.list = list;
+        this.status = status;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return list.size();
     }
 
     @Override
@@ -46,14 +48,36 @@ public class MyOrderListAdapter extends BaseAdapter {
         if (view == null) {
             holder = new ViewHolder();
             view = View.inflate(context, R.layout.order_item_layout, null);
+            holder.timeTv = (TextView) view.findViewById(R.id.order_create_time_tv);
+            holder.orderIdTv = (TextView) view.findViewById(R.id.order_create_id_tv);
+            holder.addressTv = (TextView) view.findViewById(R.id.order_address_tv);
+            holder.statusTv = (TextView) view.findViewById(R.id.order_status_tv);
+            holder.totalPriceTv = (TextView) view.findViewById(R.id.order_total_price_tv);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
+        OrderItem order = list.get(i);
+        holder.timeTv.setText(order.create_time);
+        holder.orderIdTv.setText("订单编号: "+order.order_id + "");
+        holder.addressTv.setText("四川成都");
+        String text;
+//        0表示没付款,1付款了,2配送中,3完成
+        if(status == 0){
+            text= "待付款";
+        }else if(status == 1){
+            text= "已付款";
+        }else if(status == 2){
+            text= "配送中";
+        }else if(status == 1){
+            text= "完成";
+        }
+        holder.statusTv.setText("未支付");
+        holder.totalPriceTv.setText(order.total_price + "￥");
         return view;
     }
 
     private static class ViewHolder {
-
+        public TextView timeTv, orderIdTv, addressTv, statusTv, totalPriceTv;
     }
 }

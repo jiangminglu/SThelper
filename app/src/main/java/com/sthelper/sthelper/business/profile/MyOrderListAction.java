@@ -16,7 +16,7 @@ import com.viewpagerindicator.TabPageIndicator;
 
 public class MyOrderListAction extends FragmentActivity {
 
-    private static String[] TITLES = {"全部订单", "进行成功", "交易中", "交易失败"};
+    private static String[] TITLES = {"未付款", "已付款", "配送中", "已完成"};
 
     private TabPageIndicator indicator;
     private ViewPager viewPager;

@@ -36,6 +36,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/order_create_time_tv"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_vertical"
@@ -45,6 +46,7 @@
             />
 
         <TextView
+            android:id="@+id/order_create_id_tv"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_vertical"
@@ -54,10 +56,11 @@
             />
 
         <TextView
+            android:id="@+id/order_address_tv"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:text="收货人: 张山"
+            android:text="收货地址: 张山"
             android:textColor="#595959"
             android:textSize="14sp"
             />
@@ -78,6 +81,7 @@
                 />
 
             <TextView
+                android:id="@+id/order_status_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
@@ -111,6 +115,7 @@
                 />
 
             <TextView
+                android:id="@+id/order_total_price_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
