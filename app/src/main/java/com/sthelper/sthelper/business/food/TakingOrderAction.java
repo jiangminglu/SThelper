@@ -117,6 +117,8 @@ public class TakingOrderAction extends BaseAction {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(mActivity, StoreInfoAction.class);
+                intent.putExtra("bean",bean);
+                intent.putExtra("type",type);
                 startActivity(intent);
             }
         });

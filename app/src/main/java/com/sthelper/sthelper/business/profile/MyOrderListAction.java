@@ -67,7 +67,7 @@ public class MyOrderListAction extends FragmentActivity {
 
         @Override
         public Fragment getItem(int i) {
-            return OrderFragment.getInstance();
+            return OrderFragment.getInstance(i);
         }
 
         @Override
