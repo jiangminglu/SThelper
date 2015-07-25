@@ -33,4 +33,21 @@ public class ImageLoadUtil {
 
         imageLoader.displayImage(url, imageView, options);
     }
+
+    public static void getCommonImage(ImageView imageView, String url) {
+        if (url == null || "".equals(url)) return;
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.mipmap.default_avatar)
+                .showImageForEmptyUri(R.mipmap.default_avatar)
+                .showImageOnFail(R.mipmap.default_avatar)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .resetViewBeforeLoading(true)
+                .considerExifParams(true)
+                .build();
+
+        imageLoader.displayImage(url, imageView, options);
+    }
 }
+

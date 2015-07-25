@@ -9,6 +9,7 @@
     android:paddingTop="12dp">
 
     <ImageView
+        android:id="@+id/food_store_logo"
         android:layout_width="100dp"
         android:layout_height="80dp"
         android:src="@mipmap/main_item_bg1"

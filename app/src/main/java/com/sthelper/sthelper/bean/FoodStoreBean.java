@@ -105,7 +105,7 @@ public class FoodStoreBean implements Parcelable {
     public String discounts;
     public String business_id;
     public String user_id;
-    public String closed;
+    public int closed;
     public String score_num;
     public String lat;
     public String tags;
@@ -167,7 +167,7 @@ public class FoodStoreBean implements Parcelable {
         dest.writeString(this.discounts);
         dest.writeString(this.business_id);
         dest.writeString(this.user_id);
-        dest.writeString(this.closed);
+        dest.writeInt(this.closed);
         dest.writeString(this.score_num);
         dest.writeString(this.lat);
         dest.writeString(this.tags);
@@ -227,7 +227,7 @@ public class FoodStoreBean implements Parcelable {
         this.discounts = in.readString();
         this.business_id = in.readString();
         this.user_id = in.readString();
-        this.closed = in.readString();
+        this.closed = in.readInt();
         this.score_num = in.readString();
         this.lat = in.readString();
         this.tags = in.readString();

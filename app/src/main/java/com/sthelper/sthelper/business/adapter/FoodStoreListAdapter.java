@@ -6,11 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.SApp;
 import com.sthelper.sthelper.bean.FoodStoreBean;
+import com.sthelper.sthelper.util.ImageLoadUtil;
 
 import java.util.ArrayList;
 
@@ -56,7 +59,7 @@ public class FoodStoreListAdapter extends BaseAdapter {
             viewHolder.payView = view.findViewById(R.id.food_store_pay_view);
             viewHolder.statusTv = (TextView) view.findViewById(R.id.food_store_listitem_status);
             viewHolder.remarkTv = (TextView) view.findViewById(R.id.food_store_listitem_time_remark);
-
+            viewHolder.logoImg = (ImageView) view.findViewById(R.id.food_store_logo);
             RatingBar ratingBar = (RatingBar) view.findViewById(R.id.food_store_listitem_rating);
             RatingBar ratingBar1 = (RatingBar) view.findViewById(R.id.food_store_listitem_rating1);
 
@@ -88,7 +91,13 @@ public class FoodStoreListAdapter extends BaseAdapter {
         FoodStoreBean bean = list.get(i);
         viewHolder.nameTv.setText(bean.shop_name);
         viewHolder.ratingBar.setRating(bean.score);
+        ImageLoadUtil.getCommonImage(viewHolder.logoImg, SApp.IMG_URL+bean.photo);
 
+        if(bean.closed == 0){
+            viewHolder.statusTv.setText("营业中");
+        }else{
+            viewHolder.statusTv.setText("暂停中");
+        }
         return view;
     }
 
@@ -98,5 +107,6 @@ public class FoodStoreListAdapter extends BaseAdapter {
         public TextView statusTv;
         public TextView remarkTv;
         public RatingBar ratingBar;
+        public ImageView logoImg;
     }
 }

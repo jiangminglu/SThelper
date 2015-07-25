@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.SApp;
 import com.sthelper.sthelper.api.BaseApi;
 import com.sthelper.sthelper.api.FoodApi;
 import com.sthelper.sthelper.bean.FoodStoreBean;
@@ -29,6 +30,7 @@ import com.sthelper.sthelper.bean.GoodsItemBean;
 import com.sthelper.sthelper.business.BaseAction;
 import com.sthelper.sthelper.business.CarAction;
 import com.sthelper.sthelper.business.adapter.GoodsItemAdapter;
+import com.sthelper.sthelper.util.ImageLoadUtil;
 import com.sthelper.sthelper.view.SListView;
 
 import org.apache.http.Header;
@@ -90,6 +92,7 @@ public class TakingOrderAction extends BaseAction {
         yelloRate = (RatingBar) findViewById(store_rating);
         blueRate = (RatingBar) findViewById(R.id.store_rating_blue);
 
+
         if (type == 100) {
             totalPriceTv.setBackgroundResource(R.drawable.yellow_circle);
             blueRate.setVisibility(View.GONE);
@@ -127,6 +130,11 @@ public class TakingOrderAction extends BaseAction {
                 startActivity(intent);
             }
         });
+
+
+        storeNameTv.setText(bean.shop_name);
+        ImageLoadUtil.getCommonImage(storeImg, SApp.IMG_URL + bean.photo);
+        storeRate.setRating(bean.score);
     }
 
     private void initDialog(GoodsInfo info) {
@@ -255,14 +263,32 @@ public class TakingOrderAction extends BaseAction {
      */
     public void add2Car(int position) {
         GoodsInfo info = list.get(position);
-        priceList.add(info);
+
+        boolean flag = false;
+        GoodsInfo goodsInfoIndex = null;
+        for (GoodsInfo bean : priceList) {
+            if (bean.goods_id == info.goods_id) {
+                flag = true;
+                goodsInfoIndex = bean;
+                break;
+            }
+        }
+        if (flag) {
+            goodsInfoIndex.num += 1;
+        } else {
+            priceList.add(info);
+        }
+
         double price = 0;
+        int num = 0;
         for (GoodsInfo item : priceList) {
-            price += item.price;
+            price += item.price * item.num;
+            num += item.num;
         }
         totalPriceTv.setText("￥" + price);
         TextView numTv = (TextView) findViewById(R.id.goods_num);
-        numTv.setText("已点" + priceList.size() + "件");
+
+        numTv.setText("已点" + num + "件");
     }
 }
 

@@ -70,6 +70,7 @@ public class GoodsInfo implements Parcelable {
     }
 
     public GoodsInfo() {
+        this.num = 1;
     }
 
     protected GoodsInfo(Parcel in) {

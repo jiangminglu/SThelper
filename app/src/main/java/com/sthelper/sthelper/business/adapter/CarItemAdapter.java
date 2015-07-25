@@ -27,7 +27,7 @@ public class CarItemAdapter extends BaseAdapter {
     private ArrayList<GoodsInfo> list;
     private CarAction activity;
     private LayoutInflater inflater;
-    private HashMap<Integer, GoodsInfo> tempMap = new HashMap<Integer, GoodsInfo>();
+    private HashMap<Integer, GoodsInfo> tempMap = SApp.getInstance().carGoodsMap;
 
     public CarItemAdapter(ArrayList<GoodsInfo> list, CarAction activity) {
         this.list = list;
@@ -44,9 +44,9 @@ public class CarItemAdapter extends BaseAdapter {
             item.photo = info.photo;
             item.shop_id = info.shop_id;
             item.title = info.title;
+            item.num = info.num;
             item.shopcate_id = info.shopcate_id;
             tempMap.put(info.goods_id, item);
-
         }
     }
 
@@ -88,7 +88,7 @@ public class CarItemAdapter extends BaseAdapter {
 
         viewHolder.nameTv.setText(bean.title);
         viewHolder.priceTv.setText("￥" + (tempMap.get(bean.goods_id).num * bean.price));
-        viewHolder.numTv.setText(tempMap.get(bean.goods_id) + "");
+        viewHolder.numTv.setText(tempMap.get(bean.goods_id).num + "");
         viewHolder.zjImg.setOnClickListener(new NumOptionListener(viewHolder, bean));
         viewHolder.jsImg.setOnClickListener(new NumOptionListener(viewHolder, bean));
         viewHolder.delImg.setOnClickListener(new View.OnClickListener() {

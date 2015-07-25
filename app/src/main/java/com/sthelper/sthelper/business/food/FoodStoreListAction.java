@@ -121,7 +121,7 @@ public class FoodStoreListAction extends BaseAction {
         processDialog.show();
         int cateId;
         if (currentType == TYPE_SHI) {
-            cateId = 1;
+            cateId = 53;
         } else {
             cateId = 71;
         }

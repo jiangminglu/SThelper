@@ -31,7 +31,7 @@ public class SApp extends Application {
     private static SApp app;
     public SharedPreferences preferences;
     public HashMap<Integer, GoodsInfo> carGoodsMap = new HashMap<Integer, GoodsInfo>();
-
+    public static final String IMG_URL = "http://120.26.49.208/attachs/";
     @Override
     public void onCreate() {
         super.onCreate();
