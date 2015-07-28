@@ -23,6 +23,7 @@ import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.SApp;
 import com.sthelper.sthelper.api.BaseApi;
 import com.sthelper.sthelper.api.FoodApi;
+import com.sthelper.sthelper.api.ShopingApi;
 import com.sthelper.sthelper.bean.FoodStoreBean;
 import com.sthelper.sthelper.bean.Goods;
 import com.sthelper.sthelper.bean.GoodsInfo;
@@ -31,6 +32,8 @@ import com.sthelper.sthelper.business.BaseAction;
 import com.sthelper.sthelper.business.CarAction;
 import com.sthelper.sthelper.business.adapter.GoodsItemAdapter;
 import com.sthelper.sthelper.util.ImageLoadUtil;
+import com.sthelper.sthelper.util.SPUtil;
+import com.sthelper.sthelper.util.ToastUtil;
 import com.sthelper.sthelper.view.SListView;
 
 import org.apache.http.Header;
@@ -117,8 +120,8 @@ public class TakingOrderAction extends BaseAction {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(mActivity, StoreInfoAction.class);
-                intent.putExtra("bean",bean);
-                intent.putExtra("type",type);
+                intent.putExtra("bean", bean);
+                intent.putExtra("type", type);
                 startActivity(intent);
             }
         });
@@ -148,7 +151,7 @@ public class TakingOrderAction extends BaseAction {
         ImageView img = (ImageView) view.findViewById(R.id.goods_item_photo_img);
         itemNameTv.setText(info.product_name);
         itemContentTv.setText(info.instructions);
-        ImageLoadUtil.getCommonImage(img,SApp.IMG_URL+info.photo);
+        ImageLoadUtil.getCommonImage(img, SApp.IMG_URL + info.photo);
 
     }
 
@@ -267,31 +270,63 @@ public class TakingOrderAction extends BaseAction {
     public void add2Car(int position) {
         GoodsInfo info = list.get(position);
 
-        boolean flag = false;
-        GoodsInfo goodsInfoIndex = null;
-        for (GoodsInfo bean : priceList) {
-            if (bean.product_id == info.product_id) {
-                flag = true;
-                goodsInfoIndex = bean;
-                break;
+        addGoods2cart(info);
+    }
+
+    /**
+     * 添加商品到购物车
+     *
+     * @param goodsInfo
+     */
+    private void addGoods2cart(final GoodsInfo goodsInfo) {
+        int uid = SPUtil.getInt("uid");
+        if (uid < 1) {
+            ToastUtil.showToast("请先登录");
+            return;
+        }
+        processDialog.show();
+        ShopingApi api = new ShopingApi();
+        api.add2Cart(uid, goodsInfo.product_id, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                processDialog.dismiss();
+                if (0 == response.optInt("ret")) {
+                    boolean flag = false;
+                    GoodsInfo goodsInfoIndex = null;
+                    for (GoodsInfo bean : priceList) {
+                        if (bean.product_id == goodsInfo.product_id) {
+                            flag = true;
+                            goodsInfoIndex = bean;
+                            break;
+                        }
+                    }
+                    if (flag) {
+                        goodsInfoIndex.num += 1;
+                    } else {
+                        priceList.add(goodsInfo);
+                    }
+
+                    double price = 0;
+                    int num = 0;
+                    for (GoodsInfo item : priceList) {
+                        price += item.price * item.num;
+                        num += item.num;
+                    }
+                    totalPriceTv.setText("￥" + price);
+                    TextView numTv = (TextView) findViewById(R.id.goods_num);
+
+                    numTv.setText("已点" + num + "件");
+                } else {
+                }
             }
-        }
-        if (flag) {
-            goodsInfoIndex.num += 1;
-        } else {
-            priceList.add(info);
-        }
 
-        double price = 0;
-        int num = 0;
-        for (GoodsInfo item : priceList) {
-            price += item.price * item.num;
-            num += item.num;
-        }
-        totalPriceTv.setText("￥" + price);
-        TextView numTv = (TextView) findViewById(R.id.goods_num);
-
-        numTv.setText("已点" + num + "件");
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                processDialog.dismiss();
+            }
+        });
     }
 }
 

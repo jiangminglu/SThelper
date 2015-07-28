@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.SApp;
+import com.sthelper.sthelper.bean.CartGoodsItem;
 import com.sthelper.sthelper.bean.GoodsInfo;
 import com.sthelper.sthelper.business.CarAction;
 
@@ -22,34 +23,33 @@ import java.util.HashMap;
  */
 public class CarItemAdapter extends BaseAdapter {
 
-    private ArrayList<GoodsInfo> list;
+    private ArrayList<CartGoodsItem> list;
     private CarAction activity;
     private LayoutInflater inflater;
-    private HashMap<Integer, GoodsInfo> tempMap = SApp.getInstance().carGoodsMap;
+    private HashMap<Integer, CartGoodsItem> tempMap = new HashMap<Integer, CartGoodsItem>();
 
-    public CarItemAdapter(ArrayList<GoodsInfo> list, CarAction activity) {
+    public CarItemAdapter(ArrayList<CartGoodsItem> list, CarAction activity) {
         this.list = list;
         this.activity = activity;
         this.inflater = activity.getLayoutInflater();
-        for (GoodsInfo info : list) {
-            GoodsInfo item = new GoodsInfo();
+    }
+
+
+    @Override
+    public int getCount() {
+        tempMap.clear();
+        for (CartGoodsItem info : list) {
+            CartGoodsItem item = new CartGoodsItem();
             item.price = info.price;
             item.product_id = info.product_id;
             item.cate_id = info.cate_id;
-            item.business_id = info.business_id;
-            item.area_id = info.area_id;
-            item.instructions = info.instructions;
             item.photo = info.photo;
             item.shop_id = info.shop_id;
             item.product_name = info.product_name;
             item.num = info.num;
-            item.shopcate_id = info.shopcate_id;
             tempMap.put(info.product_id, item);
         }
-    }
 
-    @Override
-    public int getCount() {
         return list.size();
     }
 
@@ -81,7 +81,7 @@ public class CarItemAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        GoodsInfo bean = list.get(i);
+        CartGoodsItem bean = list.get(i);
 
 
         viewHolder.nameTv.setText(bean.product_name);
@@ -92,7 +92,7 @@ public class CarItemAdapter extends BaseAdapter {
         viewHolder.delImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                activity.deleteGoods(list.get(i));
             }
         });
         viewHolder.checkBox.setOnCheckedChangeListener(new CheckListener(viewHolder, bean));
@@ -110,9 +110,9 @@ public class CarItemAdapter extends BaseAdapter {
 
     private class NumOptionListener implements View.OnClickListener {
         ViewHolder viewHolder;
-        GoodsInfo info;
+        CartGoodsItem info;
 
-        public NumOptionListener(ViewHolder viewHolder, GoodsInfo info) {
+        public NumOptionListener(ViewHolder viewHolder, CartGoodsItem info) {
             this.viewHolder = viewHolder;
             this.info = info;
         }
@@ -132,15 +132,16 @@ public class CarItemAdapter extends BaseAdapter {
             tempMap.put(product_id, info);
             viewHolder.numTv.setText(num + "");
             viewHolder.priceTv.setText("￥" + (num * info.price) + "");
+            activity.goodsNumOption(num,product_id);
         }
     }
 
     private class CheckListener implements CompoundButton.OnCheckedChangeListener {
 
         ViewHolder viewHolder;
-        GoodsInfo info;
+        CartGoodsItem info;
 
-        public CheckListener(ViewHolder viewHolder, GoodsInfo info) {
+        public CheckListener(ViewHolder viewHolder, CartGoodsItem info) {
             this.viewHolder = viewHolder;
             this.info = info;
         }
@@ -150,7 +151,7 @@ public class CarItemAdapter extends BaseAdapter {
             info.isSelect = b;
             notifyDataSetChanged();
             double totalPrice = 0;
-            for (GoodsInfo item : list) {
+            for (CartGoodsItem item : list) {
                 if (item.isSelect) {
                     int num = tempMap.get(item.product_id).num;
                     totalPrice = totalPrice + num * item.price;

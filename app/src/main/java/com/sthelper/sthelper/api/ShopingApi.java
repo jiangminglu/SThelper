@@ -88,4 +88,61 @@ public class ShopingApi extends BaseApi {
     public void submitOrder(RequestParams params, JsonHttpResponseHandler handler) {
         get("User", "setorder", params, handler);
     }
+//    ./index.php?g=api&m=User&sig=123456789987654321&t=1324567&a=addcart&token=%@&uid=%@&goods_id=%@
+
+    /**
+     * 天骄到购物车
+     *
+     * @param uid
+     * @param goods_id
+     * @param handler
+     */
+    public void add2Cart(int uid, int goods_id, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("goods_id", goods_id);
+        params.put("uid", uid);
+        get("User", "addcart", params, handler);
+    }
+
+    /**
+     * 获取购物车列表
+     *
+     * @param uid
+     * @param handler
+     */
+    public void getCartGoodsList(int uid, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("uid", uid);
+        get("User", "getcart", params, handler);
+    }
+
+//    /index.php?g=api&m=User&sig=123456789987654321&t=1324567&a=addcart&token=%@&uid=%@&goods_id=%@&num=%@
+
+    /**
+     * 修改购物车商品数量
+     *
+     * @param goods_id
+     * @param num
+     * @param handler
+     */
+    public void editCartGoodsNum(int uid,int goods_id, int num, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("goods_id", goods_id);
+        params.put("num", num);
+        params.put("uid",uid);
+        get("User", "addcart", params, handler);
+    }
+
+    /**
+     * 删除购物车商品
+     *
+     * @param goods
+     * @param handler
+     */
+    public void deleteCartGoods(int uid, int goods_id, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("goods_id", goods_id);
+        params.put("uid", uid);
+        get("User", "deletecart", params, handler);
+    }
 }
