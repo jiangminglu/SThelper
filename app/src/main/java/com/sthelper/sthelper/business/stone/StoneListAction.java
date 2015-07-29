@@ -4,14 +4,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.api.BaseApi;
+import com.sthelper.sthelper.api.UserApi;
 import com.sthelper.sthelper.business.BaseAction;
 import com.sthelper.sthelper.view.sortlistview.CharacterParser;
 import com.sthelper.sthelper.view.sortlistview.PinyinComparator;
@@ -19,9 +21,12 @@ import com.sthelper.sthelper.view.sortlistview.SideBar;
 import com.sthelper.sthelper.view.sortlistview.SortAdapter;
 import com.sthelper.sthelper.view.sortlistview.SortModel;
 
+import org.apache.http.Header;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class StoneListAction extends BaseAction implements View.OnClickListener {
 
@@ -30,11 +35,12 @@ public class StoneListAction extends BaseAction implements View.OnClickListener 
     private TextView dialog;
     private SortAdapter adapter;
 
+    private ArrayList<SortModel> list = new ArrayList<SortModel>();
+
     /**
      * 汉字转换成拼音的类
      */
     private CharacterParser characterParser;
-    private List<SortModel> SourceDateList;
 
     private TextView type1, type2, currentType;
     /**
@@ -49,6 +55,7 @@ public class StoneListAction extends BaseAction implements View.OnClickListener 
         initActionBar("水头石材");
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_stone_actionbar_bg)));
         init();
+        loadData(1);
     }
 
     private void init() {
@@ -89,15 +96,13 @@ public class StoneListAction extends BaseAction implements View.OnClickListener 
                                     int position, long id) {
                 Intent intent = new Intent();
                 intent.setClass(mActivity, StoneItemListAction.class);
+                intent.putExtra("stone_id",list.get(position).stone_id);
                 startActivity(intent);
             }
         });
 
-        SourceDateList = filledData(getResources().getStringArray(R.array.date));
 
-        // 根据a-z进行排序源数据
-        Collections.sort(SourceDateList, pinyinComparator);
-        adapter = new SortAdapter(this, SourceDateList);
+        adapter = new SortAdapter(this, list);
         sortListView.setAdapter(adapter);
 
         findViewById(R.id.stone_list_public).setOnClickListener(new View.OnClickListener() {
@@ -110,56 +115,6 @@ public class StoneListAction extends BaseAction implements View.OnClickListener 
         });
     }
 
-    /**
-     * 为ListView填充数据
-     *
-     * @param date
-     * @return
-     */
-    private List<SortModel> filledData(String[] date) {
-        List<SortModel> mSortList = new ArrayList<SortModel>();
-
-        for (int i = 0; i < date.length; i++) {
-            SortModel sortModel = new SortModel();
-            sortModel.setName(date[i]);
-            //汉字转换成拼音
-            String pinyin = characterParser.getSelling(date[i]);
-            String sortString = pinyin.substring(0, 1).toUpperCase();
-
-            // 正则表达式，判断首字母是否是英文字母
-            if (sortString.matches("[A-Z]")) {
-                sortModel.setSortLetters(sortString.toUpperCase());
-            } else {
-                sortModel.setSortLetters("#");
-            }
-
-            mSortList.add(sortModel);
-        }
-        return mSortList;
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_stone_list_action, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onClick(View view) {
@@ -168,11 +123,54 @@ public class StoneListAction extends BaseAction implements View.OnClickListener 
             type1.setTextColor(getResources().getColor(R.color.app_stone_actionbar_bg));
             type2.setBackground(null);
             type2.setTextColor(Color.parseColor("#a0a0a0"));
+            loadData(1);
         } else if (view == type2) {
             type2.setBackgroundResource(R.drawable.stone_type);
             type2.setTextColor(getResources().getColor(R.color.app_stone_actionbar_bg));
             type1.setTextColor(Color.parseColor("#a0a0a0"));
             type1.setBackground(null);
+            loadData(2);
         }
+    }
+
+    private void loadData(int cate_id) {
+        processDialog.show();
+        UserApi api = new UserApi();
+        api.getStoneList(cate_id, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                processDialog.dismiss();
+                if (response.optInt("ret") == 0) {
+                    try {
+                        JsonNode node = BaseApi.mapper.readTree(response.optString("result"));
+                        list.removeAll(list);
+                        for (JsonNode item : node) {
+                            SortModel sortModel = BaseApi.mapper.readValue(item.toString(), SortModel.class);
+                            String pinyin = characterParser.getSelling(sortModel.stone_name);
+                            String sortString = pinyin.substring(0, 1).toUpperCase();
+                            // 正则表达式，判断首字母是否是英文字母
+                            if (sortString.matches("[A-Z]")) {
+                                sortModel.sortLetters = sortString.toUpperCase();
+                            } else {
+                                sortModel.sortLetters = "#";
+                            }
+                            list.add(sortModel);
+                        }
+                        Collections.sort(list, pinyinComparator);
+                        adapter.notifyDataSetChanged();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                processDialog.dismiss();
+            }
+        });
     }
 }

@@ -34,4 +34,30 @@ public class UserApi extends BaseApi {
         params.put("status", status);
         get("User", "getorder", params, jsonHttpResponseHandler);
     }
+
+    /**
+     * 获取石头列表
+     *
+     * @param cate_id                 1-大理石； 2-花岗岩
+     * @param jsonHttpResponseHandler
+     */
+    public void getStoneList(int cate_id, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("cate_id", cate_id);
+        get("Data", "stonelist", params, jsonHttpResponseHandler);
+    }
+
+    /**
+     * 获取石头分类下面的列表
+     *
+     * @param stone_id
+     * @param jsonHttpResponseHandler
+     */
+    public void getStoneChildList(int stone_id, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("stone_id", stone_id);
+        get("Data", "getstone", params, jsonHttpResponseHandler);
+    }
+
+
 }

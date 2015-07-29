@@ -55,6 +55,9 @@ public class StoneItemAdapter extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder) view.getTag();
         }
+        StoneItemBean bean = list.get(i);
+        viewHolder.titleTv.setText(bean.my_stone_name);
+        viewHolder.priceTv.setText(bean.price+"");
         return view;
     }
     private static class ViewHolder{

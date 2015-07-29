@@ -27,6 +27,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 public class CarAction extends BaseAction {
 
@@ -62,8 +66,15 @@ public class CarAction extends BaseAction {
         allSeleck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                double price = 0;
                 for (CartGoodsItem info : list) {
                     info.isSelect = b;
+                    price = price + info.num * info.price;
+                }
+                if (b) {
+                    allPrice.setText(price + "￥");
+                } else {
+                    allPrice.setText("0￥");
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -71,34 +82,21 @@ public class CarAction extends BaseAction {
         startOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                ArrayList<CartGoodsItem> tempList = new ArrayList<CartGoodsItem>();
+                for (int i = 0; i < list.size(); i++) {
+                    CartGoodsItem item = list.get(i);
+                    if (item.isSelect) {
+                        tempList.add(item);
+                    }
+                }
                 Intent intent = new Intent();
                 intent.setClass(mActivity, VerifyOrderAction.class);
+                intent.putParcelableArrayListExtra("list", tempList);
                 startActivity(intent);
             }
         });
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_car_action, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -144,7 +142,7 @@ public class CarAction extends BaseAction {
         });
     }
 
-    public void goodsNumOption(final int num,int goods_id) {
+    public void goodsNumOption(final int num, int goods_id) {
 
         int uid = SPUtil.getInt("uid");
         if (uid < 1) {
@@ -168,7 +166,7 @@ public class CarAction extends BaseAction {
         });
     }
 
-    public void deleteGoods(final CartGoodsItem item){
+    public void deleteGoods(final CartGoodsItem item) {
 
         int uid = SPUtil.getInt("uid");
         if (uid < 1) {
@@ -177,17 +175,17 @@ public class CarAction extends BaseAction {
         }
         processDialog.show();
         ShopingApi api = new ShopingApi();
-        api.deleteCartGoods(uid,item.goods_id,new JsonHttpResponseHandler(){
+        api.deleteCartGoods(uid, item.goods_id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 processDialog.dismiss();
-                if(0 == response.optInt("ret")){
+                if (0 == response.optInt("ret")) {
                     ToastUtil.showToast("删除成功");
                     list.remove(item);
                     adapter.notifyDataSetChanged();
 
-                }else{
+                } else {
                     ToastUtil.showToast("删除失败");
                 }
             }

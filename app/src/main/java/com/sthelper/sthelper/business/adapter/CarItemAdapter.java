@@ -10,9 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sthelper.sthelper.R;
-import com.sthelper.sthelper.SApp;
 import com.sthelper.sthelper.bean.CartGoodsItem;
-import com.sthelper.sthelper.bean.GoodsInfo;
 import com.sthelper.sthelper.business.CarAction;
 
 import java.util.ArrayList;
@@ -26,7 +24,6 @@ public class CarItemAdapter extends BaseAdapter {
     private ArrayList<CartGoodsItem> list;
     private CarAction activity;
     private LayoutInflater inflater;
-    private HashMap<Integer, CartGoodsItem> tempMap = new HashMap<Integer, CartGoodsItem>();
 
     public CarItemAdapter(ArrayList<CartGoodsItem> list, CarAction activity) {
         this.list = list;
@@ -37,18 +34,6 @@ public class CarItemAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        tempMap.clear();
-        for (CartGoodsItem info : list) {
-            CartGoodsItem item = new CartGoodsItem();
-            item.price = info.price;
-            item.product_id = info.product_id;
-            item.cate_id = info.cate_id;
-            item.photo = info.photo;
-            item.shop_id = info.shop_id;
-            item.product_name = info.product_name;
-            item.num = info.num;
-            tempMap.put(info.product_id, item);
-        }
 
         return list.size();
     }
@@ -85,8 +70,8 @@ public class CarItemAdapter extends BaseAdapter {
 
 
         viewHolder.nameTv.setText(bean.product_name);
-        viewHolder.priceTv.setText("￥" + (tempMap.get(bean.product_id).num * bean.price));
-        viewHolder.numTv.setText(tempMap.get(bean.product_id).num + "");
+        viewHolder.priceTv.setText("￥" + bean.num * bean.price);
+        viewHolder.numTv.setText(bean.num + "");
         viewHolder.zjImg.setOnClickListener(new NumOptionListener(viewHolder, bean));
         viewHolder.jsImg.setOnClickListener(new NumOptionListener(viewHolder, bean));
         viewHolder.delImg.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +105,7 @@ public class CarItemAdapter extends BaseAdapter {
         @Override
         public void onClick(View view) {
             int product_id = info.product_id;
-            int num = tempMap.get(product_id).num;
+            int num = info.num;
             if (view.getId() == R.id.car_goods_add_img) {//增加
                 num++;
             } else if (view.getId() == R.id.car_goods_del_img) {//减少
@@ -129,10 +114,9 @@ public class CarItemAdapter extends BaseAdapter {
 
             }
             info.num = num;
-            tempMap.put(product_id, info);
             viewHolder.numTv.setText(num + "");
             viewHolder.priceTv.setText("￥" + (num * info.price) + "");
-            activity.goodsNumOption(num,product_id);
+            activity.goodsNumOption(num, product_id);
         }
     }
 
@@ -153,7 +137,7 @@ public class CarItemAdapter extends BaseAdapter {
             double totalPrice = 0;
             for (CartGoodsItem item : list) {
                 if (item.isSelect) {
-                    int num = tempMap.get(item.product_id).num;
+                    int num = item.num;
                     totalPrice = totalPrice + num * item.price;
                 }
             }

@@ -53,6 +53,15 @@ public class AddressManagerAction extends BaseAction {
         adapter = new AddressListAdapter(list, this);
         listView.setAdapter(adapter);
         listView.setOnItemLongClickListener(onItemLongClickListener);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Address address = list.get(i);
+                Intent intent = new Intent();
+                intent.putExtra("bean",address);
+                setResult(RESULT_OK,intent);
+            }
+        });
     }
 
     private AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {

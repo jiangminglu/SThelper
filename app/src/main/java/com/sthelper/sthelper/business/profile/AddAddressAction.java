@@ -25,7 +25,7 @@ public class AddAddressAction extends BaseAction {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address_action);
         initActionBar("添加收餐人信息");
-        bean = (Address) getIntent().getSerializableExtra("bean");
+        bean = getIntent().getParcelableExtra("bean");
         init();
     }
 

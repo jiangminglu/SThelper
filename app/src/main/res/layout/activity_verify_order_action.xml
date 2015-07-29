@@ -11,13 +11,13 @@
         >
 
         <TextView
+            android:id="@+id/add_address"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:gravity="center"
+            android:text="添加地址"
             android:textColor="#000000"
             android:textSize="18sp"
-            android:text="添加地址"
-            android:id="@+id/add_address"
-            android:gravity="center"
             android:visibility="gone"
 
             />
@@ -161,12 +161,13 @@
                 />
 
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
-                android:text="￥5"
+                android:text="0￥"
                 android:textColor="@color/app_default_actionbar_bg"
                 />
 
