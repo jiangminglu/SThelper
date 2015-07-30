@@ -84,6 +84,7 @@ public class StoneItemListAction extends BaseAction {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent = new Intent();
             intent.setClass(mActivity, StoneInfoAction.class);
+            intent.putExtra("bean",list.get(i));
             startActivity(intent);
         }
     };
