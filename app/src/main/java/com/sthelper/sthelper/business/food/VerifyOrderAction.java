@@ -24,6 +24,7 @@ import com.sthelper.sthelper.bean.CartGoodsItem;
 import com.sthelper.sthelper.business.BaseAction;
 import com.sthelper.sthelper.business.profile.AddAddressAction;
 import com.sthelper.sthelper.business.profile.AddressManagerAction;
+import com.sthelper.sthelper.util.Config;
 import com.sthelper.sthelper.util.PayResult;
 import com.sthelper.sthelper.util.SPUtil;
 import com.sthelper.sthelper.util.SignUtils;
@@ -43,15 +44,6 @@ import java.util.Random;
 
 public class VerifyOrderAction extends BaseAction {
 
-
-    //商户PID
-    public static final String PARTNER = "";
-    //商户收款账号
-    public static final String SELLER = "";
-    //商户私钥，pkcs8格式
-    public static final String RSA_PRIVATE = "";
-    //支付宝公钥
-    public static final String RSA_PUBLIC = "";
 
     private static final int SDK_PAY_FLAG = 1;
 
@@ -95,7 +87,7 @@ public class VerifyOrderAction extends BaseAction {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(mActivity, AddressManagerAction.class);
-                startActivityForResult(intent,1024);
+                startActivityForResult(intent, 1024);
             }
         });
     }
@@ -104,7 +96,7 @@ public class VerifyOrderAction extends BaseAction {
 
         StringBuffer stringBuffer = new StringBuffer();
         int totalNum = 0;
-        double totalPrice = 0;
+        totalPrice = 0;
         for (int i = 0; i < list.size(); i++) {
             CartGoodsItem info = list.get(i);
             stringBuffer.append(info.product_id + ":" + info.num);
@@ -244,7 +236,7 @@ public class VerifyOrderAction extends BaseAction {
                 if (0 == response.optInt("ret")) {
                     JSONObject result = response.optJSONObject("result");
                     order_id = result.optString("order_id");
-//                    pay();
+                    pay("购买的商品", 0.01);
                 } else {
                     ToastUtil.showToast(response.optString("error"));
                 }
@@ -262,9 +254,9 @@ public class VerifyOrderAction extends BaseAction {
     /**
      * 支付宝支付
      */
-    private void pay() {
+    private void pay(String desc, double price) {
         // 订单
-        String orderInfo = getOrderInfo("测试的商品", "该测试商品的详细描述", "0.01");
+        String orderInfo = getOrderInfo("水头商品", desc, price + "");
 
         // 对订单做RSA 签名
         String sign = sign(orderInfo);
@@ -305,10 +297,10 @@ public class VerifyOrderAction extends BaseAction {
      */
     public String getOrderInfo(String subject, String body, String price) {
         // 签约合作者身份ID
-        String orderInfo = "partner=" + "\"" + PARTNER + "\"";
+        String orderInfo = "partner=" + "\"" + Config.PARTNER + "\"";
 
         // 签约卖家支付宝账号
-        orderInfo += "&seller_id=" + "\"" + SELLER + "\"";
+        orderInfo += "&seller_id=" + "\"" + Config.SELLER + "\"";
 
         // 商户网站唯一订单号
         orderInfo += "&out_trade_no=" + "\"" + getOutTradeNo() + "\"";
@@ -375,7 +367,7 @@ public class VerifyOrderAction extends BaseAction {
      * @param content 待签名订单信息
      */
     public String sign(String content) {
-        return SignUtils.sign(content, RSA_PRIVATE);
+        return SignUtils.sign(content, Config.RSA_PRIVATE);
     }
 
     /**
@@ -400,6 +392,8 @@ public class VerifyOrderAction extends BaseAction {
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(mActivity, "支付成功",
                                 Toast.LENGTH_SHORT).show();
+                        changeOrder(order_id);
+
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
@@ -430,8 +424,8 @@ public class VerifyOrderAction extends BaseAction {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            if(requestCode == 1024){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1024) {
                 address = data.getParcelableExtra("bean");
                 TextView nameTv = (TextView) addressLayout.findViewById(R.id.address_item_name);
                 TextView telTv = (TextView) addressLayout.findViewById(R.id.address_item_tel);
@@ -439,5 +433,27 @@ public class VerifyOrderAction extends BaseAction {
                 telTv.setText(address.mobile);
             }
         }
+    }
+
+    private void changeOrder(String order_id) {
+        int uid = SPUtil.getInt("uid");
+        if (uid < 1) return;
+        ShopingApi api = new ShopingApi();
+        api.changeOrderStatus(uid, order_id, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if(0== response.optInt("ret")){
+                    finish();
+                }else{
+                    ToastUtil.showToast(response.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
     }
 }

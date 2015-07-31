@@ -59,5 +59,14 @@ public class UserApi extends BaseApi {
         get("Data", "getstone", params, jsonHttpResponseHandler);
     }
 
+    /**
+     * 发布石头
+     *
+     * @param params
+     * @param jsonHttpResponseHandler
+     */
+    public void publishStone(RequestParams params, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        postStone(params, jsonHttpResponseHandler);
+    }
 
 }

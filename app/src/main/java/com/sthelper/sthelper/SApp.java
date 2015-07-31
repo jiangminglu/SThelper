@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.os.Environment;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -16,6 +17,7 @@ import com.sthelper.sthelper.bean.Business;
 import com.sthelper.sthelper.bean.GoodsInfo;
 import com.sthelper.sthelper.bean.UserInfo;
 
+import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -30,15 +32,35 @@ public class SApp extends Application {
     public Business business;
     private static SApp app;
     public SharedPreferences preferences;
+    public String rootPath, cachePath, imagePath;
     public static final String IMG_URL = "http://120.26.49.208/attachs/";
+
     @Override
     public void onCreate() {
         super.onCreate();
         app = this;
+        rootPath = Environment.getExternalStorageDirectory() + "/sthelper";
+        cachePath = rootPath + "/cache";
+        imagePath = rootPath + "/img";
+        initDir();
         initScreenWH();
         initImageLoader();
-        preferences = getApplicationContext().getSharedPreferences("sthelper",
-                Activity.MODE_PRIVATE);
+        preferences = getApplicationContext().getSharedPreferences("sthelper", Activity.MODE_PRIVATE);
+    }
+
+    private void initDir() {
+        File file = new File(rootPath);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        file = new File(cachePath);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        file = new File(imagePath);
+        if (!file.exists()) {
+            file.mkdir();
+        }
     }
 
     public static SApp getInstance() {
@@ -54,6 +76,7 @@ public class SApp extends Application {
         this.screenW = localPoint.x;
         this.density = getResources().getDisplayMetrics().density;
     }
+
     public void initImageLoader() {
         ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(getApplicationContext());
         config.threadPriority(Thread.NORM_PRIORITY - 2);

@@ -31,6 +31,7 @@ import com.sthelper.sthelper.bean.GoodsItemBean;
 import com.sthelper.sthelper.business.BaseAction;
 import com.sthelper.sthelper.business.CarAction;
 import com.sthelper.sthelper.business.adapter.GoodsItemAdapter;
+import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.util.ImageLoadUtil;
 import com.sthelper.sthelper.util.SPUtil;
 import com.sthelper.sthelper.util.ToastUtil;
@@ -43,6 +44,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sthelper.sthelper.R.id.indicator;
 import static com.sthelper.sthelper.R.id.none;
 import static com.sthelper.sthelper.R.id.store_rating;
 
@@ -142,7 +144,7 @@ public class TakingOrderAction extends BaseAction {
         storeRate.setRating(bean.score);
     }
 
-    private void initDialog(GoodsInfo info) {
+    private void initDialog(final GoodsInfo info) {
         detailDialog = new Dialog(mActivity, R.style.full_dialog);
         View view = getLayoutInflater().inflate(R.layout.goods_item_detail_layout, null);
         detailDialog.setContentView(view);
@@ -152,6 +154,37 @@ public class TakingOrderAction extends BaseAction {
         itemNameTv.setText(info.product_name);
         itemContentTv.setText(info.instructions);
         ImageLoadUtil.getCommonImage(img, SApp.IMG_URL + info.photo);
+
+        ImageView favImg = (ImageView) view.findViewById(R.id.goods_item_favorite_img);
+        favImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int uid = SPUtil.getInt("uid");
+                if (uid < 1) {
+                    Intent intent = new Intent();
+                    intent.setClass(mActivity, LoginAction.class);
+                    startActivity(intent);
+                    return;
+                }
+                ShopingApi api = new ShopingApi();
+                api.addFav(uid, info.product_id, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        if (0 == response.optInt("ret")) {
+                            ToastUtil.showToast("收藏成功");
+                        } else {
+                            ToastUtil.showToast(response.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                    }
+                });
+            }
+        });
 
     }
 

@@ -5,4 +5,5 @@
     <dimen name="navigation_drawer_width">240.0dip</dimen>
     <dimen name="shadow_width">0.0dip</dimen>
     <dimen name="food_store_h">200dp</dimen>
+    <dimen name="publish_item_img_side">90dp</dimen>
 </resources>

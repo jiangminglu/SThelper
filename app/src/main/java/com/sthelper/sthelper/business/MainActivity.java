@@ -22,6 +22,7 @@ import com.sthelper.sthelper.business.profile.AccountAction;
 import com.sthelper.sthelper.business.profile.MyFavAction;
 import com.sthelper.sthelper.business.profile.MyOrderListAction;
 import com.sthelper.sthelper.business.stone.StoneListAction;
+import com.sthelper.sthelper.util.SPUtil;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -86,6 +87,13 @@ public class MainActivity extends BaseAction {
                     MainActivity.this.startActivity(localIntent);
                     break;
                 case R.id.menu_fav:
+                    int uid = SPUtil.getInt("uid");
+                    if (uid < 1) {
+                        localIntent = new Intent();
+                        localIntent.setClass(MainActivity.this, LoginAction.class);
+                        MainActivity.this.startActivity(localIntent);
+                        break;
+                    }
                     localIntent = new Intent();
                     localIntent.setClass(MainActivity.this, MyFavAction.class);
                     MainActivity.this.startActivity(localIntent);
