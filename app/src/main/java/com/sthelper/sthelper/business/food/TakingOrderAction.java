@@ -154,35 +154,44 @@ public class TakingOrderAction extends BaseAction {
         itemNameTv.setText(info.product_name);
         itemContentTv.setText(info.instructions);
         ImageLoadUtil.getCommonImage(img, SApp.IMG_URL + info.photo);
+        final ImageView favImg = (ImageView) view.findViewById(R.id.goods_item_favorite_img);
 
-        ImageView favImg = (ImageView) view.findViewById(R.id.goods_item_favorite_img);
+        final int uid = SPUtil.getInt("uid");
+        if (uid < 1) {
+            Intent intent = new Intent();
+            intent.setClass(mActivity, LoginAction.class);
+            startActivity(intent);
+            return;
+        }
+        ShopingApi api = new ShopingApi();
+        api.isFavGoods(uid, info.product_id, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (0 == response.optInt("ret")) {
+                    favImg.setTag("true");
+                    favImg.setImageResource(R.mipmap.icon_favorited);
+
+                } else if (1 == response.optInt("ret")) {
+                    favImg.setTag("false");
+                    favImg.setImageResource(R.mipmap.icon_favorite);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
         favImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int uid = SPUtil.getInt("uid");
-                if (uid < 1) {
-                    Intent intent = new Intent();
-                    intent.setClass(mActivity, LoginAction.class);
-                    startActivity(intent);
-                    return;
+                String tag = favImg.getTag()+"";
+                if("true".equals(tag)){
+                    delFav(uid, info.product_id,favImg);
+                }else{
+                    addFav(uid, info.product_id,favImg);
                 }
-                ShopingApi api = new ShopingApi();
-                api.addFav(uid, info.product_id, new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        if (0 == response.optInt("ret")) {
-                            ToastUtil.showToast("收藏成功");
-                        } else {
-                            ToastUtil.showToast(response.toString());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        super.onFailure(statusCode, headers, throwable, errorResponse);
-                    }
-                });
             }
         });
 
@@ -358,6 +367,48 @@ public class TakingOrderAction extends BaseAction {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 processDialog.dismiss();
+            }
+        });
+    }
+
+    private void addFav(int uid, int goods_id,final ImageView img) {
+        ShopingApi api = new ShopingApi();
+        api.addFav(uid, goods_id, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if(response.optInt("ret")==0){
+                    ToastUtil.showToast("添加收藏成功");
+                    img.setImageResource(R.mipmap.icon_favorited);
+                    img.setTag("true");
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
+
+    private void delFav(int uid, int goods_id,final ImageView img) {
+        ShopingApi api = new ShopingApi();
+        api.delFavGoods(uid, goods_id, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if(response.optInt("ret")==0){
+                    ToastUtil.showToast("删除收藏成功");
+                    img.setImageResource(R.mipmap.icon_favorite);
+                    img.setTag("false");
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
     }

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -21,6 +22,7 @@ import com.sthelper.sthelper.bean.FoodStoreBean;
 import com.sthelper.sthelper.business.BaseAction;
 import com.sthelper.sthelper.business.CarAction;
 import com.sthelper.sthelper.business.adapter.FoodStoreListAdapter;
+import com.sthelper.sthelper.business.profile.MyOrderListAction;
 import com.sthelper.sthelper.util.ToastUtil;
 import com.sthelper.sthelper.view.SListView;
 
@@ -84,6 +86,7 @@ public class FoodStoreListAction extends BaseAction {
         }
         findViewById(R.id.food_store_all_type).setOnClickListener(onClickListener);
         findViewById(R.id.goto_car).setOnClickListener(onClickListener);
+        findViewById(R.id.goto_order).setOnClickListener(onClickListener);
     }
 
     private void initTypePop() {
@@ -135,7 +138,7 @@ public class FoodStoreListAction extends BaseAction {
                         if (result.isArray()) {
                             Gson gson = new Gson();
                             for (JsonNode item : result) {
-                                FoodStoreBean bean = gson.fromJson(item.toString(),FoodStoreBean.class);
+                                FoodStoreBean bean = gson.fromJson(item.toString(), FoodStoreBean.class);
                                 list.add(bean);
                             }
                             adapter.notifyDataSetChanged();
@@ -196,6 +199,10 @@ public class FoodStoreListAction extends BaseAction {
                 Intent intent = new Intent();
                 intent.setClass(mActivity, CarAction.class);
                 startActivity(intent);
+            } else if (view.getId() == R.id.goto_order) {
+                Intent intent = new Intent();
+                intent.setClass(mActivity, MyOrderListAction.class);
+                startActivity(intent);
             }
         }
     };
@@ -226,7 +233,6 @@ public class FoodStoreListAction extends BaseAction {
 
     @Override
     protected void onDestroy() {
-
 
 
         super.onDestroy();

@@ -21,7 +21,7 @@ public class MyOrderListAdapter extends BaseAdapter {
     private int status;
     private Context context;
 
-    public MyOrderListAdapter(int status,ArrayList<OrderItem> list, Context context) {
+    public MyOrderListAdapter(int status, ArrayList<OrderItem> list, Context context) {
         this.list = list;
         this.status = status;
         this.context = context;
@@ -59,20 +59,20 @@ public class MyOrderListAdapter extends BaseAdapter {
         }
         OrderItem order = list.get(i);
         holder.timeTv.setText(order.create_time);
-        holder.orderIdTv.setText("订单编号: "+order.order_id + "");
+        holder.orderIdTv.setText("订单编号: " + order.order_id + "");
         holder.addressTv.setText("四川成都");
-        String text;
+        String text="";
 //        0表示没付款,1付款了,2配送中,3完成
-        if(status == 0){
-            text= "待付款";
-        }else if(status == 1){
-            text= "已付款";
-        }else if(status == 2){
-            text= "配送中";
-        }else if(status == 1){
-            text= "完成";
+        if (status == 0) {
+            text = "待付款";
+        } else if (status == 1) {
+            text = "已付款";
+        } else if (status == 2) {
+            text = "配送中";
+        } else if (status == 1) {
+            text = "完成";
         }
-        holder.statusTv.setText("未支付");
+        holder.statusTv.setText(text);
         holder.totalPriceTv.setText(order.total_price + "￥");
         return view;
     }
