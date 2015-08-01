@@ -68,4 +68,6 @@
     <string name="title_activity_my_fav_action">MyFavAction</string>
     <string name="title_activity_car_action">CarAction</string>
     <string name="title_activity_verify_order_action">VerifyOrderAction</string>
+    <string name="title_activity_my_profile_action">MyProfileAction</string>
+    <string name="title_activity_edit_name_action">EditNameAction</string>
 </resources>

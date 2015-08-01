@@ -60,6 +60,7 @@ public class AddressManagerAction extends BaseAction {
                 Intent intent = new Intent();
                 intent.putExtra("bean",address);
                 setResult(RESULT_OK,intent);
+                finish();
             }
         });
     }

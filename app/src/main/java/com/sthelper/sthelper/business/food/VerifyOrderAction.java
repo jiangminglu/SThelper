@@ -67,6 +67,7 @@ public class VerifyOrderAction extends BaseAction {
         setContentView(R.layout.activity_verify_order_action);
         initActionBar("确认订单");
         init();
+        getAddressListData();
     }
 
     private void init() {
@@ -127,11 +128,6 @@ public class VerifyOrderAction extends BaseAction {
         getAddressListData();
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        getAddressListData();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

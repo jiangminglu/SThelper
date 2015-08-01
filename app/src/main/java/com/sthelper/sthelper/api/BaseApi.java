@@ -55,8 +55,13 @@ public class BaseApi {
         if (token != null && !"".equals(token)) {
             params.put("token", token);
         }
-//        params.put("sig", "123456789987654321");
-//        params.put("t", "2015");
-        client.post(MAIN_URL+"?m=User&a=postmsg&g=api&t=2015&sig=123456789987654321", params, res);
+        client.post(MAIN_URL + "?m=User&a=postmsg&g=api&t=2015&sig=123456789987654321", params, res);
+    }
+    public static void postAvatar(RequestParams params, JsonHttpResponseHandler res) {
+        String token = SPUtil.getString("token");
+        if (token != null && !"".equals(token)) {
+            params.put("token", token);
+        }
+        client.post(MAIN_URL+"?m=User&a=useredit&g=api&t=2015&sig=123456789987654321", params, res);
     }
 }

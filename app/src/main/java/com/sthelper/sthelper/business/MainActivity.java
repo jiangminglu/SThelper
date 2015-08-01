@@ -1,10 +1,14 @@
 package com.sthelper.sthelper.business;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.capricorn.ArcMenu;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,12 +25,16 @@ import com.sthelper.sthelper.business.food.FoodStoreListAction;
 import com.sthelper.sthelper.business.profile.AccountAction;
 import com.sthelper.sthelper.business.profile.MyFavAction;
 import com.sthelper.sthelper.business.profile.MyOrderListAction;
+import com.sthelper.sthelper.business.profile.MyProfileAction;
 import com.sthelper.sthelper.business.stone.StoneListAction;
+import com.sthelper.sthelper.util.ImageLoadUtil;
 import com.sthelper.sthelper.util.SPUtil;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class MainActivity extends BaseAction {
@@ -54,6 +62,9 @@ public class MainActivity extends BaseAction {
         this.menu.setMenu(this.slidLayout);
         init();
 
+        savaAppLogo();
+
+
     }
 
     @Override
@@ -62,13 +73,33 @@ public class MainActivity extends BaseAction {
         getBusinessList();
     }
 
+    private void savaAppLogo() {
+        Bitmap photo = BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo);
+        File f = new File(app.appLogo);
+        try {
+            if (f.exists()) return;
+            f.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(f);
+            photo.compress(Bitmap.CompressFormat.JPEG, 80, fOut);
+            fOut.flush();
+            fOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         public void onClick(View paramAnonymousView) {
             int id = paramAnonymousView.getId();
+            int uid = SPUtil.getInt("uid");
             switch (id) {
                 case R.id.menu_user:
                     Intent localIntent = new Intent();
-                    localIntent.setClass(MainActivity.this, LoginAction.class);
+                    if (uid < 1) {
+                        localIntent.setClass(MainActivity.this, LoginAction.class);
+                    } else {
+                        localIntent.setClass(MainActivity.this, MyProfileAction.class);
+                    }
                     MainActivity.this.startActivity(localIntent);
                     break;
                 case R.id.menu_order:
@@ -87,7 +118,7 @@ public class MainActivity extends BaseAction {
                     MainActivity.this.startActivity(localIntent);
                     break;
                 case R.id.menu_fav:
-                    int uid = SPUtil.getInt("uid");
+
                     if (uid < 1) {
                         localIntent = new Intent();
                         localIntent.setClass(MainActivity.this, LoginAction.class);
@@ -172,6 +203,14 @@ public class MainActivity extends BaseAction {
         this.slidLayout.findViewById(R.id.menu_feedback).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_order).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_fav).setOnClickListener(this.onClickListener);
+
+        TextView textView = (TextView) findViewById(R.id.user_option);
+        int uid = SPUtil.getInt("uid");
+        if (uid > 0) {
+            textView.setText("用户中心");
+        } else {
+            textView.setText("用户登录");
+        }
     }
 
     private void getBusinessList() {

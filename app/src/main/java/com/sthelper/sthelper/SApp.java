@@ -32,7 +32,7 @@ public class SApp extends Application {
     public Business business;
     private static SApp app;
     public SharedPreferences preferences;
-    public String rootPath, cachePath, imagePath;
+    public String rootPath, cachePath, imagePath,appLogo;
     public static final String IMG_URL = "http://120.26.49.208/attachs/";
 
     @Override
@@ -42,6 +42,7 @@ public class SApp extends Application {
         rootPath = Environment.getExternalStorageDirectory() + "/sthelper";
         cachePath = rootPath + "/cache";
         imagePath = rootPath + "/img";
+        appLogo = app.imagePath + "/" + "app_logo.jpg";
         initDir();
         initScreenWH();
         initImageLoader();

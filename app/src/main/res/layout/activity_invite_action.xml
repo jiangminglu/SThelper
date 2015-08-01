@@ -27,6 +27,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/share_wx_friend"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -48,6 +49,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/share_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -69,6 +71,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/share_qq"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -99,6 +102,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/share_wx_post"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -120,6 +124,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/share_weibo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

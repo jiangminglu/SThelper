@@ -69,4 +69,8 @@ public class UserApi extends BaseApi {
         postStone(params, jsonHttpResponseHandler);
     }
 
+    public void editUserInfo(RequestParams params, JsonHttpResponseHandler handler) {
+        postAvatar(params, handler);
+    }
+
 }

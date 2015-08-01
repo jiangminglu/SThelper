@@ -1,139 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.sthelper.sthelper"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          android:versionCode="1"
-          android:versionName="st">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sthelper.sthelper"
+    android:versionCode="1"
+    android:versionName="st" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.touchscreen"
-        android:required="false"/>
+        android:required="false" />
     <uses-feature
         android:name="android.software.leanback"
-        android:required="true"/>
+        android:required="true" />
 
     <application
         android:name=".SApp"
         android:allowBackup="true"
         android:icon="@mipmap/app_logo"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo.NoActionBar">
+        android:theme="@android:style/Theme.Holo.NoActionBar" >
         <activity
             android:name=".business.main.LoadingAction"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".business.auth.LoginAction"
             android:label="@string/title_activity_login_action"
             android:screenOrientation="portrait"
-            android:theme="@style/actionTheme"/>
+            android:theme="@style/actionTheme" />
         <activity
             android:name=".business.auth.RegisterAction"
             android:label="@string/title_activity_register_action"
             android:screenOrientation="portrait"
-            android:theme="@style/actionTheme"/>
+            android:theme="@style/actionTheme" />
         <activity
             android:name=".business.food.FoodStoreListAction"
-            android:label="@string/title_activity_food_store_list_action">
+            android:label="@string/title_activity_food_store_list_action" >
         </activity>
         <activity
             android:name=".business.food.StoreInfoAction"
             android:label="@string/title_activity_store_info_action"
-            android:parentActivityName=".business.BaseAction">
+            android:parentActivityName=".business.BaseAction" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.sthelper.sthelper.business.BaseAction"/>
+                android:value="com.sthelper.sthelper.business.BaseAction" />
         </activity>
         <activity
             android:name=".business.food.TakingOrderAction"
             android:label="@string/title_activity_taking_order_action"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
             android:name=".business.FavorableAction"
             android:label="@string/title_activity_favorable_action"
-            android:parentActivityName=".business.BaseAction">
+            android:parentActivityName=".business.BaseAction" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.sthelper.sthelper.business.BaseAction"/>
+                android:value="com.sthelper.sthelper.business.BaseAction" />
         </activity>
         <activity
             android:name=".business.stone.StoneListAction"
             android:label="@string/title_activity_stone_list_action"
-            android:parentActivityName=".business.BaseAction">
+            android:parentActivityName=".business.BaseAction" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.sthelper.sthelper.business.BaseAction"/>
+                android:value="com.sthelper.sthelper.business.BaseAction" />
         </activity>
         <activity
             android:name=".business.stone.PublishStoneAction"
-            android:label="@string/title_activity_publish_stone_action">
+            android:label="@string/title_activity_publish_stone_action" >
         </activity>
         <activity
             android:name=".business.stone.StoneItemListAction"
-            android:label="@string/title_activity_stone_item_info_action">
+            android:label="@string/title_activity_stone_item_info_action" >
         </activity>
         <activity
             android:name=".business.stone.StoneInfoAction"
-            android:label="@string/title_activity_stone_info_action">
+            android:label="@string/title_activity_stone_info_action" >
         </activity>
         <activity
             android:name=".business.profile.AccountAction"
-            android:label="@string/title_activity_account_action">
+            android:label="@string/title_activity_account_action" >
         </activity>
         <activity
             android:name=".business.AboutAction"
-            android:label="@string/title_activity_about_action">
+            android:label="@string/title_activity_about_action" >
         </activity>
         <activity
             android:name=".business.InviteAction"
-            android:label="@string/title_activity_invite_action">
+            android:label="@string/title_activity_invite_action" >
         </activity>
         <activity
             android:name=".FeedBackAction"
-            android:label="@string/title_activity_feed_back_action">
+            android:label="@string/title_activity_feed_back_action" >
         </activity>
         <activity
             android:name=".business.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".business.profile.AddressManagerAction"
-            android:label="@string/title_activity_address_manager_action">
+            android:label="@string/title_activity_address_manager_action" >
         </activity>
         <activity
             android:name=".business.profile.AddAddressAction"
-            android:label="@string/title_activity_add_address_action">
+            android:label="@string/title_activity_add_address_action" >
         </activity>
         <activity
             android:name=".business.profile.BundleNewTelAction"
-            android:label="@string/title_activity_bundle_new_tel_action">
+            android:label="@string/title_activity_bundle_new_tel_action" >
         </activity>
         <activity
             android:name=".business.profile.MyOrderListAction"
-            android:label="@string/title_activity_my_order_list_action">
+            android:label="@string/title_activity_my_order_list_action" >
         </activity>
         <activity
             android:name=".business.profile.MyFavAction"
             android:label="@string/title_activity_my_fav_action"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".business.CarAction"
-            android:label="@string/title_activity_car_action">
+            android:label="@string/title_activity_car_action" >
         </activity>
         <activity
             android:name=".business.food.VerifyOrderAction"
-            android:label="@string/title_activity_verify_order_action">
+            android:label="@string/title_activity_verify_order_action" >
+        </activity>
+        <activity
+            android:name=".business.profile.MyProfileAction"
+            android:label="@string/title_activity_my_profile_action" >
+        </activity>
+        <activity
+            android:name=".business.profile.EditNameAction"
+            android:label="@string/title_activity_edit_name_action" >
         </activity>
     </application>
 
