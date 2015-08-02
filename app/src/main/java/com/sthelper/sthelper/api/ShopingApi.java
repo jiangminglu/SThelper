@@ -204,6 +204,7 @@ public class ShopingApi extends BaseApi {
 
     /**
      * 商品是否收藏
+     *
      * @param uid
      * @param goods_id
      * @param handler
@@ -214,4 +215,17 @@ public class ShopingApi extends BaseApi {
         params.put("uid", uid);
         get("User", "isfavorgoods", params, handler);
     }
+    /**
+     * 获取店铺详情
+     *
+     * @param shop_id
+     * @param handler
+     */
+    public void getShopInfoById(int shop_id, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("shop_id", shop_id);
+        get("Data", "getshopinfo", params, handler);
+
+    }
+
 }

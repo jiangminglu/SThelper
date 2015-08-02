@@ -14,4 +14,7 @@ public class Config {
     //支付宝公钥
     public static final String RSA_PUBLIC = "";
 
+    public static final String WX_APP_ID = "wx52d72b99db9b8ceb";
+    public static final String WX_APP_SECRET = "4f73154246527fedc5851c652bf1e33e";
+
 }

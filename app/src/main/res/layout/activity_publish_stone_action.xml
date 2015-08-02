@@ -74,6 +74,7 @@
             android:layout_width="160dp"
             android:layout_height="match_parent"
             android:background="@null"
+            android:inputType="numberDecimal"
             android:hint="0.00"
             android:textCursorDrawable="@null"/>
 

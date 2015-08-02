@@ -2,11 +2,12 @@ package com.sthelper.sthelper.business;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.util.ToastUtil;
 import com.tencent.connect.share.QQShare;
@@ -16,6 +17,7 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
 import java.io.File;
+import java.util.List;
 
 public class InviteAction extends BaseAction {
 
@@ -85,8 +87,8 @@ public class InviteAction extends BaseAction {
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_TEXT, "使用水头助手");
         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-        intent.putExtra(Intent.EXTRA_SUBJECT,"使用水头助手");
-        intent.putExtra(Intent.EXTRA_TITLE,"水头助手");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "使用水头助手");
+        intent.putExtra(Intent.EXTRA_TITLE, "水头助手");
         startActivity(intent);
     }
 
@@ -129,7 +131,60 @@ public class InviteAction extends BaseAction {
                 shareToFriend(new File(app.appLogo));
             } else if (view == sharewxpost) {
                 shareToTimeLine(new File(app.appLogo));
+            } else if (view == shareweibo) {
+                sinaShare();
             }
         }
     };
+
+    private void sinaShare() {
+        Intent weiboIntent = new Intent(Intent.ACTION_SEND);
+        weiboIntent.setType("image/*");
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> matches = pm.queryIntentActivities(weiboIntent,
+                PackageManager.MATCH_DEFAULT_ONLY);
+        String packageName = "com.sina.weibo";
+        ResolveInfo info = null;
+        for (ResolveInfo each : matches) {
+            String pkgName = each.activityInfo.applicationInfo.packageName;
+            if (packageName.equals(pkgName)) {
+                info = each;
+                break;
+            }
+        }
+        if (info != null) {
+            weiboIntent.setClassName(packageName, info.activityInfo.name);
+            weiboIntent.putExtra(Intent.EXTRA_TEXT, desc + url);
+            weiboIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(app.appLogo)));
+            startActivity(weiboIntent);
+        } else {
+            ToastUtil.showToast("你没有安装微博客户端");
+        }
+
+    }
+    private void qq() {
+        Intent weiboIntent = new Intent(Intent.ACTION_SEND);
+        weiboIntent.setType("image/*");
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> matches = pm.queryIntentActivities(weiboIntent,
+                PackageManager.MATCH_DEFAULT_ONLY);
+        String packageName = "com.sina.weibo";
+        ResolveInfo info = null;
+        for (ResolveInfo each : matches) {
+            String pkgName = each.activityInfo.applicationInfo.packageName;
+            if (packageName.equals(pkgName)) {
+                info = each;
+                break;
+            }
+        }
+        if (info != null) {
+            weiboIntent.setClassName(packageName, info.activityInfo.name);
+            weiboIntent.putExtra(Intent.EXTRA_TEXT, desc + url);
+            weiboIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(app.appLogo)));
+            startActivity(weiboIntent);
+        } else {
+            ToastUtil.showToast("你没有安装微博客户端");
+        }
+
+    }
 }
