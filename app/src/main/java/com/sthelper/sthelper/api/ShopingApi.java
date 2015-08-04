@@ -215,6 +215,7 @@ public class ShopingApi extends BaseApi {
         params.put("uid", uid);
         get("User", "isfavorgoods", params, handler);
     }
+
     /**
      * 获取店铺详情
      *
@@ -225,6 +226,37 @@ public class ShopingApi extends BaseApi {
         RequestParams params = new RequestParams();
         params.put("shop_id", shop_id);
         get("Data", "getshopinfo", params, handler);
+
+    }
+
+    public void addFavStore(int shop_id, int uid, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("shop_id", shop_id);
+        params.put("uid", uid);
+        get("User", "addfavorshop", params, handler);
+
+    }
+
+    public void delFavStore(int shop_id, int uid, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("shop_id", shop_id);
+        params.put("uid", uid);
+        get("User", "deletefavorshop", params, handler);
+
+    }
+
+    public void getFavStoreList(int uid, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("uid", uid);
+        get("User", "getfavorshop", params, handler);
+
+    }
+
+    public void isFavStore(int uid, int shop_id, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("uid", uid);
+        params.put("shop_id", shop_id);
+        get("User", "isfavorshop", params, handler);
 
     }
 

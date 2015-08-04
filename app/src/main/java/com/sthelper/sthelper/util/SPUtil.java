@@ -32,7 +32,7 @@ public class SPUtil {
 
     public static int getInt(String key) {
         SharedPreferences preferences = SApp.getInstance().preferences;
-        int value = preferences.getInt(key,0);
+        int value = preferences.getInt(key, 0);
         return value;
     }
 
@@ -47,5 +47,13 @@ public class SPUtil {
         boolean value = preferences.getBoolean(key, false);
         return value;
     }
+
+    public static void clean() {
+        SharedPreferences preferences = SApp.getInstance().preferences;
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.commit();
+
+    }
+
 
 }

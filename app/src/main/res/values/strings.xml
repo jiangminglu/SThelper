@@ -70,4 +70,5 @@
     <string name="title_activity_verify_order_action">VerifyOrderAction</string>
     <string name="title_activity_my_profile_action">MyProfileAction</string>
     <string name="title_activity_edit_name_action">EditNameAction</string>
+    <string name="title_activity_forgot_pwd_action">ForgotPwdAction</string>
 </resources>

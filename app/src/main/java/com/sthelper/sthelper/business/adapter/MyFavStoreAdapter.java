@@ -1,6 +1,5 @@
 package com.sthelper.sthelper.business.adapter;
 
-import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,8 +9,8 @@ import android.widget.TextView;
 
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.SApp;
-import com.sthelper.sthelper.api.ShopingApi;
 import com.sthelper.sthelper.bean.FavBean;
+import com.sthelper.sthelper.bean.MyFavShopBean;
 import com.sthelper.sthelper.business.profile.MyFavAction;
 import com.sthelper.sthelper.util.ImageLoadUtil;
 
@@ -20,10 +19,10 @@ import java.util.ArrayList;
 /**
  * Created by luffy on 15/7/15.
  */
-public class MyFavAdapter extends BaseAdapter {
-    private ArrayList<FavBean> list;
+public class MyFavStoreAdapter extends BaseAdapter {
+    private ArrayList<MyFavShopBean> list;
     private MyFavAction activity;
-    public MyFavAdapter(ArrayList<FavBean> list, MyFavAction activity) {
+    public MyFavStoreAdapter(ArrayList<MyFavShopBean> list, MyFavAction activity) {
         this.list = list;
         this.activity = activity;
     }
@@ -57,13 +56,13 @@ public class MyFavAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        final  FavBean bean = list.get(i);
-        ImageLoadUtil.getCommonImage(holder.imageView, SApp.IMG_URL+bean.photo);
-        holder.itemNameTv.setText(bean.product_name);
+        final  MyFavShopBean bean = list.get(i);
+        ImageLoadUtil.getCommonImage(holder.imageView, SApp.IMG_URL+bean.logo);
+        holder.itemNameTv.setText(bean.shop_name);
         holder.delImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.deleteGoods(bean);
+                activity.deleteStore(bean);
             }
         });
         return view;

@@ -143,6 +143,10 @@
             android:name=".business.profile.EditNameAction"
             android:label="@string/title_activity_edit_name_action" >
         </activity>
+        <activity
+            android:name=".business.profile.ForgotPwdAction"
+            android:label="@string/title_activity_forgot_pwd_action" >
+        </activity>
     </application>
 
 </manifest>
