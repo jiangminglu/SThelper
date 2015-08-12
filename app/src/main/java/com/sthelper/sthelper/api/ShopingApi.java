@@ -260,4 +260,28 @@ public class ShopingApi extends BaseApi {
 
     }
 
+    /**
+     * 评价订单
+     *
+     * @param params
+     * @param handler
+     */
+    public void evaluateOrder(RequestParams params, JsonHttpResponseHandler handler) {
+        get("User", "commentorder", params, handler);
+    }
+
+    /**
+     * 删除订单
+     *
+     * @param uid
+     * @param order_id
+     * @param handler
+     */
+    public void deleteOrder(int uid, int order_id, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("uid", uid);
+        params.put("order_id", order_id);
+        get("User", "isfavorshop", params, handler);
+    }
+
 }

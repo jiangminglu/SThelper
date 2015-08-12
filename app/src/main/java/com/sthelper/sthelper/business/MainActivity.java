@@ -129,11 +129,6 @@ public class MainActivity extends BaseAction {
                     localIntent.setClass(MainActivity.this, MyFavAction.class);
                     MainActivity.this.startActivity(localIntent);
                     break;
-                case R.id.menu_feedback:
-                    localIntent = new Intent();
-                    localIntent.setClass(MainActivity.this, FeedBackAction.class);
-                    MainActivity.this.startActivity(localIntent);
-                    break;
                 case 100:
                     goArcMenu.resetBgView();
                     new Handler().postDelayed(new Runnable() {
@@ -182,6 +177,11 @@ public class MainActivity extends BaseAction {
                         }
                     }, 200);
                     break;
+                case R.id.menu_setting:
+                    Intent intent = new Intent();
+                    intent.setClass(mActivity, SettingAction.class);
+                    startActivity(intent);
+                    break;
             }
         }
     };
@@ -200,9 +200,9 @@ public class MainActivity extends BaseAction {
         this.slidLayout.findViewById(R.id.menu_user).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_account).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_invite).setOnClickListener(this.onClickListener);
-        this.slidLayout.findViewById(R.id.menu_feedback).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_order).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_fav).setOnClickListener(this.onClickListener);
+        this.slidLayout.findViewById(R.id.menu_setting).setOnClickListener(this.onClickListener);
 
         TextView textView = (TextView) findViewById(R.id.user_option);
         int uid = SPUtil.getInt("uid");

@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.util.ToastUtil;
 import com.tencent.connect.share.QQShare;
@@ -39,23 +40,30 @@ public class InviteAction extends BaseAction {
         initView();
     }
 
-
     private void qqShare() {
-        final Tencent mTencent = Tencent.createInstance("", this);
-        final Bundle params = new Bundle();
-        params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
-        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, url);
-        params.putString(QQShare.SHARE_TO_QQ_SUMMARY, desc);
-
-        // QQ分享要在主线程做
-        ThreadManager.getMainHandler().post(new Runnable() {
-            @Override
-            public void run() {
-                if (null != mTencent) {
-                    mTencent.shareToQQ(mActivity, params, qqShareListener);
-                }
+        Intent weiboIntent = new Intent(Intent.ACTION_SEND);
+        weiboIntent.setType("text/plain");
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> matches = pm.queryIntentActivities(weiboIntent,
+                PackageManager.MATCH_DEFAULT_ONLY);
+        String packageName = "com.tencent.mobileqq";
+        ResolveInfo info = null;
+        for (ResolveInfo each : matches) {
+            String pkgName = each.activityInfo.applicationInfo.packageName;
+            if (packageName.equals(pkgName)) {
+                info = each;
+                break;
             }
-        });
+        }
+        if (info != null) {
+            weiboIntent.setClassName(packageName, info.activityInfo.name);
+            weiboIntent.putExtra(Intent.EXTRA_TEXT, desc + url);
+            weiboIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(app.appLogo)));
+            startActivity(weiboIntent);
+        } else {
+            ToastUtil.showToast("你没有安装QQ客户端");
+        }
+
     }
 
     IUiListener qqShareListener = new IUiListener() {
@@ -81,14 +89,13 @@ public class InviteAction extends BaseAction {
      */
     private void shareToFriend(File file) {
         Intent intent = new Intent();
-        ComponentName componentName = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI");
-        intent.setComponent(componentName);
-        intent.setAction(Intent.ACTION_SEND);
+        ComponentName comp = new ComponentName("com.tencent.mm",
+                "com.tencent.mm.ui.tools.ShareImgUI");
+        intent.setComponent(comp);
+        intent.setAction("android.intent.action.SEND");
         intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_TEXT, "使用水头助手");
+        intent.putExtra(Intent.EXTRA_TEXT, "我是文字");
         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-        intent.putExtra(Intent.EXTRA_SUBJECT, "使用水头助手");
-        intent.putExtra(Intent.EXTRA_TITLE, "水头助手");
         startActivity(intent);
     }
 
@@ -104,7 +111,7 @@ public class InviteAction extends BaseAction {
 
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-
+        intent.putExtra(Intent.EXTRA_TEXT, "固定字段");
         intent.setType("image/*");
 
         startActivity(intent);
@@ -133,6 +140,8 @@ public class InviteAction extends BaseAction {
                 shareToTimeLine(new File(app.appLogo));
             } else if (view == shareweibo) {
                 sinaShare();
+            } else if (view == shareqq) {
+                qqShare();
             }
         }
     };
@@ -162,6 +171,7 @@ public class InviteAction extends BaseAction {
         }
 
     }
+
     private void qq() {
         Intent weiboIntent = new Intent(Intent.ACTION_SEND);
         weiboIntent.setType("image/*");

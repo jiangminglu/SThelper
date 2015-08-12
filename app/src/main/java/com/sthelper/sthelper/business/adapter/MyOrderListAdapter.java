@@ -53,13 +53,15 @@ public class MyOrderListAdapter extends BaseAdapter {
             holder.addressTv = (TextView) view.findViewById(R.id.order_address_tv);
             holder.statusTv = (TextView) view.findViewById(R.id.order_status_tv);
             holder.totalPriceTv = (TextView) view.findViewById(R.id.order_total_price_tv);
+            holder.storeTv = (TextView) view.findViewById(R.id.order_item_store_name);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
         OrderItem order = list.get(i);
-        holder.timeTv.setText(order.create_time);
-        holder.orderIdTv.setText("订单编号: " + order.order_id + "");
+        holder.storeTv.setText(order.mainInfo.shop_name);
+        holder.timeTv.setText(order.mainInfo.create_time);
+        holder.orderIdTv.setText("订单编号: " + order.mainInfo.order_id + "");
         holder.addressTv.setText("四川成都");
         String text="";
 //        0表示没付款,1付款了,2配送中,3完成
@@ -73,11 +75,11 @@ public class MyOrderListAdapter extends BaseAdapter {
             text = "完成";
         }
         holder.statusTv.setText(text);
-        holder.totalPriceTv.setText(order.total_price + "￥");
+        holder.totalPriceTv.setText(order.mainInfo.total_price + "￥");
         return view;
     }
 
     private static class ViewHolder {
-        public TextView timeTv, orderIdTv, addressTv, statusTv, totalPriceTv;
+        public TextView timeTv, orderIdTv, addressTv, statusTv, totalPriceTv,storeTv;
     }
 }

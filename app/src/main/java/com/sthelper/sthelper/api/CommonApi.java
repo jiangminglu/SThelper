@@ -31,4 +31,27 @@ public class CommonApi extends BaseApi {
         get("User", "areas", params, httpResponseHandler);
     }
 
+    /**
+     * 用户反馈
+     * @param content
+     * @param httpResponseHandler
+     */
+    public void feedback(String content,JsonHttpResponseHandler httpResponseHandler) {
+        RequestParams params = new RequestParams();
+        int uid = SPUtil.getInt("uid");
+        params.put("uid",uid);
+        params.put("content",content);
+        params.put("app_id","1");
+        get("User", "appadvice", params, httpResponseHandler);
+    }
+
+    /**
+     * 检查版本更新
+     * @param httpResponseHandler
+     */
+    public void checkUpdate(JsonHttpResponseHandler httpResponseHandler) {
+        RequestParams params = new RequestParams();
+        get("Data", "versionupdate", params, httpResponseHandler);
+    }
+
 }

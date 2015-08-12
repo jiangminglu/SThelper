@@ -1,10 +1,13 @@
 package com.sthelper.sthelper.business;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -53,34 +56,38 @@ public class OrderFragment extends Fragment {
 
         list = new ArrayList<OrderItem>();
         listView = (ListView) view.findViewById(R.id.order_listview);
-        adapter = new MyOrderListAdapter(status,list, getActivity());
+        listView.setOnItemClickListener(onItemClickListener);
+        adapter = new MyOrderListAdapter(status, list, getActivity());
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), OrderInfoAction.class);
+                intent.putExtra("bean", list.get(i));
+                startActivity(intent);
+            }
+        });
 
     }
 
     private void getOrderList() {
         int uid = SPUtil.getInt("uid");
         UserApi api = new UserApi();
-        api.getUserAddressList(uid,status,new JsonHttpResponseHandler(){
+        api.getUserAddressList(uid, status, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
                     JsonNode node = BaseApi.mapper.readTree(response.toString());
-                    if(0 == node.path("ret").asInt()){
+                    if (0 == node.path("ret").asInt()) {
                         JsonNode result = node.path("result");
-                        for(JsonNode resultItem: result){
+                        for (JsonNode resultItem : result) {
 
-//                            Order order = BaseApi.mapper.readValue(resultItem.toString(),Order.class);
-
-                            JsonNode goodsInfoNode = resultItem.path("goodsInfo");
-                            for(JsonNode item:goodsInfoNode){
-                                OrderItem order = BaseApi.mapper.readValue(item.toString(),OrderItem.class);
-                                list.add(order);
-                            }
+                            OrderItem order = BaseApi.mapper.readValue(resultItem.toString(), OrderItem.class);
+                            list.add(order);
                             adapter.notifyDataSetChanged();
                         }
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -92,6 +99,38 @@ public class OrderFragment extends Fragment {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
+    }
+
+    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            OrderItem item = list.get(i);
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), OrderInfoAction.class);
+            intent.putExtra("bean", item);
+            startActivityForResult(intent,1024);
+        }
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK){
+            OrderItem bean = data.getParcelableExtra("bean");
+            if(bean!=null){
+                OrderItem temp = null;
+                for(OrderItem item:list){
+                    if(item.mainInfo.order_id == bean.mainInfo.order_id){
+                        temp = item;
+                        break;
+                    }
+                }
+                if(temp!=null){
+                    list.remove(temp);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
     }
 }
 

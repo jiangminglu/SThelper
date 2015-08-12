@@ -147,6 +147,18 @@
             android:name=".business.profile.ForgotPwdAction"
             android:label="@string/title_activity_forgot_pwd_action" >
         </activity>
+        <activity
+            android:name=".business.SettingAction"
+            android:label="@string/title_activity_setting_action" >
+        </activity>
+        <activity
+            android:name=".business.OrderInfoAction"
+            android:label="@string/title_activity_order_info_action" >
+        </activity>
+        <activity
+            android:name=".business.profile.EvaluateOrderAction"
+            android:label="@string/title_activity_evaluate_order_action" >
+        </activity>
     </application>
 
 </manifest>
