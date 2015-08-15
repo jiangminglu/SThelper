@@ -88,7 +88,7 @@
             android:label="@string/title_activity_stone_info_action" >
         </activity>
         <activity
-            android:name=".business.profile.AccountAction"
+            android:name=".business.profile.MyAccountIDAction"
             android:label="@string/title_activity_account_action" >
         </activity>
         <activity
@@ -158,6 +158,14 @@
         <activity
             android:name=".business.profile.EvaluateOrderAction"
             android:label="@string/title_activity_evaluate_order_action" >
+        </activity>
+        <activity
+            android:name=".business.food.OpenStoreAction"
+            android:label="@string/title_activity_open_store_action" >
+        </activity>
+        <activity
+            android:name=".business.profile.MyAccountAction"
+            android:label="@string/title_activity_my_account_action" >
         </activity>
     </application>
 

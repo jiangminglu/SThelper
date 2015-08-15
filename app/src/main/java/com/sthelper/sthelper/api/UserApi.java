@@ -73,4 +73,16 @@ public class UserApi extends BaseApi {
         postAvatar(params, handler);
     }
 
+    /**
+     * 获取用户最近一个月账单
+     */
+    public void getUserLatelyOrders(int uid, int month, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("uid", uid);
+        if (month == 1)
+            params.put("month", month);
+        get("User", "getamonth", params, handler);
+
+    }
+
 }

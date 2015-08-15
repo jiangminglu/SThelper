@@ -158,9 +158,6 @@ public class TakingOrderAction extends BaseAction {
 
         final int uid = SPUtil.getInt("uid");
         if (uid < 1) {
-            Intent intent = new Intent();
-            intent.setClass(mActivity, LoginAction.class);
-            startActivity(intent);
             return;
         }
         ShopingApi api = new ShopingApi();
@@ -186,11 +183,18 @@ public class TakingOrderAction extends BaseAction {
         favImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String tag = favImg.getTag()+"";
-                if("true".equals(tag)){
-                    delFav(uid, info.product_id,favImg);
-                }else{
-                    addFav(uid, info.product_id,favImg);
+                if (uid < 1) {
+                    Intent intent = new Intent();
+                    intent.setClass(mActivity, LoginAction.class);
+                    startActivity(intent);
+                    return;
+                }
+
+                String tag = favImg.getTag() + "";
+                if ("true".equals(tag)) {
+                    delFav(uid, info.product_id, favImg);
+                } else {
+                    addFav(uid, info.product_id, favImg);
                 }
             }
         });
@@ -279,6 +283,7 @@ public class TakingOrderAction extends BaseAction {
         @Override
         public void onClick(View view) {
 
+
             int count = storeGoodsListContent.getChildCount();
             for (int i = 0; i < count; i++) {
                 TextView item = (TextView) storeGoodsListContent.getChildAt(i);
@@ -323,7 +328,9 @@ public class TakingOrderAction extends BaseAction {
     private void addGoods2cart(final GoodsInfo goodsInfo) {
         int uid = SPUtil.getInt("uid");
         if (uid < 1) {
-            ToastUtil.showToast("请先登录");
+            Intent intent = new Intent();
+            intent.setClass(mActivity, LoginAction.class);
+            startActivity(intent);
             return;
         }
         processDialog.show();
@@ -371,13 +378,13 @@ public class TakingOrderAction extends BaseAction {
         });
     }
 
-    private void addFav(int uid, int goods_id,final ImageView img) {
+    private void addFav(int uid, int goods_id, final ImageView img) {
         ShopingApi api = new ShopingApi();
         api.addFav(uid, goods_id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                if(response.optInt("ret")==0){
+                if (response.optInt("ret") == 0) {
                     ToastUtil.showToast("添加收藏成功");
                     img.setImageResource(R.mipmap.icon_favorited);
                     img.setTag("true");
@@ -392,13 +399,13 @@ public class TakingOrderAction extends BaseAction {
         });
     }
 
-    private void delFav(int uid, int goods_id,final ImageView img) {
+    private void delFav(int uid, int goods_id, final ImageView img) {
         ShopingApi api = new ShopingApi();
         api.delFavGoods(uid, goods_id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                if(response.optInt("ret")==0){
+                if (response.optInt("ret") == 0) {
                     ToastUtil.showToast("删除收藏成功");
                     img.setImageResource(R.mipmap.icon_favorite);
                     img.setTag("false");

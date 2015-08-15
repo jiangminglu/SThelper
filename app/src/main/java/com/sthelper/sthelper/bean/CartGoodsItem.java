@@ -9,33 +9,35 @@ import android.os.Parcelable;
  */
 public class CartGoodsItem implements Parcelable {
 
+
     /**
      * month_num : 0
-     * shop_id : 2
-     * product_id : 64
-     * record_time : 2015-07-27 22:37:48
+     * record_time : 2015-08-14 15:15:35
+     * product_id : 138
+     * shop_id : 1
      * sold_num : 0
-     * create_ip : 218.17.230.131
-     * product_name : 阿武
-     * cate_id : 25
-     * photo : 2015/07/25/55b313df3122a.jpg
-     * shop_name : 吴大总管
-     * record_id : 63
+     * create_ip : 218.17.230.134
+     * product_name : 大
+     * cate_id : 42
+     * photo : 2015/08/13/55cbfb01d864f.png
+     * shop_name : 杨小贤
+     * record_id : 90
      * record_ip : null
-     * is_new : 0
      * num : 2
+     * is_new : 0
      * price : 1.00
-     * goods_id : 64
-     * create_time : 1437799394
-     * is_hot : 0
+     * goods_id : 138
+     * freight : 0
+     * create_time : 1439431430
      * is_tuijian : 0
-     * user_id : 6
+     * is_hot : 0
      * closed : 0
+     * user_id : 6
      */
     public int month_num;
-    public int shop_id;
-    public int product_id;
     public String record_time;
+    public int product_id;
+    public int shop_id;
     public int sold_num;
     public String create_ip;
     public String product_name;
@@ -44,15 +46,16 @@ public class CartGoodsItem implements Parcelable {
     public String shop_name;
     public int record_id;
     public String record_ip;
-    public int is_new;
     public int num;
-    public double price;
+    public int is_new;
+    public float price;
     public int goods_id;
+    public String freight;
     public String create_time;
-    public int is_hot;
     public int is_tuijian;
-    public int user_id;
+    public int is_hot;
     public int closed;
+    public int user_id;
     public boolean isSelect;
 
     @Override
@@ -63,9 +66,9 @@ public class CartGoodsItem implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.month_num);
-        dest.writeInt(this.shop_id);
-        dest.writeInt(this.product_id);
         dest.writeString(this.record_time);
+        dest.writeInt(this.product_id);
+        dest.writeInt(this.shop_id);
         dest.writeInt(this.sold_num);
         dest.writeString(this.create_ip);
         dest.writeString(this.product_name);
@@ -74,15 +77,16 @@ public class CartGoodsItem implements Parcelable {
         dest.writeString(this.shop_name);
         dest.writeInt(this.record_id);
         dest.writeString(this.record_ip);
-        dest.writeInt(this.is_new);
         dest.writeInt(this.num);
-        dest.writeDouble(this.price);
+        dest.writeInt(this.is_new);
+        dest.writeFloat(this.price);
         dest.writeInt(this.goods_id);
+        dest.writeString(this.freight);
         dest.writeString(this.create_time);
-        dest.writeInt(this.is_hot);
         dest.writeInt(this.is_tuijian);
-        dest.writeInt(this.user_id);
+        dest.writeInt(this.is_hot);
         dest.writeInt(this.closed);
+        dest.writeInt(this.user_id);
         dest.writeByte(isSelect ? (byte) 1 : (byte) 0);
     }
 
@@ -91,9 +95,9 @@ public class CartGoodsItem implements Parcelable {
 
     protected CartGoodsItem(Parcel in) {
         this.month_num = in.readInt();
-        this.shop_id = in.readInt();
-        this.product_id = in.readInt();
         this.record_time = in.readString();
+        this.product_id = in.readInt();
+        this.shop_id = in.readInt();
         this.sold_num = in.readInt();
         this.create_ip = in.readString();
         this.product_name = in.readString();
@@ -102,15 +106,16 @@ public class CartGoodsItem implements Parcelable {
         this.shop_name = in.readString();
         this.record_id = in.readInt();
         this.record_ip = in.readString();
-        this.is_new = in.readInt();
         this.num = in.readInt();
-        this.price = in.readDouble();
+        this.is_new = in.readInt();
+        this.price = in.readFloat();
         this.goods_id = in.readInt();
+        this.freight = in.readString();
         this.create_time = in.readString();
-        this.is_hot = in.readInt();
         this.is_tuijian = in.readInt();
-        this.user_id = in.readInt();
+        this.is_hot = in.readInt();
         this.closed = in.readInt();
+        this.user_id = in.readInt();
         this.isSelect = in.readByte() != 0;
     }
 

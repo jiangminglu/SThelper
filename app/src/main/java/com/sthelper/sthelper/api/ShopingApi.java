@@ -281,7 +281,7 @@ public class ShopingApi extends BaseApi {
         RequestParams params = new RequestParams();
         params.put("uid", uid);
         params.put("order_id", order_id);
-        get("User", "isfavorshop", params, handler);
+        get("User", "deleteorder", params, handler);
     }
 
 }

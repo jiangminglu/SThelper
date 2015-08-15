@@ -119,7 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="清理缓存"
+            android:text="检查更新"
             android:textColor="#000000"
             android:textSize="14sp"
             />

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.SApp;
 import com.sthelper.sthelper.api.BaseApi;
 import com.sthelper.sthelper.api.UserApi;
 import com.sthelper.sthelper.bean.UserInfo;
@@ -24,14 +25,20 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class AccountAction extends BaseAction implements View.OnClickListener {
+public class MyAccountIDAction extends BaseAction implements View.OnClickListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_action);
-        initActionBar("个人账户");
+        initActionBar("我的账号");
         init();
+        getUserInfo();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
         getUserInfo();
     }
 
@@ -41,13 +48,14 @@ public class AccountAction extends BaseAction implements View.OnClickListener {
         findViewById(R.id.callservice).setOnClickListener(this);
         findViewById(R.id.address_manager_item).setOnClickListener(this);
         findViewById(R.id.bundle_tel_layout).setOnClickListener(this);
+        findViewById(R.id.account_avatar).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.about) {
             Intent intent = new Intent();
-            intent.setClass(AccountAction.this, AboutAction.class);
+            intent.setClass(MyAccountIDAction.this, AboutAction.class);
             startActivity(intent);
         } else if (view.getId() == R.id.checkupdate) {
             BaseProcessDialog dialog = new BaseProcessDialog(mActivity);
@@ -66,6 +74,10 @@ public class AccountAction extends BaseAction implements View.OnClickListener {
             Intent intent = new Intent();
             intent.setClass(mActivity, BundleNewTelAction.class);
             startActivity(intent);
+        } else if (view.getId() == R.id.account_avatar) {
+            Intent localIntent = new Intent();
+            localIntent.setClass(mActivity, MyProfileAction.class);
+            startActivity(localIntent);
         }
     }
 
@@ -109,6 +121,6 @@ public class AccountAction extends BaseAction implements View.OnClickListener {
 
         if (app.currentUserInfo == null) return;
         nameTv.setText(app.currentUserInfo.nickname);
-        ImageLoadUtil.getCircleAvatarImage(avatarImg, app.currentUserInfo.face);
+        ImageLoadUtil.getCircleAvatarImage(avatarImg, SApp.IMG_URL + app.currentUserInfo.face);
     }
 }

@@ -126,6 +126,32 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/menu_open_store"
+            android:layout_width="fill_parent"
+            android:layout_height="60.0dip"
+            android:background="@drawable/menu_item_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:padding="12.0dip">
+
+            <ImageView
+                android:layout_width="23.0dip"
+                android:layout_height="28.0dip"
+                android:src="@mipmap/open_store_icon"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8.0dip"
+                android:layout_marginLeft="42.0dip"
+                android:gravity="bottom|center|left"
+                android:text="我要开店"
+                android:textColor="@drawable/main_menu_left_text_selcetor"
+                android:textSize="18.0sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/menu_invite"
             android:layout_width="fill_parent"
             android:layout_height="60.0dip"
@@ -163,7 +189,7 @@
             <ImageView
                 android:layout_width="28.0dip"
                 android:layout_height="28.0dip"
-                android:src="@drawable/main_menu_left_invite_selector"/>
+                android:src="@mipmap/setting_icon"/>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -3,7 +3,6 @@ package com.sthelper.sthelper.business;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -14,7 +13,6 @@ import com.capricorn.ArcMenu;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.sthelper.sthelper.FeedBackAction;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.api.BaseApi;
 import com.sthelper.sthelper.api.CommonApi;
@@ -22,12 +20,12 @@ import com.sthelper.sthelper.bean.Area;
 import com.sthelper.sthelper.bean.Business;
 import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.business.food.FoodStoreListAction;
-import com.sthelper.sthelper.business.profile.AccountAction;
+import com.sthelper.sthelper.business.food.OpenStoreAction;
+import com.sthelper.sthelper.business.profile.MyAccountAction;
+import com.sthelper.sthelper.business.profile.MyAccountIDAction;
 import com.sthelper.sthelper.business.profile.MyFavAction;
 import com.sthelper.sthelper.business.profile.MyOrderListAction;
-import com.sthelper.sthelper.business.profile.MyProfileAction;
 import com.sthelper.sthelper.business.stone.StoneListAction;
-import com.sthelper.sthelper.util.ImageLoadUtil;
 import com.sthelper.sthelper.util.SPUtil;
 
 import org.apache.http.Header;
@@ -98,7 +96,7 @@ public class MainActivity extends BaseAction {
                     if (uid < 1) {
                         localIntent.setClass(MainActivity.this, LoginAction.class);
                     } else {
-                        localIntent.setClass(MainActivity.this, MyProfileAction.class);
+                        localIntent.setClass(MainActivity.this, MyAccountIDAction.class);
                     }
                     MainActivity.this.startActivity(localIntent);
                     break;
@@ -109,8 +107,13 @@ public class MainActivity extends BaseAction {
                     break;
                 case R.id.menu_account:
                     localIntent = new Intent();
-                    localIntent.setClass(MainActivity.this, AccountAction.class);
+                    if (uid < 1) {
+                        localIntent.setClass(MainActivity.this, LoginAction.class);
+                    } else {
+                        localIntent.setClass(MainActivity.this, MyAccountAction.class);
+                    }
                     MainActivity.this.startActivity(localIntent);
+
                     break;
                 case R.id.menu_invite:
                     localIntent = new Intent();
@@ -182,6 +185,11 @@ public class MainActivity extends BaseAction {
                     intent.setClass(mActivity, SettingAction.class);
                     startActivity(intent);
                     break;
+                case R.id.menu_open_store:
+                    intent = new Intent();
+                    intent.setClass(mActivity, OpenStoreAction.class);
+                    startActivity(intent);
+                    break;
             }
         }
     };
@@ -203,6 +211,7 @@ public class MainActivity extends BaseAction {
         this.slidLayout.findViewById(R.id.menu_order).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_fav).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_setting).setOnClickListener(this.onClickListener);
+        this.slidLayout.findViewById(R.id.menu_open_store).setOnClickListener(this.onClickListener);
 
         TextView textView = (TextView) findViewById(R.id.user_option);
         int uid = SPUtil.getInt("uid");
