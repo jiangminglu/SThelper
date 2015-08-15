@@ -49,7 +49,7 @@ public class VerifyOrderAction extends BaseAction {
 
     private static final int SDK_CHECK_FLAG = 2;
 
-    private String order_id = null;
+    private ArrayList<String> orderIds = new ArrayList<String>();
 
     private TextView totalNumTv, totalPriceTv;
     private LinearLayout goodsListView;
@@ -57,8 +57,7 @@ public class VerifyOrderAction extends BaseAction {
     private View addressLayout;
     private double totalPrice;
     private Address address;
-    private int shop_id;
-    private String goodString;
+
     private ArrayList<CartGoodsItem> list = new ArrayList<CartGoodsItem>();
 
     @Override
@@ -94,15 +93,12 @@ public class VerifyOrderAction extends BaseAction {
     }
 
     private void initGoodsMenu() {
-
-        StringBuffer stringBuffer = new StringBuffer();
         int totalNum = 0;
         totalPrice = 0;
         for (int i = 0; i < list.size(); i++) {
             CartGoodsItem info = list.get(i);
-            stringBuffer.append(info.product_id + ":" + info.num);
-            stringBuffer.append(",");
-            shop_id = info.shop_id;
+            info.isSelect = false;
+
             View view = getLayoutInflater().inflate(R.layout.order_goods_item_layout, null);
             TextView nameTv = (TextView) view.findViewById(R.id.order_goods_item_name);
             TextView numTv = (TextView) view.findViewById(R.id.order_goods_item_num);
@@ -116,9 +112,7 @@ public class VerifyOrderAction extends BaseAction {
             totalNum = totalNum + info.num;
             totalPrice = totalPrice + info.num * info.price;
         }
-        if (stringBuffer.length() > 0) {
-            goodString = stringBuffer.substring(0, stringBuffer.length() - 1);
-        }
+
 
         totalNumTv.setText("共计" + totalNum + "份");
         totalPriceTv.setText(totalPrice + "￥");
@@ -139,6 +133,7 @@ public class VerifyOrderAction extends BaseAction {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            processDialog.show();
             submitOrder();
             return true;
         }
@@ -207,21 +202,50 @@ public class VerifyOrderAction extends BaseAction {
             ToastUtil.showToast("请选择收货地址");
             return;
         }
-
-//        addr_id=1&shop_id=1&uid=1&total_price=12&create_time=2015-17-18%2012:00:00&goods=1:2,2:3,3:4
+        CartGoodsItem temp = null;
+        for (int i = 0; i < list.size(); i++) {
+            if (!list.get(i).isSelect) {
+                temp = list.get(i);
+                break;
+            }
+        }
+        if (temp == null) {
+            processDialog.dismiss();
+            pay("购买商品", 0.01);
+            return;
+        }
+        StringBuffer stringBuffer = new StringBuffer();
+        float tempTotal = 0;
+        float ps = 0;
+        int shop_id = 0;
+        for (int i = 0; i < list.size(); i++) {
+            CartGoodsItem item = list.get(i);
+            if (!item.isSelect && item.shop_id == temp.shop_id) {
+                tempTotal = tempTotal + item.num * item.price;
+                item.isSelect = true;
+                ps = item.freight;
+                shop_id = item.shop_id;
+                stringBuffer.append(item.product_id + ":" + item.num);
+                stringBuffer.append(",");
+            }
+        }
+        String goodString = null;
+        if (stringBuffer.length() > 0) {
+            goodString = stringBuffer.substring(0, stringBuffer.length() - 1);
+        }
         RequestParams params = new RequestParams();
-        params.put("total_price", totalPrice);
+        params.put("total_price", tempTotal);
         params.put("addr_id", address.addr_id);
         params.put("shop_id", shop_id);
         int uid = SPUtil.getInt("uid");
         params.put("uid", uid);
+        params.put("transport_fee", ps);
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd:HH:mm");
         String time = format.format(new Date());
         params.put("create_time", time);
         params.put("goods", goodString);
 
-        processDialog.show();
         ShopingApi api = new ShopingApi();
         api.submitOrder(params, new JsonHttpResponseHandler() {
             @Override
@@ -231,8 +255,10 @@ public class VerifyOrderAction extends BaseAction {
 //                {"ret":0,"result":{"order_id":33}}
                 if (0 == response.optInt("ret")) {
                     JSONObject result = response.optJSONObject("result");
-                    order_id = result.optString("order_id");
-                    pay("购买的商品", 0.01);
+                    String order_id = result.optString("order_id");
+                    orderIds.add(order_id);
+                    submitOrder();
+
                 } else {
                     ToastUtil.showToast(response.optString("error"));
                 }
@@ -388,7 +414,19 @@ public class VerifyOrderAction extends BaseAction {
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(mActivity, "支付成功",
                                 Toast.LENGTH_SHORT).show();
-                        changeOrder(order_id);
+                        processDialog.show();
+                        processDialog.setCancelable(false);
+                        for (int i = 0; i < orderIds.size(); i++) {
+                            changeOrder(orderIds.get(i));
+                        }
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                processDialog.dismiss();
+                                finish();
+                            }
+                        }, 5000);
+
 
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
@@ -439,9 +477,8 @@ public class VerifyOrderAction extends BaseAction {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                if(0== response.optInt("ret")){
-                    finish();
-                }else{
+                if (0 == response.optInt("ret")) {
+                } else {
                     ToastUtil.showToast(response.toString());
                 }
             }

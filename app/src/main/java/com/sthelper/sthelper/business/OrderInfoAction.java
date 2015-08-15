@@ -54,6 +54,12 @@ public class OrderInfoAction extends BaseAction {
         evlatuateBt.setOnClickListener(onClickListener);
         initGoodsMenu();
         shopname.setText(bean.mainInfo.shop_name);
+
+        if (bean.mainInfo.status == 4) {//已经评价
+            evlatuateBt.setVisibility(View.INVISIBLE);
+            evlatuateBt.setEnabled(false);
+            evlatuateBt.setClickable(false);
+        }
     }
 
     private void initGoodsMenu() {
@@ -91,21 +97,23 @@ public class OrderInfoAction extends BaseAction {
                 intent.setClass(mActivity, EvaluateOrderAction.class);
                 intent.putExtra("bean", bean);
                 startActivity(intent);
-            }else if(view == delBt){
+            } else if (view == delBt) {
                 int uid = SPUtil.getInt("uid");
                 processDialog.show();
                 ShopingApi api = new ShopingApi();
-                api.deleteOrder(uid,bean.mainInfo.order_id,new JsonHttpResponseHandler(){
+                api.deleteOrder(uid, bean.mainInfo.order_id, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         processDialog.dismiss();
-                        if(response.optInt("ret") == 0){
+                        if (response.optInt("ret") == 0) {
                             ToastUtil.showToast("删除成功");
                             Intent intent = new Intent();
-                            intent.putExtra("bean",bean);
-                            setResult(RESULT_OK,intent);
+                            intent.putExtra("bean", bean);
+                            setResult(RESULT_OK, intent);
                             finish();
+                        } else {
+                            ToastUtil.showToast(response.toString());
                         }
                     }
 

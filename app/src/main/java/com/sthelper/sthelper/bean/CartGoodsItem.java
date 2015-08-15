@@ -50,7 +50,7 @@ public class CartGoodsItem implements Parcelable {
     public int is_new;
     public float price;
     public int goods_id;
-    public String freight;
+    public float freight;
     public String create_time;
     public int is_tuijian;
     public int is_hot;
@@ -81,7 +81,7 @@ public class CartGoodsItem implements Parcelable {
         dest.writeInt(this.is_new);
         dest.writeFloat(this.price);
         dest.writeInt(this.goods_id);
-        dest.writeString(this.freight);
+        dest.writeFloat(this.freight);
         dest.writeString(this.create_time);
         dest.writeInt(this.is_tuijian);
         dest.writeInt(this.is_hot);
@@ -110,7 +110,7 @@ public class CartGoodsItem implements Parcelable {
         this.is_new = in.readInt();
         this.price = in.readFloat();
         this.goods_id = in.readInt();
-        this.freight = in.readString();
+        this.freight = in.readFloat();
         this.create_time = in.readString();
         this.is_tuijian = in.readInt();
         this.is_hot = in.readInt();

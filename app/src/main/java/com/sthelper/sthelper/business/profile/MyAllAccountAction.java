@@ -1,11 +1,7 @@
 package com.sthelper.sthelper.business.profile;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -25,10 +21,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyAccountAction extends BaseAction {
+public class MyAllAccountAction extends BaseAction {
 
-    private RelativeLayout totalPriceLayout;
-    private TextView totalPriceTv;
     private ListView orderListview;
     private AccountOrderAdapter adapter = null;
     private List<AccountOrder> list = null;
@@ -36,28 +30,14 @@ public class MyAccountAction extends BaseAction {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_account_action);
-        initActionBar("我的账户");
-        initView();
-        loadData();
-    }
+        setContentView(R.layout.activity_my_all_account_action);
+        initActionBar("全部账单");
 
-    private void initView() {
-        totalPriceLayout = (RelativeLayout) findViewById(R.id.total_price_layout);
-        totalPriceTv = (TextView) findViewById(R.id.total_price);
-        orderListview = (ListView) findViewById(R.id.order_listview);
-        totalPriceLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(mActivity, MyAllAccountAction.class);
-                startActivity(intent);
-            }
-        });
-
+        orderListview = (ListView) findViewById(R.id.all_listview);
         list = new ArrayList<AccountOrder>();
         adapter = new AccountOrderAdapter(mActivity, list);
         orderListview.setAdapter(adapter);
+        loadData();
     }
 
     private void loadData() {
@@ -72,7 +52,6 @@ public class MyAccountAction extends BaseAction {
                 super.onSuccess(statusCode, headers, response);
                 processDialog.dismiss();
                 if (response.optInt("ret") == 0) {
-                    String totalPrice = response.optJSONObject("result").optString("totalprice");
                     JSONArray monthinfo = response.optJSONObject("result").optJSONArray("monthinfo");
                     try {
                         JsonNode jsonNode = BaseApi.mapper.readTree(monthinfo.toString());
@@ -84,14 +63,7 @@ public class MyAccountAction extends BaseAction {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-                    if ("null".equals(totalPrice) || totalPrice == null) {
-                        totalPriceTv.setText("0￥");
-                    } else {
-                        totalPriceTv.setText(totalPrice + "￥");
-                    }
                 }
-                processDialog.dismiss();
             }
 
             @Override

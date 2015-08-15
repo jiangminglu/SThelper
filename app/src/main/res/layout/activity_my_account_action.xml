@@ -82,12 +82,12 @@
             android:textSize="14sp"/>
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="40dp"
-            android:background="@drawable/ic_launcher"
+            android:background="@mipmap/alipay_icon"
             />
 
         <ImageView
@@ -96,7 +96,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
-            android:background="@mipmap/default_arrow"/>
+            android:background="@mipmap/default_arrow"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -132,7 +133,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="3px"
-        android:layout_marginTop="12dp"
         android:background="@color/app_default_line_bg"
         />
 

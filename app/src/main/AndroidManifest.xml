@@ -167,6 +167,10 @@
             android:name=".business.profile.MyAccountAction"
             android:label="@string/title_activity_my_account_action" >
         </activity>
+        <activity
+            android:name=".business.profile.MyAllAccountAction"
+            android:label="@string/title_activity_my_all_account_action" >
+        </activity>
     </application>
 
 </manifest>
