@@ -25,8 +25,8 @@ import java.util.ArrayList;
 public class StoneItemListAction extends BaseAction {
 
     public ArrayList<StoneItemBean> list;
-    public ListView listView;
     public StoneItemAdapter adapter;
+    public ListView listView;
     public int stone_id = 0;
 
     @Override

@@ -77,4 +77,5 @@
     <string name="title_activity_open_store_action">OpenStoreAction</string>
     <string name="title_activity_my_account_action">MyAccountAction</string>
     <string name="title_activity_my_all_account_action">MyAllAccountAction</string>
+    <string name="title_activity_find_shop_action">FindShopAction</string>
 </resources>

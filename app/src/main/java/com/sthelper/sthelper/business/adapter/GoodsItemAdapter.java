@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.bean.GoodsInfo;
 import com.sthelper.sthelper.bean.GoodsItemBean;
+import com.sthelper.sthelper.business.food.FindAction;
 import com.sthelper.sthelper.business.food.TakingOrderAction;
 
 import java.util.ArrayList;
@@ -22,11 +23,12 @@ import java.util.ArrayList;
 public class GoodsItemAdapter extends BaseAdapter {
 
     private ArrayList<GoodsInfo> list;
-    private TakingOrderAction activity;
+    private Activity activity;
     private LayoutInflater inflater;
 
     private int type;
-    public GoodsItemAdapter(ArrayList<GoodsInfo> list, TakingOrderAction activity,int type) {
+
+    public GoodsItemAdapter(ArrayList<GoodsInfo> list, Activity activity, int type) {
         this.list = list;
         this.activity = activity;
         this.type = type;
@@ -60,22 +62,25 @@ public class GoodsItemAdapter extends BaseAdapter {
             viewHolder.priceTv = (TextView) view.findViewById(R.id.goods_item_price);
             viewHolder.addImg = (ImageView) view.findViewById(R.id.goods_item_add);
             view.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        if(type == 100){
+        if (type == 100) {
             viewHolder.priceTv.setTextColor(Color.parseColor("#d96a1d"));
-        }else if(type == 101){
+        } else if (type == 101) {
             viewHolder.priceTv.setTextColor(activity.getResources().getColor(R.color.app_blue_actionbar_bg));
         }
 
         GoodsInfo goodsInfo = list.get(i);
         viewHolder.nameTv.setText(goodsInfo.product_name);
-        viewHolder.priceTv.setText(goodsInfo.price+"");
+        viewHolder.priceTv.setText(goodsInfo.price + "");
         viewHolder.addImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.add2Car(i);
+                if (activity instanceof TakingOrderAction)
+                    ((TakingOrderAction) activity).add2Car(i);
+                else if (activity instanceof FindAction)
+                    ((FindAction) activity).add2Car(i);
             }
         });
 

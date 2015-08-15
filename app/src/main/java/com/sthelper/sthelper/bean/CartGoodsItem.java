@@ -57,6 +57,8 @@ public class CartGoodsItem implements Parcelable {
     public int closed;
     public int user_id;
     public boolean isSelect;
+    public String intro;
+
 
     @Override
     public int describeContents() {
@@ -88,6 +90,7 @@ public class CartGoodsItem implements Parcelable {
         dest.writeInt(this.closed);
         dest.writeInt(this.user_id);
         dest.writeByte(isSelect ? (byte) 1 : (byte) 0);
+        dest.writeString(this.intro);
     }
 
     public CartGoodsItem() {
@@ -117,6 +120,7 @@ public class CartGoodsItem implements Parcelable {
         this.closed = in.readInt();
         this.user_id = in.readInt();
         this.isSelect = in.readByte() != 0;
+        this.intro = in.readString();
     }
 
     public static final Parcelable.Creator<CartGoodsItem> CREATOR = new Parcelable.Creator<CartGoodsItem>() {

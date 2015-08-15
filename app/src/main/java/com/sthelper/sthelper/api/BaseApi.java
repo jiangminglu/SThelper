@@ -1,5 +1,6 @@
 package com.sthelper.sthelper.api;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -24,6 +25,7 @@ public class BaseApi {
     static {
         mapper = new ObjectMapper();
         client.setTimeout(11000);   //设置链接超时，如果不设置，默认为10s
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     public static void get(String path, String method, RequestParams params, JsonHttpResponseHandler res) {

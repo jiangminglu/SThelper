@@ -171,6 +171,10 @@
             android:name=".business.profile.MyAllAccountAction"
             android:label="@string/title_activity_my_all_account_action" >
         </activity>
+        <activity
+            android:name=".business.food.FindAction"
+            android:label="@string/title_activity_find_shop_action" >
+        </activity>
     </application>
 
 </manifest>
