@@ -284,4 +284,14 @@ public class ShopingApi extends BaseApi {
         get("User", "deleteorder", params, handler);
     }
 
+    /**
+     * 开店
+     *
+     * @param params
+     * @param handler
+     */
+    public void openShop(RequestParams params, JsonHttpResponseHandler handler) {
+        postOpenShop(params, handler);
+    }
+
 }

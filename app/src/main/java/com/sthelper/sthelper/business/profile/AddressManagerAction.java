@@ -122,6 +122,7 @@ public class AddressManagerAction extends BaseAction {
                     JsonNode jsonNode = BaseApi.mapper.readTree(response.toString());
                     if (jsonNode.get("ret").asInt() == 0) {
                         JsonNode result = jsonNode.get("result");
+                        if(result == null)return;
                         if (result.isArray()) {
                             list.removeAll(list);
                             for (JsonNode item : result) {

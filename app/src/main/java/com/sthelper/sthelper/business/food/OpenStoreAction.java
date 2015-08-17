@@ -15,9 +15,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.api.ShopingApi;
 import com.sthelper.sthelper.business.BaseAction;
+import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.util.BitmapUtil;
+import com.sthelper.sthelper.util.SPUtil;
+import com.sthelper.sthelper.util.ToastUtil;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,7 +38,9 @@ public class OpenStoreAction extends BaseAction implements View.OnClickListener 
     public static final int PHOTOHRAPH = 20;//照相
     public static final int IMAGE_CODE = 21;//相册
     private String tempPhotoPath;
+    private String filePath;
 
+    int cate_id = 71;
     EditText openstorename;
     ImageView showimg;
     RelativeLayout addimglayout;
@@ -80,6 +91,7 @@ public class OpenStoreAction extends BaseAction implements View.OnClickListener 
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            openShop();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -111,9 +123,11 @@ public class OpenStoreAction extends BaseAction implements View.OnClickListener 
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                         if (i == 0) {
+                            cate_id = 71;
                             showtype.setText("食品店铺");
                         } else if (i == 1) {
                             showtype.setText("饮品店铺");
+                            cate_id = 53;
                         }
                     }
                 }).show();
@@ -156,15 +170,15 @@ public class OpenStoreAction extends BaseAction implements View.OnClickListener 
             try {
                 Bitmap newBitmap = BitmapUtil.getBitmapByPath(path, BitmapUtil.getOptions(path), app.screenW, app.screenH);
 
-                String newPath = app.imagePath + "/" + System.currentTimeMillis() + ".jpg";
-                File f = new File(newPath);
+                filePath = app.imagePath + "/" + System.currentTimeMillis() + ".jpg";
+                File f = new File(filePath);
                 f.createNewFile();
                 FileOutputStream fOut = new FileOutputStream(f);
                 newBitmap.compress(Bitmap.CompressFormat.JPEG, 80, fOut);
                 fOut.flush();
                 fOut.close();
 
-                BitmapUtil.setExif(path, newPath);
+                BitmapUtil.setExif(path, filePath);
                 showimg.setImageBitmap(newBitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -176,14 +190,14 @@ public class OpenStoreAction extends BaseAction implements View.OnClickListener 
                 Bitmap newBitmap = BitmapUtil.getBitmapByPath(tempPhotoPath, BitmapUtil.getOptions(tempPhotoPath), app.screenW, app.screenH);
                 if (newBitmap == null)
                     return;
-                String newPath = app.imagePath + "/" + System.currentTimeMillis() + ".jpg";
-                File f = new File(newPath);
+                filePath = app.imagePath + "/" + System.currentTimeMillis() + ".jpg";
+                File f = new File(filePath);
                 f.createNewFile();
                 FileOutputStream fOut = new FileOutputStream(f);
                 newBitmap.compress(Bitmap.CompressFormat.JPEG, 80, fOut);
                 fOut.flush();
                 fOut.close();
-                BitmapUtil.setExif(tempPhotoPath, newPath);
+                BitmapUtil.setExif(tempPhotoPath, filePath);
                 showimg.setImageBitmap(newBitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -191,6 +205,57 @@ public class OpenStoreAction extends BaseAction implements View.OnClickListener 
                 e1.printStackTrace();
             }
         }
+    }
+
+
+    private void openShop() {
+        int uid = SPUtil.getInt("uid");
+        if (uid < 1) {
+            Intent intent = new Intent();
+            intent.setClass(mActivity, LoginAction.class);
+            startActivity(intent);
+            return;
+        }
+        RequestParams params = new RequestParams();
+        params.put("shop_name", openstorename.getText().toString());
+        params.put("addr", openstorearea.getText().toString());
+        params.put("area_id", "1");
+        params.put("tel", openstoretel.getText().toString());
+        params.put("business_time", openstoretime.getText().toString());
+        params.put("cate_id", cate_id);
+        params.put("freight", openstoredeliveryprice.getText().toString());
+        params.put("uid", uid);
+        try {
+            params.put("file",new File(filePath));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        processDialog.show();
+        ShopingApi api = new ShopingApi();
+        api.openShop(params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                processDialog.dismiss();
+
+                if (response.optString("error") != null) {
+                    ToastUtil.showToast(response.optString("error"));
+                }
+
+                if (response.optInt("ret") == 0) {
+                    finish();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                processDialog.dismiss();
+            }
+        });
+
     }
 
 
