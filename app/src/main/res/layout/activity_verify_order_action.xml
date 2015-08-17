@@ -259,13 +259,16 @@
                 android:background="@color/app_default_line_bg"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/order_tips_et"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="12dp"
+                android:background="@null"
                 android:gravity="center_vertical"
-                android:text="少加点盐，多放点辣椒"
+                android:hint="添加订单备注"
                 android:textColor="#b9b9b9"
+                android:textCursorDrawable="@null"
                 android:textSize="14sp"/>
 
             <View
@@ -323,12 +326,12 @@
                 />
 
             <CheckBox
+                android:id="@+id/order_daofu_ck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:checked="true"/>
+                android:checked="false"/>
 
             <View
                 android:layout_width="match_parent"
@@ -355,9 +358,9 @@
                 />
 
             <CheckBox
+                android:id="@+id/order_alipay_ck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:checked="true"/>

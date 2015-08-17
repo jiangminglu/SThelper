@@ -71,8 +71,12 @@ public class MyOrderListAdapter extends BaseAdapter {
             text = "已付款";
         } else if (status == 2) {
             text = "配送中";
-        } else if (status == 1) {
+        } else if (status == 3) {
             text = "完成";
+        }
+
+        if(order.mainInfo.is_daofu == 1){
+            text = "货到付款";
         }
         holder.statusTv.setText(text);
         holder.totalPriceTv.setText(order.mainInfo.total_price + "￥");

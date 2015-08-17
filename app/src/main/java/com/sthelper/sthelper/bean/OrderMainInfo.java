@@ -97,6 +97,7 @@ public class OrderMainInfo implements Parcelable {
     public String view;
     public String ranking;
     public String mobile;
+    public String tips;
 
     @Override
     public int describeContents() {
@@ -148,6 +149,7 @@ public class OrderMainInfo implements Parcelable {
         dest.writeString(this.view);
         dest.writeString(this.ranking);
         dest.writeString(this.mobile);
+        dest.writeString(this.tips);
     }
 
     public OrderMainInfo() {
@@ -197,9 +199,10 @@ public class OrderMainInfo implements Parcelable {
         this.view = in.readString();
         this.ranking = in.readString();
         this.mobile = in.readString();
+        this.tips = in.readString();
     }
 
-    public static final Parcelable.Creator<OrderMainInfo> CREATOR = new Parcelable.Creator<OrderMainInfo>() {
+    public static final Creator<OrderMainInfo> CREATOR = new Creator<OrderMainInfo>() {
         public OrderMainInfo createFromParcel(Parcel source) {
             return new OrderMainInfo(source);
         }

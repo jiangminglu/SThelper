@@ -27,7 +27,7 @@ public class OrderInfoAction extends BaseAction {
     TextView shopname;
     LinearLayout ordergoodslistview;
     TextView ordergoodstotalprice;
-    TextView ordergoodstotalnum;
+    TextView ordergoodstotalnum, orderTpisTv;
 
     private Button delBt, evlatuateBt;
     private OrderItem bean;
@@ -49,7 +49,7 @@ public class OrderInfoAction extends BaseAction {
         ordergoodstotalnum = (TextView) findViewById(R.id.order_goods_total_num);
         delBt = (Button) findViewById(R.id.delete_order);
         evlatuateBt = (Button) findViewById(R.id.evaluate_order);
-
+        orderTpisTv = (TextView) findViewById(R.id.order_tips_tv);
         delBt.setOnClickListener(onClickListener);
         evlatuateBt.setOnClickListener(onClickListener);
         initGoodsMenu();
@@ -82,7 +82,7 @@ public class OrderInfoAction extends BaseAction {
             goodsNum += info.num;
 
         }
-
+        orderTpisTv.setText("备注:   "+ bean.mainInfo.tips+"");
         TextView descTv = (TextView) findViewById(R.id.desc);
         descTv.setText(bean.mainInfo.tags);
         ordergoodstotalnum.setText("共计" + goodsNum + "份");

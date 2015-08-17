@@ -16,10 +16,11 @@ import com.viewpagerindicator.TabPageIndicator;
 
 public class MyOrderListAction extends FragmentActivity {
 
-    private static String[] TITLES = {"未付款", "已付款", "配送中", "已完成"};
+    private static String[] TITLES = {"全部", "未付款", "待发货", "进行中", "已完成", "已关闭"};
 
     private TabPageIndicator indicator;
     private ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.actionTheme);
@@ -53,7 +54,7 @@ public class MyOrderListAction extends FragmentActivity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
-        }else if(id == android.R.id.home){
+        } else if (id == android.R.id.home) {
             finish();
         }
 

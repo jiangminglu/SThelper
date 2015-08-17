@@ -114,12 +114,13 @@
             />
 
         <TextView
-            android:layout_width="60dp"
+            android:id="@+id/order_tips_tv"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="12dp"
             android:gravity="center_vertical"
-            android:text="备注: "
+            android:layout_marginRight="120dp"
             android:textColor="#b9b9b9"
             android:textSize="14sp"
 

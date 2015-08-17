@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +44,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
-public class VerifyOrderAction extends BaseAction {
+public class VerifyOrderAction extends BaseAction implements View.OnClickListener {
 
 
     private static final int SDK_PAY_FLAG = 1;
@@ -57,6 +59,8 @@ public class VerifyOrderAction extends BaseAction {
     private View addressLayout;
     private double totalPrice;
     private Address address;
+    private EditText tipsEt;
+    private CheckBox daofuCk, alipayCk;
 
     private ArrayList<CartGoodsItem> list = new ArrayList<CartGoodsItem>();
 
@@ -73,11 +77,17 @@ public class VerifyOrderAction extends BaseAction {
 
         list = getIntent().getParcelableArrayListExtra("list");
         goodsListView = (LinearLayout) findViewById(R.id.order_goods_listview);
-
+        tipsEt = (EditText) findViewById(R.id.order_tips_et);
         totalPriceTv = (TextView) findViewById(R.id.order_goods_total_price);
         totalNumTv = (TextView) findViewById(R.id.order_goods_total_num);
         addAddressTv = (TextView) findViewById(R.id.add_address);
         addressLayout = findViewById(R.id.address_layout);
+
+        daofuCk = (CheckBox) findViewById(R.id.order_daofu_ck);
+        alipayCk = (CheckBox) findViewById(R.id.order_alipay_ck);
+
+        daofuCk.setOnClickListener(this);
+        alipayCk.setOnClickListener(this);
         goodsListView.removeAllViews();
         initGoodsMenu();
         initAddress();
@@ -211,7 +221,9 @@ public class VerifyOrderAction extends BaseAction {
         }
         if (temp == null) {
             processDialog.dismiss();
-            pay("购买商品", 0.01);
+            if (!daofuCk.isChecked())//如果不是到付，就是阿里支付
+                pay("购买商品", 0.01);
+            else finish();
             return;
         }
         StringBuffer stringBuffer = new StringBuffer();
@@ -240,12 +252,15 @@ public class VerifyOrderAction extends BaseAction {
         int uid = SPUtil.getInt("uid");
         params.put("uid", uid);
         params.put("transport_fee", ps);
+        params.put("tips", tipsEt.getText().toString());
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd:HH:mm");
         String time = format.format(new Date());
         params.put("create_time", time);
         params.put("goods", goodString);
-
+        if (daofuCk.isChecked()) {//如果是到付
+            params.put("is_daofu", 1);
+        }
         ShopingApi api = new ShopingApi();
         api.submitOrder(params, new JsonHttpResponseHandler() {
             @Override
@@ -488,5 +503,26 @@ public class VerifyOrderAction extends BaseAction {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == alipayCk) {
+            if (!alipayCk.isChecked()) {
+                alipayCk.setChecked(false);
+                daofuCk.setChecked(true);
+            } else {
+                daofuCk.setChecked(false);
+                alipayCk.setChecked(true);
+            }
+        } else if (view == daofuCk) {
+            if (!daofuCk.isChecked()) {
+                daofuCk.setChecked(false);
+                alipayCk.setChecked(true);
+            } else {
+                daofuCk.setChecked(true);
+                alipayCk.setChecked(false);
+            }
+        }
     }
 }

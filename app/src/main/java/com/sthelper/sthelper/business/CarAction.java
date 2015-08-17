@@ -49,6 +49,12 @@ public class CarAction extends BaseAction {
         setContentView(R.layout.activity_car_action);
         initActionBar("购物车");
         init();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getUserCartGoodsList();
     }
 
