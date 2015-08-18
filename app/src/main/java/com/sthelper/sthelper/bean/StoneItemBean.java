@@ -3,6 +3,8 @@ package com.sthelper.sthelper.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by luffy on 15/6/17.
  */
@@ -34,7 +36,8 @@ public class StoneItemBean implements Parcelable {
     public String tips;
     public int stone_id;
     public String shop_name;
-    public String stone_photo;
+    public List<String> stone_photo;
+
 
     @Override
     public int describeContents() {
@@ -54,7 +57,7 @@ public class StoneItemBean implements Parcelable {
         dest.writeString(this.tips);
         dest.writeInt(this.stone_id);
         dest.writeString(this.shop_name);
-        dest.writeString(this.stone_photo);
+        dest.writeStringList(this.stone_photo);
     }
 
     public StoneItemBean() {
@@ -72,10 +75,10 @@ public class StoneItemBean implements Parcelable {
         this.tips = in.readString();
         this.stone_id = in.readInt();
         this.shop_name = in.readString();
-        this.stone_photo = in.readString();
+        this.stone_photo = in.createStringArrayList();
     }
 
-    public static final Parcelable.Creator<StoneItemBean> CREATOR = new Parcelable.Creator<StoneItemBean>() {
+    public static final Creator<StoneItemBean> CREATOR = new Creator<StoneItemBean>() {
         public StoneItemBean createFromParcel(Parcel source) {
             return new StoneItemBean(source);
         }
