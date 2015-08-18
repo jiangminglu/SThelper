@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.SApp;
 import com.sthelper.sthelper.bean.CartGoodsItem;
 import com.sthelper.sthelper.business.CarAction;
+import com.sthelper.sthelper.util.ImageLoadUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,6 +82,7 @@ public class CarItemAdapter extends BaseAdapter {
                 activity.deleteGoods(list.get(i));
             }
         });
+        ImageLoadUtil.getCommonImage(viewHolder.imageView, SApp.IMG_URL + bean.photo);
         viewHolder.checkBox.setOnCheckedChangeListener(new CheckListener(viewHolder, bean));
         viewHolder.checkBox.setChecked(bean.isSelect);
         return view;

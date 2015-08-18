@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -235,7 +236,7 @@ public class TakingOrderAction extends BaseAction {
                             }
                             goodsList.add(goods);
                         }
-                        initLeftView();
+                        initLeftView(0);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -255,22 +256,32 @@ public class TakingOrderAction extends BaseAction {
     /**
      * 刷新左边商品分类列表
      */
-    private void initLeftView() {
+    private void initLeftView(int position) {
         storeGoodsListContent.removeAllViews();
         for (int i = 0; i < goodsList.size(); i++) {
             Goods goods = goodsList.get(i);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             TextView textView = new TextView(mActivity);
-            textView.setPadding(0, 24, 0, 24);
+            textView.setPadding(20, 24, 20, 24);
             textView.setText(goods.cate_name);
-            textView.setGravity(Gravity.CENTER);
-            textView.setTextSize(16);
+            textView.setGravity(Gravity.LEFT);
+            textView.setTextSize(14);
+            textView.setLines(1);
+            textView.setEllipsize(TextUtils.TruncateAt.END);
             textView.setTextColor(Color.BLACK);
             textView.setLayoutParams(params);
             storeGoodsListContent.addView(textView);
+            textView.setTag(i);
             textView.setOnClickListener(onClickListener);
+
+            View lineView = new View(mActivity);
+            LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2);
+            lineView.setBackgroundColor(getResources().getColor(R.color.app_default_line_bg));
+            lineView.setLayoutParams(params2);
+            storeGoodsListContent.addView(lineView);
+
         }
-        initRightList(goodsList.get(0).goodsinfo);
+        initRightList(goodsList.get(position).goodsinfo);
     }
 
     private void initRightList(List<GoodsInfo> goodsInfoArrayList) {
@@ -286,9 +297,13 @@ public class TakingOrderAction extends BaseAction {
 
             int count = storeGoodsListContent.getChildCount();
             for (int i = 0; i < count; i++) {
-                TextView item = (TextView) storeGoodsListContent.getChildAt(i);
-                item.setBackgroundResource(R.drawable.goods_item_normal);
-                item.setTextColor(Color.BLACK);
+                try {
+                    TextView item = (TextView) storeGoodsListContent.getChildAt(i);
+                    item.setBackgroundResource(R.drawable.goods_item_normal);
+                    item.setTextColor(Color.BLACK);
+                } catch (Exception e) {
+
+                }
             }
 
             TextView textView = (TextView) view;
@@ -298,6 +313,8 @@ public class TakingOrderAction extends BaseAction {
             } else {
                 textView.setTextColor(getResources().getColor(R.color.app_blue_actionbar_bg));
             }
+            int index = Integer.parseInt(view.getTag() + "");
+            initRightList(goodsList.get(index).goodsinfo);
         }
     };
 

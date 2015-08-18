@@ -123,6 +123,7 @@ public class CarAction extends BaseAction {
                 processDialog.dismiss();
                 if (0 == response.optInt("ret")) {
                     try {
+                        list.removeAll(list);
                         JsonNode root = BaseApi.mapper.readTree(response.toString());
                         JsonNode result = root.path("result");
                         JsonNode itemArray = result.get(0);

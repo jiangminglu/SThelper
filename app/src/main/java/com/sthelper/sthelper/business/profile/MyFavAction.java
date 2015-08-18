@@ -90,7 +90,6 @@ public class MyFavAction extends BaseAction implements View.OnClickListener {
                             FavBean bean = BaseApi.mapper.readValue(item.toString(), FavBean.class);
                             list.add(bean);
                         }
-                        list = new ArrayList<FavBean>();
                         adapter = new MyFavAdapter(list, MyFavAction.this);
                         listView.setAdapter(adapter);
                     } catch (IOException e) {

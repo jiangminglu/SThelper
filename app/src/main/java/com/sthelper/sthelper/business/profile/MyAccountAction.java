@@ -81,7 +81,7 @@ public class MyAccountAction extends BaseAction {
                             list.add(accountOrder);
                         }
                         adapter.notifyDataSetChanged();
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
