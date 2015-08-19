@@ -21,6 +21,13 @@ public class FoodApi extends BaseApi {
         params.put("cate_id", cateId);
         get("Data", "getshops", params, handler);
     }
+    public void getFoodStoreList(int page,String type, int cateId, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("page", page);
+        params.put("cate_id", cateId);
+        params.put("type", type);
+        get("Data", "getshops", params, handler);
+    }
 
     /**
      * 获取店铺详情

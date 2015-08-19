@@ -87,6 +87,15 @@ public class FoodStoreListAction extends BaseAction {
         findViewById(R.id.food_store_all_type).setOnClickListener(onClickListener);
         findViewById(R.id.goto_car).setOnClickListener(onClickListener);
         findViewById(R.id.goto_order).setOnClickListener(onClickListener);
+        hotImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(mActivity, HotStoreAction.class);
+                intent.putExtra("type",currentType);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initTypePop() {

@@ -7,19 +7,25 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.SApp;
 import com.sthelper.sthelper.api.BaseApi;
 import com.sthelper.sthelper.api.ShopingApi;
+import com.sthelper.sthelper.bean.Comment;
 import com.sthelper.sthelper.bean.FoodStoreBean;
 import com.sthelper.sthelper.bean.ShopInfo;
 import com.sthelper.sthelper.bean.ShopInfoBean;
 import com.sthelper.sthelper.business.BaseAction;
+import com.sthelper.sthelper.business.adapter.CommentItemLayoutAdapter;
 import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.util.ImageLoadUtil;
 import com.sthelper.sthelper.util.SPUtil;
@@ -29,6 +35,8 @@ import org.apache.http.Header;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StoreInfoAction extends BaseAction {
 
@@ -38,38 +46,53 @@ public class StoreInfoAction extends BaseAction {
     private RatingBar storeRatingbar;
     private int type;
     private ShopInfoBean shopInfoBean;
+    private List<Comment> comments = new ArrayList<Comment>();
     boolean isFav = false;
     MenuItem menuItem = null;
-
-    private TextView timeTv, speedTv, addressTv, priceTv;
+    View headView = null;
+    ListView listView = null;
+    private TextView timeTv, speedTv, addressTv, priceTv, telTv, commentCountTv;
+    CommentItemLayoutAdapter adapter = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_store_info_action);
+
+        listView = new ListView(mActivity);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        listView.setLayoutParams(params);
+        setContentView(listView);
+
+        headView = getLayoutInflater().inflate(R.layout.activity_store_info_action, null);
+        listView.addHeaderView(headView);
         bean = getIntent().getParcelableExtra("bean");
         type = getIntent().getIntExtra("type", 100);
         initActionBar(bean.shop_name);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+
         init();
         getInfo();
         isFav();
     }
 
     private void init() {
-        storeImg = (ImageView) findViewById(R.id.store_info_img);
-        storeNameTv = (TextView) findViewById(R.id.store_name);
-        storeRatingbar = (RatingBar) findViewById(R.id.store_rating);
-
-        timeTv = (TextView) findViewById(R.id.store_delivery_time);
-        speedTv = (TextView) findViewById(R.id.store_delivery_speed);
-        addressTv = (TextView) findViewById(R.id.store_delivery_address);
-        priceTv = (TextView) findViewById(R.id.store_delivery_price);
+        storeImg = (ImageView) headView.findViewById(R.id.store_info_img);
+        storeNameTv = (TextView) headView.findViewById(R.id.store_name);
+        storeRatingbar = (RatingBar) headView.findViewById(R.id.store_rating);
+        telTv = (TextView) headView.findViewById(R.id.store_tel);
+        commentCountTv = (TextView) headView.findViewById(R.id.store_comments_count);
+        timeTv = (TextView) headView.findViewById(R.id.store_delivery_time);
+        speedTv = (TextView) headView.findViewById(R.id.store_delivery_speed);
+        addressTv = (TextView) headView.findViewById(R.id.store_delivery_address);
+        priceTv = (TextView) headView.findViewById(R.id.store_delivery_price);
 
 
         ImageLoadUtil.getCommonImage(storeImg, SApp.IMG_URL + bean.photo);
         storeNameTv.setText(bean.shop_name);
         storeRatingbar.setRating(bean.score);
+
+        adapter = new CommentItemLayoutAdapter(mActivity, comments);
+        listView.setAdapter(adapter);
     }
 
     @Override
@@ -120,8 +143,22 @@ public class StoreInfoAction extends BaseAction {
                         if (shopInfoBean != null) {
                             timeTv.setText(shopInfoBean.business_time + "");
                             speedTv.setText(shopInfoBean.send_time + "");
-                            priceTv.setText(shopInfoBean.Freight + "元");
+                            priceTv.setText(shopInfoBean.freight + "元");
+                            telTv.setText("" + shopInfoBean.tel);
                             addressTv.setText(bean.addr);
+                        }
+                        JsonNode commentsNode = BaseApi.mapper.readTree(result.optString("comments"));
+                        if (commentsNode.isArray()) {
+                            for (JsonNode item : commentsNode) {
+                                Comment comment = BaseApi.mapper.readValue(item.toString(), Comment.class);
+                                comments.add(comment);
+                            }
+                            if(comments.size()>0){
+                                commentCountTv.setText("(共"+comments.size()+"评论)");
+                            }else{
+                                commentCountTv.setText("(暂无评论)");
+                            }
+                            adapter.notifyDataSetChanged();
                         }
 
                     } catch (IOException e) {
@@ -153,7 +190,7 @@ public class StoreInfoAction extends BaseAction {
                 super.onSuccess(statusCode, headers, response);
                 if (response.optInt("ret") == 0) {
                     isFav = true;
-                }else {
+                } else {
                     isFav = false;
                 }
                 invalidateOptionsMenu();
@@ -228,4 +265,6 @@ public class StoreInfoAction extends BaseAction {
             }
         });
     }
+
+
 }

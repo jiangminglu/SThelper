@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/comment_tel_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ssssss"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            />
+
+        <RatingBar
+            android:layout_marginTop="4dp"
+            android:id="@+id/comment_rating"
+            style="@style/yellowRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/comment_content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="ssssss"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/comment_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="ssssss"
+        android:layout_marginBottom="10dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        />
+</RelativeLayout>

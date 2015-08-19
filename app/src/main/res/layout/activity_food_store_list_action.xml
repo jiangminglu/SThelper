@@ -147,6 +147,6 @@
         android:layout_marginBottom="68dp"
         android:layout_marginRight="12dp"
         android:background="@mipmap/icon_store_hot"
-        android:visibility="gone"/>
+        />
 
 </RelativeLayout>

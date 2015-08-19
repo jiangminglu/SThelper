@@ -175,6 +175,10 @@
             android:name=".business.food.FindAction"
             android:label="@string/title_activity_find_shop_action" >
         </activity>
+        <activity
+            android:name=".business.food.HotStoreAction"
+            android:label="@string/title_activity_hot_store_action" >
+        </activity>
     </application>
 
 </manifest>

@@ -60,7 +60,7 @@ public class MyAllAccountAction extends BaseAction {
                             list.add(accountOrder);
                         }
                         adapter.notifyDataSetChanged();
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

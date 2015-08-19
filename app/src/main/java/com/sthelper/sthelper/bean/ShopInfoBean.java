@@ -18,10 +18,12 @@ public class ShopInfoBean implements Parcelable {
      */
     public String business_time;
     public String send_time;
-    public String Freight;
+    public String freight;
     public String addr;
     public String photo;
     public String shop_name;
+    public String tel;
+
 
     @Override
     public int describeContents() {
@@ -32,10 +34,11 @@ public class ShopInfoBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.business_time);
         dest.writeString(this.send_time);
-        dest.writeString(this.Freight);
+        dest.writeString(this.freight);
         dest.writeString(this.addr);
         dest.writeString(this.photo);
         dest.writeString(this.shop_name);
+        dest.writeString(this.tel);
     }
 
     public ShopInfoBean() {
@@ -44,13 +47,14 @@ public class ShopInfoBean implements Parcelable {
     protected ShopInfoBean(Parcel in) {
         this.business_time = in.readString();
         this.send_time = in.readString();
-        this.Freight = in.readString();
+        this.freight = in.readString();
         this.addr = in.readString();
         this.photo = in.readString();
         this.shop_name = in.readString();
+        this.tel = in.readString();
     }
 
-    public static final Parcelable.Creator<ShopInfoBean> CREATOR = new Parcelable.Creator<ShopInfoBean>() {
+    public static final Creator<ShopInfoBean> CREATOR = new Creator<ShopInfoBean>() {
         public ShopInfoBean createFromParcel(Parcel source) {
             return new ShopInfoBean(source);
         }
