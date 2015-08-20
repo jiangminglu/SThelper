@@ -227,6 +227,7 @@ public class TakingOrderAction extends BaseAction {
                                 info.area_id = bean.path("area_id").asInt();
                                 info.business_id = bean.path("business_id").asInt();
                                 info.cate_id = bean.path("cate_id").asInt();
+                                info.sold_num = bean.path("sold_num").asInt();
                                 info.product_id = bean.path("product_id").asInt();
                                 info.price = bean.path("price").asDouble();
                                 info.shop_id = bean.path("shop_id").asInt();
@@ -384,6 +385,7 @@ public class TakingOrderAction extends BaseAction {
 
                     numTv.setText("已点" + num + "件");
                 } else {
+                    ToastUtil.showToast(response.optString("error"));
                 }
             }
 

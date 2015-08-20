@@ -216,14 +216,39 @@ public class OpenStoreAction extends BaseAction implements View.OnClickListener 
             startActivity(intent);
             return;
         }
+
+        String shop_name = openstorename.getText().toString();
+        String addr = openstorearea.getText().toString();
+        String tel = openstoretel.getText().toString();
+        String business_time = openstoretime.getText().toString();
+        String freight = openstoredeliveryprice.getText().toString();
+
+
+        if(shop_name.equals("")){
+            ToastUtil.showToast("请输入店铺名称");
+            return;
+        }
+        if(addr.equals("")){
+            ToastUtil.showToast("请输入店铺地址");
+            return;
+        }
+        if(business_time.equals("")){
+            ToastUtil.showToast("请输入营业时间");
+            return;
+        }
+        if(freight.equals("")){
+            ToastUtil.showToast("请输入配送费用");
+            return;
+        }
+
         RequestParams params = new RequestParams();
-        params.put("shop_name", openstorename.getText().toString());
-        params.put("addr", openstorearea.getText().toString());
+        params.put("shop_name", shop_name);
+        params.put("addr", addr);
         params.put("area_id", "1");
-        params.put("tel", openstoretel.getText().toString());
-        params.put("business_time", openstoretime.getText().toString());
+        params.put("tel", tel);
+        params.put("business_time",business_time );
         params.put("cate_id", cate_id);
-        params.put("freight", openstoredeliveryprice.getText().toString());
+        params.put("freight", freight);
         params.put("uid", uid);
         try {
             params.put("file",new File(filePath));

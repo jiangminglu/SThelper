@@ -43,24 +43,6 @@ public class MyOrderListAction extends FragmentActivity {
         indicator.setViewPager(viewPager);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_my_order_list_action, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        } else if (id == android.R.id.home) {
-            finish();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private class OrderPageAdapter extends FragmentPagerAdapter {
         public OrderPageAdapter(FragmentManager fm) {
             super(fm);

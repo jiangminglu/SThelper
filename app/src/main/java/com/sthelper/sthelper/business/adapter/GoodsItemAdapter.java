@@ -61,6 +61,7 @@ public class GoodsItemAdapter extends BaseAdapter {
             viewHolder.nameTv = (TextView) view.findViewById(R.id.goods_item_name);
             viewHolder.priceTv = (TextView) view.findViewById(R.id.goods_item_price);
             viewHolder.addImg = (ImageView) view.findViewById(R.id.goods_item_add);
+            viewHolder.soldNumTv = (TextView) view.findViewById(R.id.goods_item_sold_num);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -72,6 +73,7 @@ public class GoodsItemAdapter extends BaseAdapter {
         }
 
         GoodsInfo goodsInfo = list.get(i);
+        viewHolder.soldNumTv.setText("已售:  " + goodsInfo.sold_num + "份");
         viewHolder.nameTv.setText(goodsInfo.product_name);
         viewHolder.priceTv.setText(goodsInfo.price + "");
         viewHolder.addImg.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +91,7 @@ public class GoodsItemAdapter extends BaseAdapter {
 
     private static class ViewHolder {
         public TextView nameTv;
-        public TextView priceTv;
+        public TextView priceTv, soldNumTv;
         public ImageView addImg;
     }
 }
