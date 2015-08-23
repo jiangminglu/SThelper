@@ -75,7 +75,7 @@ public class HotStoreAction extends BaseAction {
             cateId = 71;
         }
         FoodApi api = new FoodApi();
-        api.getFoodStoreList(1, "hot", cateId, new JsonHttpResponseHandler() {
+        api.getFoodStoreList(1, "hot",null, cateId, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

@@ -140,6 +140,7 @@
                 android:src="@mipmap/open_store_icon"/>
 
             <TextView
+                android:id="@+id/menu_open_store_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

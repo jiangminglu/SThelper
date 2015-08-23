@@ -7,6 +7,14 @@
               android:paddingTop="20dp"
               tools:context="com.sthelper.sthelper.business.food.OpenStoreAction">
 
+    <TextView
+        android:id="@+id/open_status"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:visibility="gone"
+        android:layout_height="match_parent"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp">

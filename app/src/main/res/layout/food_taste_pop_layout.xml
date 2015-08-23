@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/app_default_bg"
-        android:tag="default">
+        android:tag="清淡">
 
         <TextView
             android:layout_width="wrap_content"
@@ -18,7 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="默认"
+            android:text="清淡"
             android:textColor="#000000"
             android:textSize="14sp"/>
 
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/app_default_bg"
-        android:tag="hot">
+        android:tag="微辣">
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="按销量"
+            android:text="微辣"
             android:textColor="#000000"
             android:textSize="14sp"/>
 
@@ -75,7 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/app_default_bg"
-        android:tag="score">
+        android:tag="酸辣">
 
         <TextView
             android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="按评分"
+            android:text="酸辣"
             android:textColor="#000000"
             android:textSize="14sp"/>
 
@@ -103,70 +103,5 @@
             android:background="@color/app_default_line_bg"/>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/food_store_type4"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/app_default_bg"
-        android:tag="price">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="按起送价"
-            android:textColor="#000000"
-            android:textSize="14sp"/>
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="@mipmap/icon_check_yellow"
-            android:visibility="gone"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3px"
-            android:layout_alignParentBottom="true"
-            android:background="@color/app_default_line_bg"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/food_store_type5"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/app_default_bg"
-        android:tag="speed">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="按送餐速度"
-            android:textColor="#000000"
-            android:textSize="14sp"/>
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="@mipmap/icon_check_yellow"
-            android:visibility="gone"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3px"
-            android:layout_alignParentBottom="true"
-            android:background="@color/app_default_line_bg"/>
-    </RelativeLayout>
 
 </LinearLayout>

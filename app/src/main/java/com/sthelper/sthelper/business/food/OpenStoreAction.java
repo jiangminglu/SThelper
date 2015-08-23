@@ -53,17 +53,29 @@ public class OpenStoreAction extends BaseAction implements View.OnClickListener 
     EditText openstoretime;
     EditText openstoredeliveryprice;
 
+    String status;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_store_action);
         initActionBar("开店");
         tempPhotoPath = app.cachePath + "/temp.jpg";
+        status = getIntent().getStringExtra("status");
         initView();
 
     }
 
     private void initView() {
+
+        TextView openStatusTv = (TextView) findViewById(R.id.open_status);
+        if (status != null && !status.equals("")) {
+            openStatusTv.setVisibility(View.VISIBLE);
+            openStatusTv.setText(status);
+        } else {
+            openStatusTv.setVisibility(View.GONE);
+        }
+
         openstorename = (EditText) findViewById(R.id.open_store_name);
         showimg = (ImageView) findViewById(R.id.show_img);
         addimglayout = (RelativeLayout) findViewById(R.id.add_img_layout);
@@ -91,7 +103,11 @@ public class OpenStoreAction extends BaseAction implements View.OnClickListener 
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            openShop();
+            if (status != null && !status.equals("")) {
+                finish();
+            } else {
+                openShop();
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -224,19 +240,19 @@ public class OpenStoreAction extends BaseAction implements View.OnClickListener 
         String freight = openstoredeliveryprice.getText().toString();
 
 
-        if(shop_name.equals("")){
+        if (shop_name.equals("")) {
             ToastUtil.showToast("请输入店铺名称");
             return;
         }
-        if(addr.equals("")){
+        if (addr.equals("")) {
             ToastUtil.showToast("请输入店铺地址");
             return;
         }
-        if(business_time.equals("")){
+        if (business_time.equals("")) {
             ToastUtil.showToast("请输入营业时间");
             return;
         }
-        if(freight.equals("")){
+        if (freight.equals("")) {
             ToastUtil.showToast("请输入配送费用");
             return;
         }
@@ -246,12 +262,12 @@ public class OpenStoreAction extends BaseAction implements View.OnClickListener 
         params.put("addr", addr);
         params.put("area_id", "1");
         params.put("tel", tel);
-        params.put("business_time",business_time );
+        params.put("business_time", business_time);
         params.put("cate_id", cate_id);
         params.put("freight", freight);
         params.put("uid", uid);
         try {
-            params.put("file",new File(filePath));
+            params.put("file", new File(filePath));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

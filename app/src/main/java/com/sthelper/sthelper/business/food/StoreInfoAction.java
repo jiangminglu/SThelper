@@ -53,7 +53,7 @@ public class StoreInfoAction extends BaseAction {
     ListView listView = null;
     private TextView timeTv, speedTv, addressTv, priceTv, telTv, commentCountTv;
     CommentItemLayoutAdapter adapter = null;
-
+    int shop_id = 0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,11 +66,11 @@ public class StoreInfoAction extends BaseAction {
         headView = getLayoutInflater().inflate(R.layout.activity_store_info_action, null);
         listView.addHeaderView(headView);
         bean = getIntent().getParcelableExtra("bean");
+        shop_id = getIntent().getIntExtra("shop_id", 0);
         type = getIntent().getIntExtra("type", 100);
-        initActionBar(bean.shop_name);
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-
-        init();
+        if(bean!=null){
+            shop_id = bean.shop_id;
+        }
         getInfo();
         isFav();
     }
@@ -87,9 +87,9 @@ public class StoreInfoAction extends BaseAction {
         priceTv = (TextView) headView.findViewById(R.id.store_delivery_price);
 
 
-        ImageLoadUtil.getCommonImage(storeImg, SApp.IMG_URL + bean.photo);
-        storeNameTv.setText(bean.shop_name);
-        storeRatingbar.setRating(bean.score);
+        ImageLoadUtil.getCommonImage(storeImg, SApp.IMG_URL + shopInfoBean.photo);
+        storeNameTv.setText(shopInfoBean.shop_name);
+        storeRatingbar.setRating(0);
 
         adapter = new CommentItemLayoutAdapter(mActivity, comments);
         listView.setAdapter(adapter);
@@ -128,10 +128,9 @@ public class StoreInfoAction extends BaseAction {
     }
 
     public void getInfo() {
-        if (bean == null) return;
         processDialog.show();
         ShopingApi api = new ShopingApi();
-        api.getShopInfoById(bean.shop_id, new JsonHttpResponseHandler() {
+        api.getShopInfoById(shop_id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -141,24 +140,28 @@ public class StoreInfoAction extends BaseAction {
                     try {
                         shopInfoBean = BaseApi.mapper.readValue(result.optString("shop"), ShopInfoBean.class);
                         if (shopInfoBean != null) {
+                            initActionBar(shopInfoBean.shop_name);
+                            actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+                            init();
                             timeTv.setText(shopInfoBean.business_time + "");
                             speedTv.setText(shopInfoBean.send_time + "");
                             priceTv.setText(shopInfoBean.freight + "元");
                             telTv.setText("" + shopInfoBean.tel);
-                            addressTv.setText(bean.addr);
-                        }
-                        JsonNode commentsNode = BaseApi.mapper.readTree(result.optString("comments"));
-                        if (commentsNode.isArray()) {
-                            for (JsonNode item : commentsNode) {
-                                Comment comment = BaseApi.mapper.readValue(item.toString(), Comment.class);
-                                comments.add(comment);
+                            addressTv.setText(shopInfoBean.addr);
+
+                            JsonNode commentsNode = BaseApi.mapper.readTree(result.optString("comments"));
+                            if (commentsNode.isArray()) {
+                                for (JsonNode item : commentsNode) {
+                                    Comment comment = BaseApi.mapper.readValue(item.toString(), Comment.class);
+                                    comments.add(comment);
+                                }
+                                if(comments.size()>0){
+                                    commentCountTv.setText("(共"+comments.size()+"评论)");
+                                }else{
+                                    commentCountTv.setText("(暂无评论)");
+                                }
+                                adapter.notifyDataSetChanged();
                             }
-                            if(comments.size()>0){
-                                commentCountTv.setText("(共"+comments.size()+"评论)");
-                            }else{
-                                commentCountTv.setText("(暂无评论)");
-                            }
-                            adapter.notifyDataSetChanged();
                         }
 
                     } catch (IOException e) {
@@ -184,7 +187,7 @@ public class StoreInfoAction extends BaseAction {
             return;
         }
         ShopingApi api = new ShopingApi();
-        api.isFavStore(uid, bean.shop_id, new JsonHttpResponseHandler() {
+        api.isFavStore(uid, shop_id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

@@ -21,36 +21,43 @@ public class FoodApi extends BaseApi {
         params.put("cate_id", cateId);
         get("Data", "getshops", params, handler);
     }
-    public void getFoodStoreList(int page,String type, int cateId, JsonHttpResponseHandler handler) {
+
+    public void getFoodStoreList(int page, String type, String taste, int cateId, JsonHttpResponseHandler handler) {
         RequestParams params = new RequestParams();
         params.put("page", page);
         params.put("cate_id", cateId);
-        params.put("type", type);
+        if (type != null)
+            params.put("type", type);
+        if (taste != null) {
+            params.put("taset", taste);
+        }
         get("Data", "getshops", params, handler);
     }
 
     /**
      * 获取店铺详情
+     *
      * @param shop_id 店铺id
-     * @param cateId 分类id ， 1食，71，饮
+     * @param cateId  分类id ， 1食，71，饮
      * @param handler
      */
-    public void getStoreDetail(int shop_id,int cateId,JsonHttpResponseHandler handler){
+    public void getStoreDetail(int shop_id, int cateId, JsonHttpResponseHandler handler) {
         RequestParams params = new RequestParams();
         params.put("shop_id", shop_id);
         params.put("cat", cateId);
-        params.put("order","s");
+        params.put("order", "s");
         get("Data", "shop", params, handler);
     }
 
     /**
      * 获取店铺商品列表
+     *
      * @param shop_id 店铺id
      * @param handler
      */
-    public void getShopGoodsList(int shop_id,JsonHttpResponseHandler handler){
+    public void getShopGoodsList(int shop_id, JsonHttpResponseHandler handler) {
         RequestParams params = new RequestParams();
-        params.put("shop_id",shop_id);
+        params.put("shop_id", shop_id);
         get("Data", "getshopgoods", params, handler);
     }
 

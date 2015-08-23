@@ -25,10 +25,12 @@ import com.sthelper.sthelper.bean.UserInfo;
 import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.business.food.FoodStoreListAction;
 import com.sthelper.sthelper.business.food.OpenStoreAction;
+import com.sthelper.sthelper.business.food.StoreInfoAction;
 import com.sthelper.sthelper.business.profile.MyAccountAction;
 import com.sthelper.sthelper.business.profile.MyAccountIDAction;
 import com.sthelper.sthelper.business.profile.MyFavAction;
 import com.sthelper.sthelper.business.profile.MyOrderListAction;
+import com.sthelper.sthelper.business.stone.StoneInfoAction;
 import com.sthelper.sthelper.business.stone.StoneListAction;
 import com.sthelper.sthelper.util.ImageLoadUtil;
 import com.sthelper.sthelper.util.SPUtil;
@@ -198,8 +200,20 @@ public class MainActivity extends BaseAction {
                     startActivity(intent);
                     break;
                 case R.id.menu_open_store:
+                    Object tag = paramAnonymousView.getTag();
                     intent = new Intent();
-                    intent.setClass(mActivity, OpenStoreAction.class);
+                    if (tag == null) {
+                        intent.setClass(mActivity, OpenStoreAction.class);
+                    } else {
+                        try {
+                            int shop_id = Integer.parseInt(tag + "");
+                            intent.setClass(mActivity, StoreInfoAction.class);
+                            intent.putExtra("shop_id",shop_id);
+                        } catch (Exception e) {
+                            intent.setClass(mActivity, OpenStoreAction.class);
+                            intent.putExtra("status",tag+"");
+                        }
+                    }
                     startActivity(intent);
                     break;
             }
@@ -336,6 +350,21 @@ public class MainActivity extends BaseAction {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+//                {"ret":1,"result":{"shop_id":"1"}}
+                View view = slidLayout.findViewById(R.id.menu_open_store);
+                TextView textView = (TextView) view.findViewById(R.id.menu_open_store_tv);
+                int ret = response.optInt("ret");
+                if (ret == 1) {//审核成功
+                    int shop_id = response.optJSONObject("result").optInt("shop_id");
+                    view.setTag(shop_id);
+                    textView.setText("我的店铺");
+                } else if (ret == 0) {//正在审核中或审核失败
+                    view.setTag("正在审核中或审核失败");
+                    textView.setText("我要开店");
+                } else if (ret == 2) {//尚未开店
+                    view.setTag(null);
+                    textView.setText("我要开店");
+                }
 
             }
 
@@ -359,6 +388,7 @@ public class MainActivity extends BaseAction {
                 processDialog.dismiss();
                 try {
                     JsonNode node = BaseApi.mapper.readTree(response.toString());
+
                     if (node.path("ret").asInt() == 0) {
                         UserInfo userInfo = BaseApi.mapper.readValue(node.findPath("userinfo").toString(), UserInfo.class);
                         app.currentUserInfo = userInfo;

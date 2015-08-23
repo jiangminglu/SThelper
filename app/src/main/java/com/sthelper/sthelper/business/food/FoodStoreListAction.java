@@ -48,7 +48,7 @@ public class FoodStoreListAction extends BaseAction {
 
     private ImageView hotImg;
     private View bottomLayout;
-    private PopupWindow typePop, flavorPop;
+    private PopupWindow typePop, tastePop;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,11 +63,12 @@ public class FoodStoreListAction extends BaseAction {
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_blue_actionbar_bg)));
         }
         init();
-        loadData();
+        loadData("default", null);
     }
 
     private void init() {
         initTypePop();
+        initTastPop();
         list = new ArrayList<FoodStoreBean>();
 
         adapter = new FoodStoreListAdapter(list, mActivity, currentType);
@@ -85,6 +86,7 @@ public class FoodStoreListAction extends BaseAction {
             bottomLayout.setBackgroundColor(getResources().getColor(R.color.app_blue_actionbar_bg));
         }
         findViewById(R.id.food_store_all_type).setOnClickListener(onClickListener);
+        findViewById(R.id.food_store_all_flavor).setOnClickListener(onClickListener);
         findViewById(R.id.goto_car).setOnClickListener(onClickListener);
         findViewById(R.id.goto_order).setOnClickListener(onClickListener);
         hotImg.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +94,7 @@ public class FoodStoreListAction extends BaseAction {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(mActivity, HotStoreAction.class);
-                intent.putExtra("type",currentType);
+                intent.putExtra("type", currentType);
                 startActivity(intent);
             }
         });
@@ -104,7 +106,7 @@ public class FoodStoreListAction extends BaseAction {
         typePop.setOutsideTouchable(true);
         final int count = rootView.getChildCount();
         for (int i = 0; i < count; i++) {
-            RelativeLayout item = (RelativeLayout) rootView.getChildAt(i);
+            final RelativeLayout item = (RelativeLayout) rootView.getChildAt(i);
             if (currentType == 100) {
                 item.getChildAt(1).setBackgroundResource(R.mipmap.icon_check_yellow);
             } else if (currentType == 101) {
@@ -121,12 +123,48 @@ public class FoodStoreListAction extends BaseAction {
                     View imageView = ((RelativeLayout) (view)).getChildAt(1);
                     imageView.setVisibility(View.VISIBLE);
                     typePop.dismiss();
+
+                    String tag = item.getTag() + "";
+                    loadData(tag, null);
+
                 }
             });
         }
     }
 
-    private void loadData() {
+    private void initTastPop() {
+        final LinearLayout rootView = (LinearLayout) getLayoutInflater().inflate(R.layout.food_taste_pop_layout, null);
+        tastePop = new PopupWindow(rootView, app.screenW, getResources().getDimensionPixelSize(R.dimen.food_store_h));
+        tastePop.setOutsideTouchable(true);
+        final int count = rootView.getChildCount();
+        for (int i = 0; i < count; i++) {
+            final RelativeLayout item = (RelativeLayout) rootView.getChildAt(i);
+            if (currentType == 100) {
+                item.getChildAt(1).setBackgroundResource(R.mipmap.icon_check_yellow);
+            } else if (currentType == 101) {
+                item.getChildAt(1).setBackgroundResource(R.mipmap.icon_check_blue);
+            }
+
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    for (int j = 0; j < count; j++) {
+                        RelativeLayout item = (RelativeLayout) rootView.getChildAt(j);
+                        item.getChildAt(1).setVisibility(View.GONE);
+                    }
+                    View imageView = ((RelativeLayout) (view)).getChildAt(1);
+                    imageView.setVisibility(View.VISIBLE);
+                    tastePop.dismiss();
+
+                    String tag = item.getTag() + "";
+                    loadData(null, tag);
+
+                }
+            });
+        }
+    }
+
+    private void loadData(String type, String taste) {
         processDialog.show();
         int cateId;
         if (currentType == TYPE_SHI) {
@@ -135,7 +173,7 @@ public class FoodStoreListAction extends BaseAction {
             cateId = 71;
         }
         FoodApi api = new FoodApi();
-        api.getFoodStoreList(1, cateId, new JsonHttpResponseHandler() {
+        api.getFoodStoreList(1, type, taste, cateId, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -143,6 +181,7 @@ public class FoodStoreListAction extends BaseAction {
                 try {
                     JsonNode node = BaseApi.mapper.readTree(response.toString());
                     if (0 == node.path("ret").asInt()) {
+                        list.removeAll(list);
                         JsonNode result = node.path("result");
                         if (result.isArray()) {
                             Gson gson = new Gson();
@@ -189,8 +228,8 @@ public class FoodStoreListAction extends BaseAction {
                 typePop.dismiss();
                 return true;
             }
-            if (flavorPop != null && flavorPop.isShowing()) {
-                flavorPop.dismiss();
+            if (tastePop != null && tastePop.isShowing()) {
+                tastePop.dismiss();
                 return true;
             }
         }
@@ -207,7 +246,16 @@ public class FoodStoreListAction extends BaseAction {
                 } else {
                     typePop.showAsDropDown(view);
                 }
+            } else if (view.getId() == R.id.food_store_all_flavor) {
+                if (tastePop == null) initTastPop();
+                if (tastePop.isShowing()) {
+                    tastePop.dismiss();
+                } else {
+                    tastePop.showAsDropDown(view);
+                }
+
             } else if (view.getId() == R.id.goto_car) {
+
                 Intent intent = new Intent();
                 intent.setClass(mActivity, CarAction.class);
                 startActivity(intent);
@@ -235,8 +283,8 @@ public class FoodStoreListAction extends BaseAction {
             typePop.dismiss();
             return;
         }
-        if (flavorPop != null && flavorPop.isShowing()) {
-            flavorPop.dismiss();
+        if (tastePop != null && tastePop.isShowing()) {
+            tastePop.dismiss();
             return;
         }
 
