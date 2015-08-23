@@ -51,6 +51,7 @@ public class SPUtil {
     public static void clean() {
         SharedPreferences preferences = SApp.getInstance().preferences;
         SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
         editor.commit();
 
     }

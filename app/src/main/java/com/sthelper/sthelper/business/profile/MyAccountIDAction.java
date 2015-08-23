@@ -16,8 +16,10 @@ import com.sthelper.sthelper.api.UserApi;
 import com.sthelper.sthelper.bean.UserInfo;
 import com.sthelper.sthelper.business.AboutAction;
 import com.sthelper.sthelper.business.BaseAction;
+import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.util.ImageLoadUtil;
 import com.sthelper.sthelper.util.SPUtil;
+import com.sthelper.sthelper.util.ToastUtil;
 import com.sthelper.sthelper.view.BaseProcessDialog;
 
 import org.apache.http.Header;
@@ -99,6 +101,13 @@ public class MyAccountIDAction extends BaseAction implements View.OnClickListene
                         UserInfo userInfo = BaseApi.mapper.readValue(node.findPath("userinfo").toString(), UserInfo.class);
                         app.currentUserInfo = userInfo;
                         refreshUI();
+                    } else if (response.optInt("ret") == 3001) {
+                        ToastUtil.showToast(response.optString("error"));
+                        Intent intent = new Intent();
+                        intent.setClass(mActivity, LoginAction.class);
+                        startActivity(intent);
+                    } else {
+                        ToastUtil.showToast(response.optString("error"));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

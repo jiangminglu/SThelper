@@ -14,6 +14,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sthelper.sthelper.FeedBackAction;
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.SApp;
 import com.sthelper.sthelper.api.CommonApi;
 import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.util.SPUtil;
@@ -73,6 +74,7 @@ public class SettingAction extends BaseAction implements View.OnClickListener {
             }, 2000);
         } else if (view == settingchangeaccount) {
             SPUtil.clean();
+            SApp.getInstance().currentUserInfo = null;
             intent.setClass(mActivity, LoginAction.class);
             startActivity(intent);
             finish();

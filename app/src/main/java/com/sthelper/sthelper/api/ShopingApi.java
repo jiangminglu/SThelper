@@ -153,10 +153,11 @@ public class ShopingApi extends BaseApi {
      * @param order_id
      * @param handler
      */
-    public void changeOrderStatus(int uid, String order_id, JsonHttpResponseHandler handler) {
+    public void changeOrderStatus(int integral,int uid, String order_id, JsonHttpResponseHandler handler) {
         RequestParams params = new RequestParams();
         params.put("order_id", order_id);
         params.put("uid", uid);
+        params.put("score",integral);
         get("User", "payorder", params, handler);
     }
 
@@ -292,6 +293,18 @@ public class ShopingApi extends BaseApi {
      */
     public void openShop(RequestParams params, JsonHttpResponseHandler handler) {
         postOpenShop(params, handler);
+    }
+
+    /**
+     * 获取开店的审核状态
+     *
+     * @param uid
+     * @param handler
+     */
+    public void getShopStatus(int uid, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("uid", uid);
+        get("User", "getshopstatus", params, handler);
     }
 
 }

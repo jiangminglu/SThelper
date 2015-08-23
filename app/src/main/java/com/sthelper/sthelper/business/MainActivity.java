@@ -14,10 +14,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sthelper.sthelper.R;
+import com.sthelper.sthelper.SApp;
 import com.sthelper.sthelper.api.BaseApi;
 import com.sthelper.sthelper.api.CommonApi;
+import com.sthelper.sthelper.api.ShopingApi;
+import com.sthelper.sthelper.api.UserApi;
 import com.sthelper.sthelper.bean.Area;
 import com.sthelper.sthelper.bean.Business;
+import com.sthelper.sthelper.bean.UserInfo;
 import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.business.food.FoodStoreListAction;
 import com.sthelper.sthelper.business.food.OpenStoreAction;
@@ -26,9 +30,13 @@ import com.sthelper.sthelper.business.profile.MyAccountIDAction;
 import com.sthelper.sthelper.business.profile.MyFavAction;
 import com.sthelper.sthelper.business.profile.MyOrderListAction;
 import com.sthelper.sthelper.business.stone.StoneListAction;
+import com.sthelper.sthelper.util.ImageLoadUtil;
 import com.sthelper.sthelper.util.SPUtil;
+import com.sthelper.sthelper.util.ToastUtil;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -39,6 +47,7 @@ public class MainActivity extends BaseAction {
     private static final int[] ITEM_DRAWABLES = {R.mipmap.icon_shi, R.mipmap.icon_yin, R.mipmap.icon_stone, R.mipmap.icon_hui};
     private ArcMenu goArcMenu;
     private SlidingMenu menu;
+    private ImageView img1, img2, img3, img4;
 
     private View slidLayout;
 
@@ -60,10 +69,13 @@ public class MainActivity extends BaseAction {
         this.menu.setMenu(this.slidLayout);
         init();
 
+        getOpenShopStatus();
         savaAppLogo();
-
+        getMainPic();
+        getUserInfo();
 
     }
+
 
     @Override
     protected void onResume() {
@@ -205,6 +217,10 @@ public class MainActivity extends BaseAction {
             this.goArcMenu.addItem(localImageView, onClickListener);
         }
 
+        img1 = (ImageView) findViewById(R.id.main_item_img1);
+        img2 = (ImageView) findViewById(R.id.main_item_img2);
+        img3 = (ImageView) findViewById(R.id.main_item_img3);
+        img4 = (ImageView) findViewById(R.id.main_item_img4);
         this.slidLayout.findViewById(R.id.menu_user).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_account).setOnClickListener(this.onClickListener);
         this.slidLayout.findViewById(R.id.menu_invite).setOnClickListener(this.onClickListener);
@@ -273,5 +289,94 @@ public class MainActivity extends BaseAction {
         super.onBackPressed();
     }
 
+    private void getMainPic() {
+        CommonApi api = new CommonApi();
+        api.getMainPic(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (response.optInt("ret") == 0) {
+                    JSONArray array = response.optJSONArray("result");
+                    if (array != null && array.length() > 0) {
+                        try {
+                            JSONObject jsonObject1 = array.getJSONObject(0);
+                            String url1 = jsonObject1.optString("photo");
+                            ImageLoadUtil.getCommonImage(img1, SApp.IMG_URL + url1);
+
+                            JSONObject jsonObject2 = array.getJSONObject(1);
+                            String url2 = jsonObject2.optString("photo");
+                            ImageLoadUtil.getCommonImage(img2, SApp.IMG_URL + url2);
+
+                            JSONObject jsonObject3 = array.getJSONObject(2);
+                            String url3 = jsonObject3.optString("photo");
+                            ImageLoadUtil.getCommonImage(img3, SApp.IMG_URL + url3);
+
+                            JSONObject jsonObject4 = array.getJSONObject(3);
+                            String url4 = jsonObject4.optString("photo");
+                            ImageLoadUtil.getCommonImage(img4, SApp.IMG_URL + url4);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
+
+    private void getOpenShopStatus() {
+        int uid = SPUtil.getInt("uid");
+        if (uid < 1) return;
+        ShopingApi api = new ShopingApi();
+        api.getShopStatus(uid, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
+
+    private void getUserInfo() {
+        int uid = SPUtil.getInt("uid");
+        String token = SPUtil.getString("token");
+        if (uid < 1) return;
+        processDialog.show();
+        final UserApi api = new UserApi();
+        api.getUserInfo(uid, token, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                processDialog.dismiss();
+                try {
+                    JsonNode node = BaseApi.mapper.readTree(response.toString());
+                    if (node.path("ret").asInt() == 0) {
+                        UserInfo userInfo = BaseApi.mapper.readValue(node.findPath("userinfo").toString(), UserInfo.class);
+                        app.currentUserInfo = userInfo;
+                    } else {
+                        ToastUtil.showToast(response.optString("error"));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                processDialog.dismiss();
+            }
+        });
+    }
 
 }

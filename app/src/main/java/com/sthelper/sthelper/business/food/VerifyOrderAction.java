@@ -37,6 +37,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,14 +54,14 @@ public class VerifyOrderAction extends BaseAction implements View.OnClickListene
 
     private ArrayList<String> orderIds = new ArrayList<String>();
 
-    private TextView totalNumTv, totalPriceTv;
+    private TextView totalNumTv, totalPriceTv, integralTv;
     private LinearLayout goodsListView;
     private TextView addAddressTv;//添加收货地址
     private View addressLayout;
     private double totalPrice;
     private Address address;
     private EditText tipsEt;
-    private CheckBox daofuCk, alipayCk;
+    private CheckBox daofuCk, alipayCk, integralCk;
 
     private ArrayList<CartGoodsItem> list = new ArrayList<CartGoodsItem>();
 
@@ -82,10 +83,13 @@ public class VerifyOrderAction extends BaseAction implements View.OnClickListene
         totalNumTv = (TextView) findViewById(R.id.order_goods_total_num);
         addAddressTv = (TextView) findViewById(R.id.add_address);
         addressLayout = findViewById(R.id.address_layout);
+        integralCk = (CheckBox) findViewById(R.id.order_integral_ck);
+        integralTv = (TextView) findViewById(R.id.order_integral_tv);
 
         daofuCk = (CheckBox) findViewById(R.id.order_daofu_ck);
         alipayCk = (CheckBox) findViewById(R.id.order_alipay_ck);
 
+        integralCk.setOnClickListener(this);
         daofuCk.setOnClickListener(this);
         alipayCk.setOnClickListener(this);
         goodsListView.removeAllViews();
@@ -222,8 +226,14 @@ public class VerifyOrderAction extends BaseAction implements View.OnClickListene
         if (temp == null) {
             processDialog.dismiss();
             if (!daofuCk.isChecked())//如果不是到付，就是阿里支付
-                pay("购买商品", 0.01);
-            else finish();
+            {
+                if (integralCk.isChecked()) {
+                    pay("购买商品", totalPrice - userIntegral / 30);
+                } else {
+                    pay("购买商品", totalPrice);
+                }
+
+            } else finish();
             return;
         }
         StringBuffer stringBuffer = new StringBuffer();
@@ -427,12 +437,14 @@ public class VerifyOrderAction extends BaseAction implements View.OnClickListene
 
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
+                        app.currentUserInfo.integral = -userIntegral;
                         Toast.makeText(mActivity, "支付成功",
                                 Toast.LENGTH_SHORT).show();
                         processDialog.show();
                         processDialog.setCancelable(false);
                         for (int i = 0; i < orderIds.size(); i++) {
-                            changeOrder(orderIds.get(i));
+                            changeOrder(orderIds.get(i), userIntegral);
+                            userIntegral = 0;
                         }
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -484,11 +496,11 @@ public class VerifyOrderAction extends BaseAction implements View.OnClickListene
         }
     }
 
-    private void changeOrder(String order_id) {
+    private void changeOrder(String order_id, int integral) {
         int uid = SPUtil.getInt("uid");
         if (uid < 1) return;
         ShopingApi api = new ShopingApi();
-        api.changeOrderStatus(uid, order_id, new JsonHttpResponseHandler() {
+        api.changeOrderStatus(integral, uid, order_id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -504,6 +516,8 @@ public class VerifyOrderAction extends BaseAction implements View.OnClickListene
             }
         });
     }
+
+    private int userIntegral = 0;
 
     @Override
     public void onClick(View view) {
@@ -522,6 +536,30 @@ public class VerifyOrderAction extends BaseAction implements View.OnClickListene
             } else {
                 daofuCk.setChecked(true);
                 alipayCk.setChecked(false);
+                integralCk.setChecked(false);
+            }
+        } else if (view == integralCk) {
+            if (!integralCk.isChecked()) {
+                integralCk.setChecked(false);
+                integralTv.setText(0 + "￥");
+
+            } else {
+                integralCk.setChecked(true);
+                alipayCk.setChecked(true);
+                daofuCk.setChecked(false);
+
+                double temp = totalPrice * 0.1;
+                double tempPrice = app.currentUserInfo.integral / 30;
+                if (tempPrice <= temp) {
+                    userIntegral = app.currentUserInfo.integral;
+                } else {
+                    userIntegral = (int) (temp * 30);
+                }
+                float x = ((float) userIntegral) / 30;
+                BigDecimal bigDecimal = new BigDecimal(x);
+                x = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+
+                integralTv.setText(x + "￥");
             }
         }
     }

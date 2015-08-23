@@ -92,4 +92,14 @@ public class CommonApi extends BaseApi {
         get("Data", "searchstone", params, handler);
     }
 
+    /**
+     * 获取首页广告图
+     *
+     * @param handler
+     */
+    public void getMainPic(JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        get("Data", "frontpic", params, handler);
+    }
+
 }
