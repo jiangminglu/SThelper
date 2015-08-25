@@ -63,11 +63,12 @@ public class FoodStoreListAdapter extends BaseAdapter {
             RatingBar ratingBar = (RatingBar) view.findViewById(R.id.food_store_listitem_rating);
             RatingBar ratingBar1 = (RatingBar) view.findViewById(R.id.food_store_listitem_rating1);
             viewHolder.timeDesc = (TextView) view.findViewById(R.id.food_store_listitem_time_desc);
-            if(type == 100){
+            viewHolder.speedTv = (TextView) view.findViewById(R.id.food_store_listitem_price_desc);
+            if (type == 100) {
                 viewHolder.ratingBar = ratingBar;
                 ratingBar.setVisibility(View.VISIBLE);
                 ratingBar1.setVisibility(View.GONE);
-            }else if(type == 101){
+            } else if (type == 101) {
                 viewHolder.ratingBar = ratingBar1;
                 ratingBar.setVisibility(View.GONE);
                 ratingBar1.setVisibility(View.VISIBLE);
@@ -89,13 +90,15 @@ public class FoodStoreListAdapter extends BaseAdapter {
         }
 
         FoodStoreBean bean = list.get(i);
+        viewHolder.remarkTv.setText(bean.extension);
+        viewHolder.speedTv.setText(bean.since_money + "元起送/人均消费" + bean.price + "元");
         viewHolder.nameTv.setText(bean.shop_name);
         viewHolder.ratingBar.setRating(bean.score);
-        ImageLoadUtil.getCommonImage(viewHolder.logoImg, SApp.IMG_URL+bean.photo);
+        ImageLoadUtil.getCommonImage(viewHolder.logoImg, SApp.IMG_URL + bean.photo);
         viewHolder.timeDesc.setText(bean.business_time);
-        if(bean.closed == 0){
+        if (bean.closed == 0) {
             viewHolder.statusTv.setText("营业中");
-        }else{
+        } else {
             viewHolder.statusTv.setText("暂停中");
         }
         return view;
@@ -108,6 +111,6 @@ public class FoodStoreListAdapter extends BaseAdapter {
         public TextView remarkTv;
         public RatingBar ratingBar;
         public ImageView logoImg;
-        public TextView timeDesc;
+        public TextView timeDesc, speedTv;
     }
 }

@@ -361,6 +361,9 @@ public class TakingOrderAction extends BaseAction {
                 if (0 == response.optInt("ret")) {
                     boolean flag = false;
                     GoodsInfo goodsInfoIndex = null;
+                    if(priceList.size()==0){
+                        priceList.add(goodsInfo);
+                    }
                     for (GoodsInfo bean : priceList) {
                         if (bean.product_id == goodsInfo.product_id) {
                             flag = true;

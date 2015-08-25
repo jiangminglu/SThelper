@@ -31,7 +31,8 @@ public class UserApi extends BaseApi {
     public void getUserAddressList(int uid, int status, JsonHttpResponseHandler jsonHttpResponseHandler) {
         RequestParams params = new RequestParams();
         params.put("uid", uid);
-        params.put("status", status);
+        if (status > 0)
+            params.put("status", status);
         get("User", "getorder", params, jsonHttpResponseHandler);
     }
 

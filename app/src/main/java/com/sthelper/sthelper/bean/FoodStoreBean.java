@@ -119,9 +119,10 @@ public class FoodStoreBean implements Parcelable {
     public String shop_name;
     public String extension;
     public String card_date;
+    public String intro;
+    public String distribution;
+    public String since_money;
 
-    public FoodStoreBean() {
-    }
 
     @Override
     public int describeContents() {
@@ -184,6 +185,12 @@ public class FoodStoreBean implements Parcelable {
         dest.writeString(this.shop_name);
         dest.writeString(this.extension);
         dest.writeString(this.card_date);
+        dest.writeString(this.intro);
+        dest.writeString(this.distribution);
+        dest.writeString(this.since_money);
+    }
+
+    public FoodStoreBean() {
     }
 
     protected FoodStoreBean(Parcel in) {
@@ -241,6 +248,9 @@ public class FoodStoreBean implements Parcelable {
         this.shop_name = in.readString();
         this.extension = in.readString();
         this.card_date = in.readString();
+        this.intro = in.readString();
+        this.distribution = in.readString();
+        this.since_money = in.readString();
     }
 
     public static final Creator<FoodStoreBean> CREATOR = new Creator<FoodStoreBean>() {

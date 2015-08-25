@@ -62,20 +62,22 @@ public class MyOrderListAdapter extends BaseAdapter {
         holder.storeTv.setText(order.mainInfo.shop_name);
         holder.timeTv.setText(order.mainInfo.create_time);
         holder.orderIdTv.setText("订单编号: " + order.mainInfo.order_id + "");
-        holder.addressTv.setText("四川成都");
-        String text="";
-//        0表示没付款,1付款了,2配送中,3完成
-        if (status == 0) {
-            text = "待付款";
-        } else if (status == 1) {
-            text = "已付款";
-        } else if (status == 2) {
-            text = "配送中";
-        } else if (status == 3) {
-            text = "完成";
+        holder.addressTv.setText(order.mainInfo.addr);
+        String text = "";
+//        @"未付款",@"待发货",@"进行中",@"已完成",@"已关闭"
+        if (order.mainInfo.status == 0) {
+            text = "未付款";
+        } else if (order.mainInfo.status == 1) {
+            text = "待发货";
+        } else if (order.mainInfo.status == 2) {
+            text = "进行中";
+        } else if (order.mainInfo.status == 3) {
+            text = "已完成";
+        } else if (order.mainInfo.status == 4) {
+            text = "已关闭";
         }
 
-        if(order.mainInfo.is_daofu == 1){
+        if (order.mainInfo.is_daofu == 1) {
             text = "货到付款";
         }
         holder.statusTv.setText(text);
@@ -84,6 +86,6 @@ public class MyOrderListAdapter extends BaseAdapter {
     }
 
     private static class ViewHolder {
-        public TextView timeTv, orderIdTv, addressTv, statusTv, totalPriceTv,storeTv;
+        public TextView timeTv, orderIdTv, addressTv, statusTv, totalPriceTv, storeTv;
     }
 }

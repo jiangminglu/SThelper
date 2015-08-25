@@ -240,6 +240,9 @@ public class FoodStoreListAction extends BaseAction {
         @Override
         public void onClick(View view) {
             if (view.getId() == R.id.food_store_all_type) {
+                if (tastePop.isShowing()) {
+                    tastePop.dismiss();
+                }
                 if (typePop == null) initTypePop();
                 if (typePop.isShowing()) {
                     typePop.dismiss();
@@ -247,6 +250,9 @@ public class FoodStoreListAction extends BaseAction {
                     typePop.showAsDropDown(view);
                 }
             } else if (view.getId() == R.id.food_store_all_flavor) {
+                if (typePop.isShowing()) {
+                    typePop.dismiss();
+                }
                 if (tastePop == null) initTastPop();
                 if (tastePop.isShowing()) {
                     tastePop.dismiss();

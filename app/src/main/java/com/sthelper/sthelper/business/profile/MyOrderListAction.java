@@ -50,12 +50,12 @@ public class MyOrderListAction extends FragmentActivity {
 
         @Override
         public Fragment getItem(int i) {
-            return OrderFragment.getInstance(i);
+            return OrderFragment.getInstance(i-1);
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return TITLES.length;
         }
 
         @Override
