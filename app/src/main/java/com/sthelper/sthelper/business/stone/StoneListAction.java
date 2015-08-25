@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class StoneListAction extends BaseAction implements View.OnClickListener {
+public class StoneListAction extends BaseAction {
 
     private ListView sortListView;
     private SideBar sideBar;
@@ -55,8 +55,8 @@ public class StoneListAction extends BaseAction implements View.OnClickListener 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stone_list_action);
-        initActionBar("水头石材");
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_stone_actionbar_bg)));
+        initActionBar("水头石材");
         init();
         loadData(1);
     }
@@ -138,6 +138,7 @@ public class StoneListAction extends BaseAction implements View.OnClickListener 
     }
     @Override
     public void onClick(View view) {
+        super.onClick(view);
         if (view == type1) {
             type1.setBackgroundResource(R.drawable.stone_type);
             type1.setTextColor(getResources().getColor(R.color.app_stone_actionbar_bg));

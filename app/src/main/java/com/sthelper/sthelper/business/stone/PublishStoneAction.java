@@ -58,10 +58,10 @@ public class PublishStoneAction extends BaseAction {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_stone_action);
-        initActionBar("");
         tempPhotoPath = app.cachePath + "/temp.jpg";
 
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_stone_actionbar_bg)));
+        initActionBar("");
         initView();
     }
 

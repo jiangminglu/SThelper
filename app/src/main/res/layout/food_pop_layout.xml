@@ -50,7 +50,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="按销量"
+            android:text="销量排行"
             android:textColor="#000000"
             android:textSize="14sp"/>
 
@@ -83,7 +83,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="按评分"
+            android:text="评分排行"
             android:textColor="#000000"
             android:textSize="14sp"/>
 
@@ -116,7 +116,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="按起送价"
+            android:text="人均最低"
             android:textColor="#000000"
             android:textSize="14sp"/>
 
@@ -149,7 +149,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="按送餐速度"
+            android:text="送餐速度"
             android:textColor="#000000"
             android:textSize="14sp"/>
 

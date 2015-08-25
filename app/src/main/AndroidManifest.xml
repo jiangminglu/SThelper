@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.sthelper.sthelper"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          android:versionCode="1"
-          android:versionName="st">
+<manifest
+    package="com.sthelper.sthelper"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="1"
+    android:versionName="st">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
@@ -50,10 +51,7 @@
         <activity
             android:name=".business.food.StoreInfoAction"
             android:label="@string/title_activity_store_info_action"
-            android:parentActivityName=".business.BaseAction">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.sthelper.sthelper.business.BaseAction"/>
+            >
         </activity>
         <activity
             android:name=".business.food.TakingOrderAction"
@@ -63,18 +61,13 @@
         <activity
             android:name=".business.FavorableAction"
             android:label="@string/title_activity_favorable_action"
-            android:parentActivityName=".business.BaseAction">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.sthelper.sthelper.business.BaseAction"/>
+            >
+
         </activity>
         <activity
             android:name=".business.stone.StoneListAction"
             android:label="@string/title_activity_stone_list_action"
-            android:parentActivityName=".business.BaseAction">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.sthelper.sthelper.business.BaseAction"/>
+            >
         </activity>
         <activity
             android:name=".business.stone.PublishStoneAction"

@@ -88,7 +88,7 @@ public class FindAction extends BaseAction implements View.OnClickListener {
         view.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setCustomView(view);
-
+        view.findViewById(android.R.id.home).setOnClickListener(this);
         searchEt = (EditText) view.findViewById(R.id.search_et);
 
 
@@ -145,6 +145,7 @@ public class FindAction extends BaseAction implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        super.onClick(view);
         if (view == searchEt) {
             searchtypelayout.setVisibility(View.VISIBLE);
         } else if (view == searchshoplayout) {

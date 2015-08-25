@@ -27,8 +27,8 @@ public class FavorableAction extends BaseAction {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorable_action);
-        initActionBar("优惠活动");
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#7c4dff")));
+        initActionBar("优惠活动");
         init();
 
         loadData();

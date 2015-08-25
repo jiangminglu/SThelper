@@ -33,9 +33,10 @@ public class StoneItemListAction extends BaseAction {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stone_item_info_action);
-        initActionBar("白岩石");
+
         stone_id = getIntent().getIntExtra("stone_id", 0);
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_stone_actionbar_bg)));
+        initActionBar("");
         init();
         loadData();
     }

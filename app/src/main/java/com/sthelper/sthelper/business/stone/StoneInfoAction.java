@@ -45,8 +45,8 @@ public class StoneInfoAction extends BaseAction {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stone_info_action);
         bean = getIntent().getParcelableExtra("bean");
-        initActionBar(bean.my_stone_name);
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_stone_actionbar_bg)));
+        initActionBar(bean.my_stone_name);
         initView();
     }
 
