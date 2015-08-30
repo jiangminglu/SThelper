@@ -91,6 +91,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/order_pay_method_tv"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_vertical"

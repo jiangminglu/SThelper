@@ -54,6 +54,7 @@ public class MyOrderListAdapter extends BaseAdapter {
             holder.statusTv = (TextView) view.findViewById(R.id.order_status_tv);
             holder.totalPriceTv = (TextView) view.findViewById(R.id.order_total_price_tv);
             holder.storeTv = (TextView) view.findViewById(R.id.order_item_store_name);
+            holder.payMethodTv = (TextView) view.findViewById(R.id.order_pay_method_tv);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -76,9 +77,10 @@ public class MyOrderListAdapter extends BaseAdapter {
         } else if (order.mainInfo.status == 4) {
             text = "已关闭";
         }
-
+        holder.payMethodTv.setText("支付方式: 支付宝");
         if (order.mainInfo.is_daofu == 1) {
-            text = "货到付款";
+            text = "线下付款";
+            holder.payMethodTv.setText("支付方式: " + text);
         }
         holder.statusTv.setText(text);
         holder.totalPriceTv.setText(order.mainInfo.total_price + "￥");
@@ -86,6 +88,6 @@ public class MyOrderListAdapter extends BaseAdapter {
     }
 
     private static class ViewHolder {
-        public TextView timeTv, orderIdTv, addressTv, statusTv, totalPriceTv, storeTv;
+        public TextView timeTv, orderIdTv, addressTv, statusTv, totalPriceTv, storeTv, payMethodTv;
     }
 }

@@ -116,7 +116,11 @@ public class MainActivity extends BaseAction {
                     break;
                 case R.id.menu_order:
                     localIntent = new Intent();
-                    localIntent.setClass(MainActivity.this, MyOrderListAction.class);
+                    if (uid < 1) {
+                        localIntent.setClass(MainActivity.this, LoginAction.class);
+                    } else {
+                        localIntent.setClass(MainActivity.this, MyOrderListAction.class);
+                    }
                     MainActivity.this.startActivity(localIntent);
                     break;
                 case R.id.menu_account:
@@ -208,10 +212,10 @@ public class MainActivity extends BaseAction {
                         try {
                             int shop_id = Integer.parseInt(tag + "");
                             intent.setClass(mActivity, StoreInfoAction.class);
-                            intent.putExtra("shop_id",shop_id);
+                            intent.putExtra("shop_id", shop_id);
                         } catch (Exception e) {
                             intent.setClass(mActivity, OpenStoreAction.class);
-                            intent.putExtra("status",tag+"");
+                            intent.putExtra("status", tag + "");
                         }
                     }
                     startActivity(intent);
@@ -394,6 +398,7 @@ public class MainActivity extends BaseAction {
                         app.currentUserInfo = userInfo;
                     } else {
                         ToastUtil.showToast(response.optString("error"));
+                        SPUtil.save("uid", -10);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -5,6 +5,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
@@ -22,6 +25,7 @@ public class FavorableAction extends BaseAction {
     private FAdapter adapter;
     private ArrayList<FavorableBean> list;
     private GridView gridView;
+    private WebView webView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,21 @@ public class FavorableAction extends BaseAction {
     }
 
     private void init() {
+        webView = (WebView) findViewById(R.id.webview);
+        webView.setVisibility(View.VISIBLE);
+        // 支持javascript
+        webView.getSettings().setJavaScriptEnabled(true);
+        // 控制网页的链接仍在webView中跳转
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);   //在当前的webview中跳转到新的url
+                return true;
+            }
+        });
+        webView.loadUrl("http://120.26.49.208/yiyuanduobao/");
+
+
         list = new ArrayList<FavorableBean>();
         adapter = new FAdapter();
 
@@ -88,6 +107,15 @@ public class FavorableAction extends BaseAction {
         private class ViewHolder {
             public ImageView imageView;
             public TextView titleTv;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            finish();
         }
     }
 }

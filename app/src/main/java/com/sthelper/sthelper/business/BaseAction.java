@@ -28,7 +28,12 @@ public class BaseAction extends Activity implements View.OnClickListener{
             ((TextView) view.findViewById(R.id.title)).setText(title);
             ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
             this.actionBar.setCustomView(view, layout);
-            view.findViewById(android.R.id.home).setOnClickListener(this);
+            view.findViewById(android.R.id.home).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
         }
 
     }
