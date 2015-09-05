@@ -151,55 +151,55 @@ public class MainActivity extends BaseAction {
                     MainActivity.this.startActivity(localIntent);
                     break;
                 case 100:
-                    goArcMenu.resetBgView();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
+//                    goArcMenu.resetBgView();
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
                             Intent intent = new Intent();
                             intent.putExtra("type", 100);
                             intent.setClass(mActivity, FoodStoreListAction.class);
                             startActivity(intent);
-                        }
-                    }, 150);
+//                        }
+//                    }, 150);
                     break;
                 case 101:
-                    goArcMenu.resetBgView();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent();
+//                    goArcMenu.resetBgView();
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+                            intent = new Intent();
                             intent.putExtra("type", 101);
                             intent.setClass(mActivity, FoodStoreListAction.class);
                             startActivity(intent);
-                        }
-                    }, 150);
+//                        }
+//                    }, 150);
 
                     break;
                 case 102:
-                    goArcMenu.resetBgView();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent();
+//                    goArcMenu.resetBgView();
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+                             intent = new Intent();
                             intent.setClass(mActivity, StoneListAction.class);
                             startActivity(intent);
-                        }
-                    }, 200);
+//                        }
+//                    }, 200);
 
                     break;
                 case 103:
-                    goArcMenu.resetBgView();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent();
+//                    goArcMenu.resetBgView();
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+                             intent = new Intent();
                             intent.setClass(mActivity, FavorableAction.class);
                             startActivity(intent);
-                        }
-                    }, 200);
+//                        }
+//                    }, 200);
                     break;
                 case R.id.menu_setting:
-                    Intent intent = new Intent();
+                     intent = new Intent();
                     intent.setClass(mActivity, SettingAction.class);
                     startActivity(intent);
                     break;

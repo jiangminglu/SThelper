@@ -18,6 +18,7 @@ public class Comment implements Parcelable {
     public String content;
     public String create_time;
     public float score;
+    public String nickname;
     public String account;
 
     @Override
@@ -31,6 +32,7 @@ public class Comment implements Parcelable {
         dest.writeString(this.create_time);
         dest.writeFloat(this.score);
         dest.writeString(this.account);
+        dest.writeString(this.nickname);
     }
 
     public Comment() {
@@ -41,6 +43,7 @@ public class Comment implements Parcelable {
         this.create_time = in.readString();
         this.score = in.readFloat();
         this.account = in.readString();
+        this.nickname = in.readString();
     }
 
     public static final Parcelable.Creator<Comment> CREATOR = new Parcelable.Creator<Comment>() {

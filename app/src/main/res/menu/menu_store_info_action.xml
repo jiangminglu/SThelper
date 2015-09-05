@@ -3,7 +3,7 @@
       tools:context="com.sthelper.sthelper.business.food.StoreInfoAction">
     <item
         android:id="@+id/action_settings"
-        android:icon="@mipmap/shop_fav"
         android:showAsAction="always"
+        android:title="收藏"
         />
 </menu>
