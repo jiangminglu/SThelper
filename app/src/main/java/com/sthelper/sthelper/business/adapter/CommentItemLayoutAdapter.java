@@ -60,7 +60,13 @@ public class CommentItemLayoutAdapter extends BaseAdapter {
 
     private void initializeViews(Comment object, ViewHolder holder) {
         holder.commentContentTv.setText(object.content);
-        holder.commentTelTv.setText(object.account);
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(object.account.substring(0,3));
+        stringBuffer.append("****");
+        stringBuffer.append(object.account.substring(object.account.length()-5,object.account.length()-1));
+
+
+        holder.commentTelTv.setText(stringBuffer.toString());
         holder.commentRating.setRating(object.score);
         holder.commentTimeTv.setText(object.create_time);
     }

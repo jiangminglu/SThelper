@@ -162,6 +162,7 @@ public class OpenStoreAction extends BaseAction implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
+        super.onClick(view);
         if (view == addimglayout) {
             String tempPath = view.getTag() + "";
             if (tempPath == null || "".equals(tempPath) || "null".equals(tempPath)) {

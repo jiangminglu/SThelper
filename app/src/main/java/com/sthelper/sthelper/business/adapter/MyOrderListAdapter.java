@@ -9,14 +9,16 @@ import android.widget.TextView;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.bean.OrderItem;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by luffy on 15/7/15.
  */
 public class MyOrderListAdapter extends BaseAdapter {
 
-
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
     private ArrayList<OrderItem> list;
     private int status;
     private Context context;
@@ -61,8 +63,15 @@ public class MyOrderListAdapter extends BaseAdapter {
         }
         OrderItem order = list.get(i);
         holder.storeTv.setText(order.mainInfo.shop_name);
-        holder.timeTv.setText(order.mainInfo.create_time);
-        holder.orderIdTv.setText("订单编号: " + order.mainInfo.order_id + "");
+        try {
+            Date date = new Date(order.mainInfo.create_time * 1000);
+            String time = format.format(date);
+            holder.timeTv.setText("下单时间: " + time);
+        } catch (Exception e) {
+
+        }
+
+        holder.orderIdTv.setText("订单编号: " + order.mainInfo.order_code + "");
         holder.addressTv.setText(order.mainInfo.addr);
         String text = "";
 //        @"未付款",@"待发货",@"进行中",@"已完成",@"已关闭"
@@ -71,7 +80,7 @@ public class MyOrderListAdapter extends BaseAdapter {
         } else if (order.mainInfo.status == 1) {
             text = "待发货";
         } else if (order.mainInfo.status == 2) {
-            text = "进行中";
+            text = "送餐中";
         } else if (order.mainInfo.status == 3) {
             text = "已完成";
         } else if (order.mainInfo.status == 4) {

@@ -137,7 +137,7 @@ public class CarItemAdapter extends BaseAdapter {
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             info.isSelect = b;
             notifyDataSetChanged();
-            double totalPrice = 0;
+            float totalPrice = 0;
             for (CartGoodsItem item : list) {
                 if (item.isSelect) {
                     int num = item.num;

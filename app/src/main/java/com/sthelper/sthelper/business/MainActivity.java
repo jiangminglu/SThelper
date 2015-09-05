@@ -71,7 +71,6 @@ public class MainActivity extends BaseAction {
         this.menu.setMenu(this.slidLayout);
         init();
 
-        getOpenShopStatus();
         savaAppLogo();
         getMainPic();
         getUserInfo();
@@ -82,6 +81,7 @@ public class MainActivity extends BaseAction {
     @Override
     protected void onResume() {
         super.onResume();
+        getOpenShopStatus();
         getBusinessList();
     }
 
@@ -204,6 +204,12 @@ public class MainActivity extends BaseAction {
                     startActivity(intent);
                     break;
                 case R.id.menu_open_store:
+                    if (uid < 1) {
+                        intent = new Intent();
+                        intent.setClass(mActivity, LoginAction.class);
+                        startActivity(intent);
+                        break;
+                    }
                     Object tag = paramAnonymousView.getTag();
                     intent = new Intent();
                     if (tag == null) {

@@ -58,7 +58,7 @@ public class VerifyOrderAction extends BaseAction implements View.OnClickListene
     private LinearLayout goodsListView;
     private TextView addAddressTv;//添加收货地址
     private View addressLayout;
-    private double totalPrice;
+    private float totalPrice;
     private Address address;
     private EditText tipsEt;
     private CheckBox daofuCk, alipayCk, integralCk;
@@ -301,7 +301,7 @@ public class VerifyOrderAction extends BaseAction implements View.OnClickListene
     /**
      * 支付宝支付
      */
-    private void pay(String desc, double price) {
+    private void pay(String desc, float price) {
         // 订单
         String orderInfo = getOrderInfo("水头商品", desc, price + "");
 
@@ -548,8 +548,8 @@ public class VerifyOrderAction extends BaseAction implements View.OnClickListene
                 alipayCk.setChecked(true);
                 daofuCk.setChecked(false);
 
-                double temp = totalPrice * 0.1;
-                double tempPrice = app.currentUserInfo.integral / 30;
+                float temp = totalPrice * 0.1f;
+                float tempPrice = app.currentUserInfo.integral / 30;
                 if (tempPrice <= temp) {
                     userIntegral = app.currentUserInfo.integral;
                 } else {

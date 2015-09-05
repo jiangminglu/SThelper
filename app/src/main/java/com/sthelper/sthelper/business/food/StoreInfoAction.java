@@ -89,7 +89,7 @@ public class StoreInfoAction extends BaseAction {
 
         ImageLoadUtil.getCommonImage(storeImg, SApp.IMG_URL + shopInfoBean.photo);
         storeNameTv.setText(shopInfoBean.shop_name);
-        storeRatingbar.setRating(0);
+//        storeRatingbar.setRating(shopInfoBean);
 
         adapter = new CommentItemLayoutAdapter(mActivity, comments);
         listView.setAdapter(adapter);
@@ -148,6 +148,7 @@ public class StoreInfoAction extends BaseAction {
                             priceTv.setText(shopInfoBean.freight + "元");
                             telTv.setText("" + shopInfoBean.tel);
                             addressTv.setText(shopInfoBean.addr);
+                            storeRatingbar.setRating(shopInfoBean.score);
 
                             JsonNode commentsNode = BaseApi.mapper.readTree(result.optString("comments"));
                             if (commentsNode.isArray()) {

@@ -21,6 +21,7 @@ public class ShopInfoBean implements Parcelable {
     public String freight;
     public String addr;
     public String photo;
+    public float score;
     public String shop_name;
     public String tel;
 
@@ -36,6 +37,7 @@ public class ShopInfoBean implements Parcelable {
         dest.writeString(this.send_time);
         dest.writeString(this.freight);
         dest.writeString(this.addr);
+        dest.writeFloat(this.score);
         dest.writeString(this.photo);
         dest.writeString(this.shop_name);
         dest.writeString(this.tel);
@@ -50,6 +52,7 @@ public class ShopInfoBean implements Parcelable {
         this.freight = in.readString();
         this.addr = in.readString();
         this.photo = in.readString();
+        this.score = in.readFloat();
         this.shop_name = in.readString();
         this.tel = in.readString();
     }

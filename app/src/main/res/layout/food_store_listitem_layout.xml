@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/app_default_bg"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingBottom="12dp"
-    android:paddingTop="12dp">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/app_default_bg"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:paddingBottom="12dp"
+              android:paddingLeft="12dp"
+              android:paddingRight="12dp"
+              android:paddingTop="12dp">
 
     <ImageView
         android:id="@+id/food_store_logo"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:src="@mipmap/main_item_bg1"
+        android:layout_width="120dp"
+        android:layout_height="90dp"
         android:scaleType="centerCrop"
-        android:layout_marginLeft="12dp"
+        android:src="@mipmap/main_item_bg1"
+
         />
 
     <LinearLayout
@@ -44,31 +46,31 @@
             <RatingBar
                 android:id="@+id/food_store_listitem_rating"
                 style="@style/yellowRatingBar"
-                android:numStars="5"
-                android:rating="4"
-                android:stepSize="4"
-                android:isIndicator="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+
+                android:stepSize="1"/>
+
             <RatingBar
                 android:id="@+id/food_store_listitem_rating1"
                 style="@style/blueRatingBar"
-                android:numStars="5"
-                android:rating="4"
-                android:stepSize="4"
-                android:isIndicator="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="1"/>
 
             <TextView
                 android:id="@+id/food_store_listitem_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="10dp"
                 android:text="status"
-                android:layout_marginBottom="4dp"
                 android:textColor="#e5863c"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
         </LinearLayout>
 
         <TextView
@@ -78,7 +80,7 @@
             android:layout_marginBottom="4dp"
             android:text="20元起送/人均消费20元"
             android:textColor="#7c7c7c"
-            android:textSize="14sp" />
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/food_store_listitem_time_desc"
@@ -87,7 +89,7 @@
             android:layout_marginBottom="4dp"
             android:text="15分钟送达"
             android:textColor="#7c7c7c"
-            android:textSize="14sp" />
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/food_store_listitem_time_remark"
@@ -95,14 +97,14 @@
             android:layout_height="wrap_content"
             android:text="备注：今天起买5送1"
             android:textColor="#e5863c"
-            android:textSize="14sp" />
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="8dp">
+        >
 
         <View
             android:id="@+id/food_store_pay_view"
@@ -110,6 +112,6 @@
             android:layout_height="17dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@mipmap/icon_pay_online" />
+            android:background="@mipmap/icon_pay_online"/>
     </RelativeLayout>
 </LinearLayout>

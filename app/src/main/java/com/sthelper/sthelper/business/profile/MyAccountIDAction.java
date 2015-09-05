@@ -3,6 +3,8 @@ package com.sthelper.sthelper.business.profile;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,10 +46,26 @@ public class MyAccountIDAction extends BaseAction implements View.OnClickListene
         getUserInfo();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, 1, 0, "退出账户").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == 1) {
+            SPUtil.clean();
+            SApp.getInstance().currentUserInfo = null;
+            Intent intent = new Intent();
+            intent.setClass(mActivity, LoginAction.class);
+            startActivity(intent);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void init() {
-        findViewById(R.id.about).setOnClickListener(this);
-        findViewById(R.id.checkupdate).setOnClickListener(this);
-        findViewById(R.id.callservice).setOnClickListener(this);
         findViewById(R.id.address_manager_item).setOnClickListener(this);
         findViewById(R.id.bundle_tel_layout).setOnClickListener(this);
         findViewById(R.id.account_avatar).setOnClickListener(this);
@@ -55,20 +73,7 @@ public class MyAccountIDAction extends BaseAction implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.about) {
-            Intent intent = new Intent();
-            intent.setClass(MyAccountIDAction.this, AboutAction.class);
-            startActivity(intent);
-        } else if (view.getId() == R.id.checkupdate) {
-            BaseProcessDialog dialog = new BaseProcessDialog(mActivity);
-            dialog.setTitle("检查版本更新");
-            dialog.setMessage("正在检测新版本...");
-            dialog.show();
-        } else if (view.getId() == R.id.callservice) {
-            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + 10086));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        } else if (view.getId() == R.id.address_manager_item) {
+       if (view.getId() == R.id.address_manager_item) {
             Intent intent = new Intent();
             intent.setClass(mActivity, AddressManagerAction.class);
             startActivity(intent);
@@ -129,6 +134,8 @@ public class MyAccountIDAction extends BaseAction implements View.OnClickListene
         TextView slognTv = (TextView) findViewById(R.id.account_slogn);
 
         if (app.currentUserInfo == null) return;
+        slognTv.setText("积分" + app.currentUserInfo.integral);
+
         nameTv.setText(app.currentUserInfo.nickname);
         ImageLoadUtil.getCircleAvatarImage(avatarImg, SApp.IMG_URL + app.currentUserInfo.face);
     }

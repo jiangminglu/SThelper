@@ -48,8 +48,7 @@
                 android:layout_marginTop="4dp"
                 android:isIndicator="true"
                 android:numStars="5"
-                android:rating="4"
-                android:stepSize="4" />
+                android:stepSize="1" />
             <RatingBar
                 android:id="@+id/store_rating_blue"
                 style="@style/blueRatingBar"
@@ -60,8 +59,8 @@
                 android:layout_marginTop="4dp"
                 android:isIndicator="true"
                 android:numStars="5"
-                android:rating="4"
-                android:stepSize="4" />
+                android:stepSize="1"
+                />
 
             <ScrollView
                 android:layout_width="match_parent"

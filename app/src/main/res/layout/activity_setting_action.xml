@@ -8,73 +8,6 @@
 
 
     <RelativeLayout
-        android:id="@+id/setting_about"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="关于水头"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            />
-
-        <ImageView
-            android:layout_width="7dp"
-            android:layout_height="12dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@mipmap/default_arrow"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3px"
-            android:layout_alignParentBottom="true"
-            android:background="@color/app_default_line_bg"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/setting_feedbak"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="用户反馈"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            />
-
-        <ImageView
-            android:layout_width="7dp"
-            android:layout_height="12dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@mipmap/default_arrow"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3px"
-            android:layout_alignParentBottom="true"
-            android:background="@color/app_default_line_bg"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/setting_clean_cache"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -108,6 +41,74 @@
             />
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/setting_feedbak"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="意见反馈"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            />
+
+        <ImageView
+            android:layout_width="7dp"
+            android:layout_height="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/default_arrow"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/app_default_line_bg"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/setting_about"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="关于我们"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            />
+
+        <ImageView
+            android:layout_width="7dp"
+            android:layout_height="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/default_arrow"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/app_default_line_bg"
+            />
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
         android:id="@+id/setting_checkupdate"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -140,18 +141,5 @@
             android:background="@color/app_default_line_bg"
             />
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/setting_change_account"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:text="退出账户"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        />
 
 </LinearLayout>

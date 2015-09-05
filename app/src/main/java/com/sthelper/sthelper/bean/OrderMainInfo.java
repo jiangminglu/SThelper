@@ -92,7 +92,7 @@ public class OrderMainInfo implements Parcelable {
     public String extension;
     public String yuyue_date;
     public String card_date;
-    public String create_time;
+    public long create_time;
     public String orderby;
     public String view;
     public String ranking;
@@ -144,7 +144,7 @@ public class OrderMainInfo implements Parcelable {
         dest.writeString(this.extension);
         dest.writeString(this.yuyue_date);
         dest.writeString(this.card_date);
-        dest.writeString(this.create_time);
+        dest.writeLong(this.create_time);
         dest.writeString(this.orderby);
         dest.writeString(this.view);
         dest.writeString(this.ranking);
@@ -194,7 +194,7 @@ public class OrderMainInfo implements Parcelable {
         this.extension = in.readString();
         this.yuyue_date = in.readString();
         this.card_date = in.readString();
-        this.create_time = in.readString();
+        this.create_time = in.readLong();
         this.orderby = in.readString();
         this.view = in.readString();
         this.ranking = in.readString();

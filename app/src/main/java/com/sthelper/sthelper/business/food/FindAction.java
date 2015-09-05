@@ -129,7 +129,7 @@ public class FindAction extends BaseAction implements View.OnClickListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_find_shop_action, menu);
+//        getMenuInflater().inflate(R.menu.menu_find_shop_action, menu);
         return true;
     }
 

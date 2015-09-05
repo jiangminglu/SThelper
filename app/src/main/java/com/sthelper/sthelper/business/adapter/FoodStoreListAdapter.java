@@ -90,12 +90,12 @@ public class FoodStoreListAdapter extends BaseAdapter {
         }
 
         FoodStoreBean bean = list.get(i);
-        viewHolder.remarkTv.setText(bean.extension);
+        viewHolder.remarkTv.setText("备注: " + bean.extension);
         viewHolder.speedTv.setText(bean.since_money + "元起送/人均消费" + bean.price + "元");
         viewHolder.nameTv.setText(bean.shop_name);
         viewHolder.ratingBar.setRating(bean.score);
         ImageLoadUtil.getCommonImage(viewHolder.logoImg, SApp.IMG_URL + bean.photo);
-        viewHolder.timeDesc.setText(bean.business_time);
+        viewHolder.timeDesc.setText(bean.distribution + "分钟送达 ("+bean.business_time + ")");
         if (bean.closed == 0) {
             viewHolder.statusTv.setText("营业中");
         } else {

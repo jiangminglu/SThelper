@@ -29,7 +29,6 @@ public class SettingAction extends BaseAction implements View.OnClickListener {
     RelativeLayout settingabout;
     RelativeLayout settingfeedbak;
     RelativeLayout settingcleancache;
-    Button settingchangeaccount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,14 +42,12 @@ public class SettingAction extends BaseAction implements View.OnClickListener {
         settingabout = (RelativeLayout) findViewById(R.id.setting_about);
         settingfeedbak = (RelativeLayout) findViewById(R.id.setting_feedbak);
         settingcleancache = (RelativeLayout) findViewById(R.id.setting_clean_cache);
-        settingchangeaccount = (Button) findViewById(R.id.setting_change_account);
 
 
         findViewById(R.id.setting_checkupdate).setOnClickListener(this);
         settingabout.setOnClickListener(this);
         settingfeedbak.setOnClickListener(this);
         settingcleancache.setOnClickListener(this);
-        settingchangeaccount.setOnClickListener(this);
     }
 
     @Override
@@ -72,12 +69,6 @@ public class SettingAction extends BaseAction implements View.OnClickListener {
                     processDialog.dismiss();
                 }
             }, 2000);
-        } else if (view == settingchangeaccount) {
-            SPUtil.clean();
-            SApp.getInstance().currentUserInfo = null;
-            intent.setClass(mActivity, LoginAction.class);
-            startActivity(intent);
-            finish();
         } else if (R.id.setting_checkupdate == view.getId()) {
             checkUpdate();
         }

@@ -56,16 +56,16 @@ public class OrderFragment extends Fragment {
 
         list = new ArrayList<OrderItem>();
         listView = (ListView) view.findViewById(R.id.order_listview);
-        listView.setOnItemClickListener(onItemClickListener);
         adapter = new MyOrderListAdapter(status, list, getActivity());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                OrderItem item = list.get(i);
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), OrderInfoAction.class);
-                intent.putExtra("bean", list.get(i));
-                startActivity(intent);
+                intent.putExtra("bean", item);
+                startActivityForResult(intent, getActivity().RESULT_FIRST_USER);
             }
         });
 
@@ -101,16 +101,6 @@ public class OrderFragment extends Fragment {
         });
     }
 
-    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            OrderItem item = list.get(i);
-            Intent intent = new Intent();
-            intent.setClass(getActivity(), OrderInfoAction.class);
-            intent.putExtra("bean", item);
-            startActivityForResult(intent,1024);
-        }
-    };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
