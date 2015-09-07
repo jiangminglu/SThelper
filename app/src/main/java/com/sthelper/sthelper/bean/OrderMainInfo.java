@@ -98,6 +98,7 @@ public class OrderMainInfo implements Parcelable {
     public String ranking;
     public String mobile;
     public String tips;
+    public int is_comment;//0 和 1分别是未评价和已评价
 
     @Override
     public int describeContents() {
@@ -150,6 +151,7 @@ public class OrderMainInfo implements Parcelable {
         dest.writeString(this.ranking);
         dest.writeString(this.mobile);
         dest.writeString(this.tips);
+        dest.writeInt(this.is_comment);
     }
 
     public OrderMainInfo() {
@@ -200,6 +202,7 @@ public class OrderMainInfo implements Parcelable {
         this.ranking = in.readString();
         this.mobile = in.readString();
         this.tips = in.readString();
+        this.is_comment = in.readInt();
     }
 
     public static final Creator<OrderMainInfo> CREATOR = new Creator<OrderMainInfo>() {

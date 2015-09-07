@@ -40,11 +40,6 @@ public class MyAccountIDAction extends BaseAction implements View.OnClickListene
         getUserInfo();
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        getUserInfo();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,7 +79,7 @@ public class MyAccountIDAction extends BaseAction implements View.OnClickListene
         } else if (view.getId() == R.id.account_avatar) {
             Intent localIntent = new Intent();
             localIntent.setClass(mActivity, MyProfileAction.class);
-            startActivity(localIntent);
+            startActivityForResult(localIntent, 1024);
         }
     }
 
@@ -138,5 +133,11 @@ public class MyAccountIDAction extends BaseAction implements View.OnClickListene
 
         nameTv.setText(app.currentUserInfo.nickname);
         ImageLoadUtil.getCircleAvatarImage(avatarImg, SApp.IMG_URL + app.currentUserInfo.face);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getUserInfo();
     }
 }

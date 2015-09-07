@@ -141,8 +141,8 @@ public class MyProfileAction extends BaseAction {
         if (app.currentUserInfo == null) return;
         usernametv.setText(app.currentUserInfo.nickname);
         ImageLoadUtil.getCircleAvatarImage(useravatarimg, SApp.IMG_URL + app.currentUserInfo.face);
-        userteltv.setText(app.currentUserInfo.mobile);
-        usertotaltv.setText("0");
+        userteltv.setText(app.currentUserInfo.account);
+        usertotaltv.setText(app.currentUserInfo.integral + "");
     }
 
     @Override
@@ -245,5 +245,11 @@ public class MyProfileAction extends BaseAction {
                 processDialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        super.onBackPressed();
     }
 }
