@@ -18,7 +18,7 @@ import java.util.Date;
  */
 public class MyOrderListAdapter extends BaseAdapter {
 
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
     private ArrayList<OrderItem> list;
     private int status;
     private Context context;
@@ -52,7 +52,7 @@ public class MyOrderListAdapter extends BaseAdapter {
             view = View.inflate(context, R.layout.order_item_layout, null);
             holder.timeTv = (TextView) view.findViewById(R.id.order_create_time_tv);
             holder.orderIdTv = (TextView) view.findViewById(R.id.order_create_id_tv);
-            holder.addressTv = (TextView) view.findViewById(R.id.order_address_tv);
+            holder.tipsTv = (TextView) view.findViewById(R.id.order_tips_tv);
             holder.statusTv = (TextView) view.findViewById(R.id.order_status_tv);
             holder.totalPriceTv = (TextView) view.findViewById(R.id.order_total_price_tv);
             holder.storeTv = (TextView) view.findViewById(R.id.order_item_store_name);
@@ -66,13 +66,13 @@ public class MyOrderListAdapter extends BaseAdapter {
         try {
             Date date = new Date(order.mainInfo.create_time * 1000);
             String time = format.format(date);
-            holder.timeTv.setText("下单时间: " + time);
+            holder.timeTv.setText("下单时间:    " + time);
         } catch (Exception e) {
 
         }
 
-        holder.orderIdTv.setText("订单编号: " + order.mainInfo.order_code + "");
-        holder.addressTv.setText(order.mainInfo.addr);
+        holder.orderIdTv.setText("订单编号:    " + order.mainInfo.order_code + "");
+        holder.tipsTv.setText("订单备注:    "+order.mainInfo.tips);
         String text = "";
 //        @"未付款",@"待发货",@"进行中",@"已完成",@"已关闭"
         if (order.mainInfo.status == 0) {
@@ -86,17 +86,17 @@ public class MyOrderListAdapter extends BaseAdapter {
         } else if (order.mainInfo.status == 4) {
             text = "已关闭";
         }
-        holder.payMethodTv.setText("支付方式: 支付宝");
+        holder.payMethodTv.setText("支付方式:    支付宝");
         if (order.mainInfo.is_daofu == 1) {
             text = "线下付款";
-            holder.payMethodTv.setText("支付方式: " + text);
+            holder.payMethodTv.setText("支付方式:    " + text);
         }
         holder.statusTv.setText(text);
-        holder.totalPriceTv.setText(order.mainInfo.total_price + "￥");
+        holder.totalPriceTv.setText(order.mainInfo.total_price + "元");
         return view;
     }
 
     private static class ViewHolder {
-        public TextView timeTv, orderIdTv, addressTv, statusTv, totalPriceTv, storeTv, payMethodTv;
+        public TextView timeTv, orderIdTv, tipsTv, statusTv, totalPriceTv, storeTv, payMethodTv;
     }
 }

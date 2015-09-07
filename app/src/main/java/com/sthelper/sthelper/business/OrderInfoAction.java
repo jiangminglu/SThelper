@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,12 +42,15 @@ public class OrderInfoAction extends BaseAction {
 
     private static final int SDK_PAY_FLAG = 1;
 
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
     private static final int SDK_CHECK_FLAG = 2;
 
-    TextView shopname;
+    ImageView xdImg, jdImg, shImg;
+    View line1, line2;
+    TextView shopname, orderTimeTv, orderIdTv, orderTipsTv, telTv, addressTv;
     LinearLayout ordergoodslistview;
     TextView ordergoodstotalprice;
-    TextView ordergoodstotalnum, orderTpisTv;
+    TextView ordergoodstotalnum;
 
     private Button delBt, evlatuateBt, payBt;
     private OrderItem bean;
@@ -62,13 +66,28 @@ public class OrderInfoAction extends BaseAction {
     }
 
     private void initView() {
+
+        jdImg = (ImageView) findViewById(R.id.jd_img);
+        xdImg = (ImageView) findViewById(R.id.xd_img);
+        shImg = (ImageView) findViewById(R.id.sh_img);
+
+        line1 = findViewById(R.id.line1);
+        line2 = findViewById(R.id.line2);
+
+
+        orderTimeTv = (TextView) findViewById(R.id.order_create_time_tv);
+        orderIdTv = (TextView) findViewById(R.id.order_create_id_tv);
+        orderTipsTv = (TextView) findViewById(R.id.order_tips_tv);
+
+        telTv = (TextView) findViewById(R.id.address_item_tel);
+        addressTv = (TextView) findViewById(R.id.address_item_name);
+
         shopname = (TextView) findViewById(R.id.shop_name);
         ordergoodslistview = (LinearLayout) findViewById(R.id.order_goods_listview);
         ordergoodstotalprice = (TextView) findViewById(R.id.order_goods_total_price);
         ordergoodstotalnum = (TextView) findViewById(R.id.order_goods_total_num);
         delBt = (Button) findViewById(R.id.delete_order);
         evlatuateBt = (Button) findViewById(R.id.evaluate_order);
-        orderTpisTv = (TextView) findViewById(R.id.order_tips_tv);
         payBt = (Button) findViewById(R.id.pay_order);
         delBt.setOnClickListener(onClickListener);
         payBt.setOnClickListener(onClickListener);
@@ -76,6 +95,17 @@ public class OrderInfoAction extends BaseAction {
         initGoodsMenu();
         shopname.setText(bean.mainInfo.shop_name);
 
+        orderTipsTv.setText("订单备注:    " + bean.mainInfo.tips);
+        orderIdTv.setText("订单编号:    " + bean.mainInfo.order_code);
+        try {
+            Date date = new Date(bean.mainInfo.create_time * 1000);
+            String time = format.format(date);
+            orderTimeTv.setText("下单时间:    " + time);
+        } catch (Exception e) {
+
+        }
+        telTv.setText(bean.mainInfo.mobile);
+        addressTv.setText(bean.mainInfo.addr);
         if (bean.mainInfo.status == 0) {//未支付
             payBt.setVisibility(View.VISIBLE);
             evlatuateBt.setVisibility(View.GONE);
@@ -84,9 +114,25 @@ public class OrderInfoAction extends BaseAction {
             payBt.setVisibility(View.GONE);
             if (bean.mainInfo.is_comment == 1) {//已经评价
                 evlatuateBt.setVisibility(View.GONE);
-            }else{
+            } else {
                 evlatuateBt.setVisibility(View.VISIBLE);
             }
+        }
+
+        if (bean.mainInfo.status > 0) {//待发货，下单成功
+            xdImg.setBackgroundResource(R.mipmap.xd_true);
+            line1.setBackgroundColor(getResources().getColor(R.color.app_default_actionbar_bg));
+            jdImg.setBackgroundResource(R.mipmap.jd_true);
+
+            line2.setBackgroundColor(getResources().getColor(R.color.app_default_line_bg));
+            shImg.setBackgroundResource(R.mipmap.dsh_false);
+            if (bean.mainInfo.status > 1) {
+                shImg.setBackgroundResource(R.mipmap.dsh_true);
+                line2.setBackgroundColor(getResources().getColor(R.color.app_default_actionbar_bg));
+            }
+        } else {
+            xdImg.setBackgroundResource(R.mipmap.xd_false);
+            line1.setBackgroundColor(getResources().getColor(R.color.app_default_line_bg));
         }
 
 
@@ -112,7 +158,6 @@ public class OrderInfoAction extends BaseAction {
             goodsNum += info.num;
 
         }
-        orderTpisTv.setText("备注:   " + bean.mainInfo.tips + "");
         TextView descTv = (TextView) findViewById(R.id.desc);
         descTv.setText(bean.mainInfo.tags);
         ordergoodstotalnum.setText("共计" + goodsNum + "份");

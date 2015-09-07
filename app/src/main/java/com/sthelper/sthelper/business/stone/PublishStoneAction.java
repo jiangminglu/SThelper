@@ -228,7 +228,7 @@ public class PublishStoneAction extends BaseAction {
                     super.onSuccess(statusCode, headers, response);
                     processDialog.dismiss();
                     if (response.optInt("ret") == 0) {
-                        ToastUtil.showToast("发布成功");
+                        ToastUtil.showToast("已成功提交资料，正在等待管理员审核");
                         finish();
                     }else{
                         ToastUtil.showToast(response.toString());

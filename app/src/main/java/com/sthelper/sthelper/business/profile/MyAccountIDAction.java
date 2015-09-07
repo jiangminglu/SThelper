@@ -64,11 +64,13 @@ public class MyAccountIDAction extends BaseAction implements View.OnClickListene
         findViewById(R.id.address_manager_item).setOnClickListener(this);
         findViewById(R.id.bundle_tel_layout).setOnClickListener(this);
         findViewById(R.id.account_avatar).setOnClickListener(this);
+        findViewById(R.id.password_manager_item).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-       if (view.getId() == R.id.address_manager_item) {
+        super.onClick(view);
+        if (view.getId() == R.id.address_manager_item) {
             Intent intent = new Intent();
             intent.setClass(mActivity, AddressManagerAction.class);
             startActivity(intent);
@@ -80,6 +82,8 @@ public class MyAccountIDAction extends BaseAction implements View.OnClickListene
             Intent localIntent = new Intent();
             localIntent.setClass(mActivity, MyProfileAction.class);
             startActivityForResult(localIntent, 1024);
+        }else if(view.getId() == R.id.password_manager_item){
+
         }
     }
 

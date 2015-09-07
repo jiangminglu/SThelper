@@ -54,6 +54,7 @@ public class StoreInfoAction extends BaseAction {
     private TextView timeTv, speedTv, addressTv, priceTv, telTv, commentCountTv;
     CommentItemLayoutAdapter adapter = null;
     int shop_id = 0;
+    int currentType;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +63,19 @@ public class StoreInfoAction extends BaseAction {
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         listView.setLayoutParams(params);
         setContentView(listView);
-
-        headView = getLayoutInflater().inflate(R.layout.activity_store_info_action, null);
-        listView.addHeaderView(headView);
         bean = getIntent().getParcelableExtra("bean");
         shop_id = getIntent().getIntExtra("shop_id", 0);
         type = getIntent().getIntExtra("type", 100);
+        currentType = getIntent().getIntExtra("type",100);
+        initActionBar(bean.shop_name);
+        if (currentType == FoodStoreListAction.TYPE_SHI) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_default_actionbar_bg)));
+        } else {
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_blue_actionbar_bg)));
+        }
+        headView = getLayoutInflater().inflate(R.layout.activity_store_info_action, null);
+        listView.addHeaderView(headView);
+
         if(bean!=null){
             shop_id = bean.shop_id;
         }
@@ -95,37 +103,37 @@ public class StoreInfoAction extends BaseAction {
         listView.setAdapter(adapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_store_info_action, menu);
-        menuItem = menu.findItem(R.id.action_settings);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_store_info_action, menu);
+//        menuItem = menu.findItem(R.id.action_settings);
+//        return true;
+//    }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem menuItem = menu.findItem(R.id.action_settings);
-        if (isFav) {
-            menuItem.setIcon(getResources().getDrawable(R.mipmap.shop_faved));
-        } else {
-            menuItem.setIcon(getResources().getDrawable(R.mipmap.shop_fav));
-        }
-        return super.onPrepareOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onPrepareOptionsMenu(Menu menu) {
+//        MenuItem menuItem = menu.findItem(R.id.action_settings);
+//        if (isFav) {
+//            menuItem.setIcon(getResources().getDrawable(R.mipmap.shop_faved));
+//        } else {
+//            menuItem.setIcon(getResources().getDrawable(R.mipmap.shop_fav));
+//        }
+//        return super.onPrepareOptionsMenu(menu);
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            if (isFav) {
-                delFav();
-            } else {
-                addFav();
-            }
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == R.id.action_settings) {
+//            if (isFav) {
+//                delFav();
+//            } else {
+//                addFav();
+//            }
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     public void getInfo() {
         processDialog.show();
