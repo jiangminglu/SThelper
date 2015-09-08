@@ -27,8 +27,8 @@
 
             <ImageView
                 android:id="@+id/xd_img"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:background="@mipmap/xd_true"
                 />
 
@@ -54,8 +54,8 @@
 
             <ImageView
                 android:id="@+id/jd_img"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:background="@mipmap/jd_false"
                 />
 
@@ -75,7 +75,7 @@
             android:layout_height="2px"
             android:layout_toLeftOf="@id/layout2"
             android:layout_toRightOf="@id/layout1"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="28dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
             android:background="@color/app_default_actionbar_bg"
@@ -92,8 +92,8 @@
 
             <ImageView
                 android:id="@+id/sh_img"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:background="@mipmap/dsh_false"
                 />
 
@@ -112,7 +112,7 @@
             android:layout_height="2px"
             android:layout_toLeftOf="@id/layout3"
             android:layout_toRightOf="@id/layout2"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="28dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
             android:background="@color/app_default_line_bg"
