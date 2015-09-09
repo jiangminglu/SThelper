@@ -107,10 +107,10 @@ public class TakingOrderAction extends BaseAction {
         MenuItem menuItem = menu.findItem(R.id.action_settings);
         if (isFav) {
             menuItem.setTitle("取消收藏");
-//            menuItem.setIcon(getResources().getDrawable(R.mipmap.shop_faved));
+            menuItem.setIcon(getResources().getDrawable(R.mipmap.shop_faved));
         } else {
             menuItem.setTitle("收藏");
-//            menuItem.setIcon(getResources().getDrawable(R.mipmap.shop_fav));
+            menuItem.setIcon(getResources().getDrawable(R.mipmap.shop_fav));
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -552,12 +552,6 @@ public class TakingOrderAction extends BaseAction {
 
     public void isFav() {
         int uid = SPUtil.getInt("uid");
-        if (uid < 1) {
-            Intent intent = new Intent();
-            intent.setClass(mActivity, LoginAction.class);
-            startActivity(intent);
-            return;
-        }
         ShopingApi api = new ShopingApi();
         api.isFavStore(uid, bean.shop_id, new JsonHttpResponseHandler() {
             @Override

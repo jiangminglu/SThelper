@@ -4,6 +4,7 @@
     <item
         android:id="@+id/action_settings"
         android:showAsAction="always"
+        android:icon="@mipmap/shop_fav"
         android:title="收藏"
         />
 </menu>
