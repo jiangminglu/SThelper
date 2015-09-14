@@ -58,4 +58,19 @@ public class AuthApi extends BaseApi {
         get("Passport", "forgetpw", params, responseHandler);
     }
 
+    /**
+     * 修改密码
+     *
+     * @param oldpwd
+     * @param newpwd
+     * @param responseHandler
+     */
+    public void changePassword(int uid,String oldpwd, String newpwd, JsonHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("oldpwd", oldpwd);
+        params.put("newpwd", newpwd);
+        params.put("uid",uid);
+        changePwd(params, responseHandler);
+    }
+
 }

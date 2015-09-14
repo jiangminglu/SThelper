@@ -73,4 +73,11 @@ public class BaseApi {
         }
         client.post(MAIN_URL+"?m=User&a=openshop&g=api&t=2015&sig=123456789987654321", params, res);
     }
+    public static void changePwd(RequestParams params, JsonHttpResponseHandler res) {
+        String token = SPUtil.getString("token");
+        if (token != null && !"".equals(token)) {
+            params.put("token", token);
+        }
+        client.post(MAIN_URL+"?m=User&a=password&g=api&t=2015&sig=123456789987654321", params, res);
+    }
 }

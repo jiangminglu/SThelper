@@ -83,7 +83,9 @@ public class MyAccountIDAction extends BaseAction implements View.OnClickListene
             localIntent.setClass(mActivity, MyProfileAction.class);
             startActivityForResult(localIntent, 1024);
         }else if(view.getId() == R.id.password_manager_item){
-
+            Intent intent = new Intent();
+            intent.setClass(mActivity,ChangePwdAction.class);
+            startActivity(intent);
         }
     }
 
