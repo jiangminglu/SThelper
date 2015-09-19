@@ -112,11 +112,13 @@ public class OrderInfoAction extends BaseAction {
             delBt.setVisibility(View.VISIBLE);
         } else {
             payBt.setVisibility(View.GONE);
-            if (bean.mainInfo.is_comment == 1) {//已经评价
-                evlatuateBt.setVisibility(View.GONE);
-            } else {
-                evlatuateBt.setVisibility(View.VISIBLE);
-            }
+
+        }
+        if (bean.mainInfo.is_comment == 0 && bean.mainInfo.status == 3) {//未评价
+
+            evlatuateBt.setVisibility(View.VISIBLE);
+        } else {
+            evlatuateBt.setVisibility(View.GONE);
         }
 
         if (bean.mainInfo.status > 0) {//待发货，下单成功
@@ -171,7 +173,7 @@ public class OrderInfoAction extends BaseAction {
                 Intent intent = new Intent();
                 intent.setClass(mActivity, EvaluateOrderAction.class);
                 intent.putExtra("bean", bean);
-                startActivity(intent);
+                startActivityForResult(intent, 100);
             } else if (view == delBt) {
                 int uid = SPUtil.getInt("uid");
                 processDialog.show();
@@ -398,5 +400,14 @@ public class OrderInfoAction extends BaseAction {
                 processDialog.dismiss();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            bean.mainInfo.is_comment = 1;
+            evlatuateBt.setVisibility(View.GONE);
+        }
     }
 }

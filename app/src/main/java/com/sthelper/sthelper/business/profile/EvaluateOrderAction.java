@@ -1,5 +1,6 @@
 package com.sthelper.sthelper.business.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.sthelper.sthelper.SApp;
 import com.sthelper.sthelper.api.ShopingApi;
 import com.sthelper.sthelper.bean.OrderItem;
 import com.sthelper.sthelper.business.BaseAction;
+import com.sthelper.sthelper.business.OrderFragment;
 import com.sthelper.sthelper.util.Config;
 import com.sthelper.sthelper.util.ImageLoadUtil;
 import com.sthelper.sthelper.util.SPUtil;
@@ -121,7 +123,13 @@ public class EvaluateOrderAction extends BaseAction {
                     processDialog.dismiss();
                     if (response.optInt("ret") == 0) {
                         ToastUtil.showToast("评价成功");
+                        setResult(RESULT_OK);
+                        Intent intent = new Intent(OrderFragment.ORDER_ACTION);
+                        sendBroadcast(intent);
                         finish();
+                    } else {
+                        String error = response.optString("error");
+                        ToastUtil.showToast(error);
                     }
                 }
 

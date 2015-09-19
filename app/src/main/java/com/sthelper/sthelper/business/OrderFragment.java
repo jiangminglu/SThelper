@@ -1,9 +1,13 @@
 package com.sthelper.sthelper.business;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +38,8 @@ public class OrderFragment extends Fragment {
     private ArrayList<OrderItem> list;
     private MyOrderListAdapter adapter;
     private int status;
+    public final static String  ORDER_ACTION = "android.intent.action.CART_BROADCAST";
+    LocalBroadcastManager broadcastManager;
 
     public OrderFragment() {
     }
@@ -49,6 +55,16 @@ public class OrderFragment extends Fragment {
         View view = inflater.inflate(R.layout.order_layout, null);
         init(view);
         getOrderList();
+        broadcastManager = LocalBroadcastManager.getInstance(getActivity());
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ORDER_ACTION);
+        BroadcastReceiver mItemViewListClickReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent){
+                getOrderList();
+            }
+        };
+        broadcastManager.registerReceiver(mItemViewListClickReceiver, intentFilter);
         return view;
     }
 
@@ -81,6 +97,7 @@ public class OrderFragment extends Fragment {
                 try {
                     JsonNode node = BaseApi.mapper.readTree(response.toString());
                     if (0 == node.path("ret").asInt()) {
+                        list.removeAll(list);
                         JsonNode result = node.path("result");
                         for (JsonNode resultItem : result) {
 
