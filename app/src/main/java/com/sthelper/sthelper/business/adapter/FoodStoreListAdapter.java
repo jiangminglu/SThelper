@@ -90,7 +90,7 @@ public class FoodStoreListAdapter extends BaseAdapter {
         }
 
         FoodStoreBean bean = list.get(i);
-        viewHolder.remarkTv.setText("备注: " + bean.extension);
+        viewHolder.remarkTv.setText(bean.extension);
         viewHolder.speedTv.setText(bean.since_money + "元起送/人均消费" + bean.price + "元");
         viewHolder.nameTv.setText(bean.shop_name);
         viewHolder.ratingBar.setRating(bean.score);
