@@ -188,14 +188,44 @@ public class PublishStoneAction extends BaseAction {
                 return true;
             }
 
+            if(imgList.size()<1){
+                ToastUtil.showToast("请添加图片");
+                return  false;
+            }
 
             final String price = publishstonepriceet.getText().toString();
+            if(price.trim().length()<1){
+                ToastUtil.showToast("请输入价格");
+                return false;
+            }
             String my_stone_name = publishstonenameet.getText().toString();
+            if(my_stone_name.trim().length()<1){
+                ToastUtil.showToast("请输入石头品名");
+                return false;
+            }
             String origin = publishstoneaddresset.getText().toString();
+
             String shop_name = publishstonecompanyet.getText().toString();
+            if(shop_name.trim().length()<1){
+                ToastUtil.showToast("请输入公司");
+                return false;
+            }
+
             String adress = publishstonecompanyaddresset.getText().toString();
+            if(adress.trim().length()<1){
+                ToastUtil.showToast("请输入地址");
+                return false;
+            }
             String tel = publishstonecompanytelet.getText().toString();
+            if(tel.trim().length()<1){
+                ToastUtil.showToast("请输入电话");
+                return false;
+            }
             String tips = publishstoneremarket.getText().toString();
+            if(tips.trim().length()<1){
+                ToastUtil.showToast("请输入备注");
+                return false;
+            }
 
             String stone_name = "哈哈哈";
             String cate_id = "1";

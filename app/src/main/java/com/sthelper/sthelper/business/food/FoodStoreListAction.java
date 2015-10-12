@@ -157,8 +157,10 @@ public class FoodStoreListAction extends BaseAction {
                     tastePop.dismiss();
 
                     String tag = item.getTag() + "";
+                    if ("全部".equals(tag)) {
+                        tag = null;
+                    }
                     loadData(null, tag);
-
                 }
             });
         }

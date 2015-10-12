@@ -79,4 +79,20 @@
         android:layout_height="3px"
         android:background="@color/app_default_line_bg"/>
 
+    <Button
+
+        android:id="@+id/submit"
+        android:text="确认新密码"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/yellow_btn_selector"
+
+        />
+
 </LinearLayout>

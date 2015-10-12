@@ -6,6 +6,38 @@
               android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/food_store_type0"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/app_default_bg"
+        android:tag="全部">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="全部"
+            android:textColor="#000000"
+            android:textSize="14sp"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/icon_check_yellow"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/app_default_line_bg"/>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/food_store_type1"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -28,7 +60,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@mipmap/icon_check_yellow"/>
+            android:background="@mipmap/icon_check_yellow"
+            android:visibility="gone"/>
 
         <View
             android:layout_width="match_parent"

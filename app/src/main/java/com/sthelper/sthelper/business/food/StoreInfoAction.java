@@ -67,7 +67,10 @@ public class StoreInfoAction extends BaseAction {
         shop_id = getIntent().getIntExtra("shop_id", 0);
         type = getIntent().getIntExtra("type", 100);
         currentType = getIntent().getIntExtra("type",100);
+        if(bean != null)
         initActionBar(bean.shop_name);
+        else
+            initActionBar("");
         if (currentType == FoodStoreListAction.TYPE_SHI) {
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_default_actionbar_bg)));
         } else {
@@ -149,7 +152,11 @@ public class StoreInfoAction extends BaseAction {
                         shopInfoBean = BaseApi.mapper.readValue(result.optString("shop"), ShopInfoBean.class);
                         if (shopInfoBean != null) {
                             initActionBar(shopInfoBean.shop_name);
-                            actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+                            if (currentType == FoodStoreListAction.TYPE_SHI) {
+                                actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_default_actionbar_bg)));
+                            } else {
+                                actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_blue_actionbar_bg)));
+                            }
                             init();
                             timeTv.setText(shopInfoBean.business_time + "");
                             speedTv.setText(shopInfoBean.send_time + "");
