@@ -29,9 +29,5 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-core:2.5.4'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.4'
     compile 'com.loopj.android:android-async-http:1.4.6'
-    compile files('libs/android-support-v4.jar')
-    compile files('libs/universal-image-loader-1.9.3.jar')
     compile 'com.google.code.gson:gson:2.3.1'
-    compile files('libs/alipaySDK-20150610.jar')
-    compile files('libs/libammsdk.jar')
 }

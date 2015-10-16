@@ -1,8 +1,5 @@
 package com.sthelper.sthelper.business.food;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,11 +19,9 @@ import com.sthelper.sthelper.api.BaseApi;
 import com.sthelper.sthelper.api.ShopingApi;
 import com.sthelper.sthelper.bean.Comment;
 import com.sthelper.sthelper.bean.FoodStoreBean;
-import com.sthelper.sthelper.bean.ShopInfo;
 import com.sthelper.sthelper.bean.ShopInfoBean;
 import com.sthelper.sthelper.business.BaseAction;
 import com.sthelper.sthelper.business.adapter.CommentItemLayoutAdapter;
-import com.sthelper.sthelper.business.auth.LoginAction;
 import com.sthelper.sthelper.util.ImageLoadUtil;
 import com.sthelper.sthelper.util.SPUtil;
 import com.sthelper.sthelper.util.ToastUtil;
@@ -47,14 +42,16 @@ public class StoreInfoAction extends BaseAction {
     private int type;
     private ShopInfoBean shopInfoBean;
     private List<Comment> comments = new ArrayList<Comment>();
-    boolean isFav = false;
     MenuItem menuItem = null;
     View headView = null;
     ListView listView = null;
+    boolean isMy = false;
+    boolean isOpen = false;
     private TextView timeTv, speedTv, addressTv, priceTv, telTv, commentCountTv;
     CommentItemLayoutAdapter adapter = null;
     int shop_id = 0;
     int currentType;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,9 +63,10 @@ public class StoreInfoAction extends BaseAction {
         bean = getIntent().getParcelableExtra("bean");
         shop_id = getIntent().getIntExtra("shop_id", 0);
         type = getIntent().getIntExtra("type", 100);
-        currentType = getIntent().getIntExtra("type",100);
-        if(bean != null)
-        initActionBar(bean.shop_name);
+        isMy = getIntent().getBooleanExtra("isMy", false);
+        currentType = getIntent().getIntExtra("type", 100);
+        if (bean != null)
+            initActionBar(bean.shop_name);
         else
             initActionBar("");
         if (currentType == FoodStoreListAction.TYPE_SHI) {
@@ -79,11 +77,10 @@ public class StoreInfoAction extends BaseAction {
         headView = getLayoutInflater().inflate(R.layout.activity_store_info_action, null);
         listView.addHeaderView(headView);
 
-        if(bean!=null){
+        if (bean != null) {
             shop_id = bean.shop_id;
         }
         getInfo();
-        isFav();
     }
 
     private void init() {
@@ -100,43 +97,43 @@ public class StoreInfoAction extends BaseAction {
 
         ImageLoadUtil.getCommonImage(storeImg, SApp.IMG_URL + shopInfoBean.photo);
         storeNameTv.setText(shopInfoBean.shop_name);
-//        storeRatingbar.setRating(shopInfoBean);
 
         adapter = new CommentItemLayoutAdapter(mActivity, comments);
         listView.setAdapter(adapter);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_store_info_action, menu);
-//        menuItem = menu.findItem(R.id.action_settings);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(isMy){
+            getMenuInflater().inflate(R.menu.menu_store_info_action, menu);
+            menuItem = menu.findItem(R.id.action_settings);
+        }
 
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        MenuItem menuItem = menu.findItem(R.id.action_settings);
-//        if (isFav) {
-//            menuItem.setIcon(getResources().getDrawable(R.mipmap.shop_faved));
-//        } else {
-//            menuItem.setIcon(getResources().getDrawable(R.mipmap.shop_fav));
-//        }
-//        return super.onPrepareOptionsMenu(menu);
-//    }
+        return true;
+    }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            if (isFav) {
-//                delFav();
-//            } else {
-//                addFav();
-//            }
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(!isMy)return super.onPrepareOptionsMenu(menu);
+        MenuItem menuItem = menu.findItem(R.id.action_settings);
+        if (isOpen) {
+            menuItem.setTitle("打烊");
+        } else {
+            menuItem.setTitle("营业");
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(!isMy)return false;
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            shopOption(!isOpen);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void getInfo() {
         processDialog.show();
@@ -171,9 +168,9 @@ public class StoreInfoAction extends BaseAction {
                                     Comment comment = BaseApi.mapper.readValue(item.toString(), Comment.class);
                                     comments.add(comment);
                                 }
-                                if(comments.size()>0){
-                                    commentCountTv.setText("(共"+comments.size()+"评论)");
-                                }else{
+                                if (comments.size() > 0) {
+                                    commentCountTv.setText("(共" + comments.size() + "评论)");
+                                } else {
                                     commentCountTv.setText("(暂无评论)");
                                 }
                                 adapter.notifyDataSetChanged();
@@ -194,26 +191,24 @@ public class StoreInfoAction extends BaseAction {
         });
     }
 
-    public void isFav() {
-        int uid = SPUtil.getInt("uid");
-        if (uid < 1) {
-            Intent intent = new Intent();
-            intent.setClass(mActivity, LoginAction.class);
-            startActivity(intent);
-            return;
-        }
+    public void shopOption(final boolean flag) {
         ShopingApi api = new ShopingApi();
-        api.isFavStore(uid, shop_id, new JsonHttpResponseHandler() {
+        int uid = SPUtil.getInt("uid");
+        api.shopOption(uid, shop_id, flag, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 if (response.optInt("ret") == 0) {
-                    isFav = true;
+                    if (flag) {
+                        ToastUtil.showToast("已经营业");
+                    } else {
+                        ToastUtil.showToast("已经打烊");
+                    }
+                    isOpen = flag;
+                    invalidateOptionsMenu();
                 } else {
-                    isFav = false;
+                    ToastUtil.showToast("操作失败");
                 }
-                invalidateOptionsMenu();
-
             }
 
             @Override
@@ -222,68 +217,5 @@ public class StoreInfoAction extends BaseAction {
             }
         });
     }
-
-    private void addFav() {
-
-        int uid = SPUtil.getInt("uid");
-        if (uid < 1) {
-            Intent intent = new Intent();
-            intent.setClass(mActivity, LoginAction.class);
-            startActivity(intent);
-            return;
-        }
-        processDialog.show();
-        ShopingApi api = new ShopingApi();
-        api.addFavStore(bean.shop_id, uid, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                processDialog.dismiss();
-                if (response.optInt("ret") == 0) {
-                    isFav = true;
-                    invalidateOptionsMenu();
-                    ToastUtil.showToast("收藏成功");
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                processDialog.dismiss();
-            }
-        });
-    }
-
-    private void delFav() {
-        int uid = SPUtil.getInt("uid");
-        if (uid < 1) {
-            Intent intent = new Intent();
-            intent.setClass(mActivity, LoginAction.class);
-            startActivity(intent);
-            return;
-        }
-        processDialog.show();
-        ShopingApi api = new ShopingApi();
-        api.delFavStore(bean.shop_id, uid, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                processDialog.dismiss();
-                if (response.optInt("ret") == 0) {
-                    isFav = false;
-                    invalidateOptionsMenu();
-                    ToastUtil.showToast("取消收藏成功");
-                }
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                processDialog.dismiss();
-            }
-        });
-    }
-
 
 }

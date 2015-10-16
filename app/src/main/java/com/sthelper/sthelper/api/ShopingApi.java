@@ -153,11 +153,11 @@ public class ShopingApi extends BaseApi {
      * @param order_id
      * @param handler
      */
-    public void changeOrderStatus(int integral,int uid, String order_id, JsonHttpResponseHandler handler) {
+    public void changeOrderStatus(int integral, int uid, String order_id, JsonHttpResponseHandler handler) {
         RequestParams params = new RequestParams();
         params.put("order_id", order_id);
         params.put("uid", uid);
-        params.put("score",integral);
+        params.put("score", integral);
         get("User", "payorder", params, handler);
     }
 
@@ -305,6 +305,14 @@ public class ShopingApi extends BaseApi {
         RequestParams params = new RequestParams();
         params.put("uid", uid);
         get("User", "getshopstatus", params, handler);
+    }
+
+    public void shopOption(int uid, int shop_id, boolean flag, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("uid", uid);
+        params.put("is_open", flag ? 1 : 0);
+        params.put("shop_id", shop_id);
+        get("User", "openclose", params, handler);
     }
 
 }

@@ -15,6 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.util.ToastUtil;
 import com.sthelper.sthelper.util.Util;
+import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
@@ -53,46 +54,50 @@ public class InviteAction extends BaseAction {
     }
 
     private void qqShare() {
-        Intent weiboIntent = new Intent(Intent.ACTION_SEND);
-        weiboIntent.setType("text/plain");
-        PackageManager pm = getPackageManager();
-        List<ResolveInfo> matches = pm.queryIntentActivities(weiboIntent,
-                PackageManager.MATCH_DEFAULT_ONLY);
-        String packageName = "com.tencent.mobileqq";
-        ResolveInfo info = null;
-        for (ResolveInfo each : matches) {
-            String pkgName = each.activityInfo.applicationInfo.packageName;
-            if (packageName.equals(pkgName)) {
-                info = each;
-                break;
-            }
-        }
-        if (info != null) {
-            weiboIntent.setClassName(packageName, info.activityInfo.name);
-            weiboIntent.putExtra(Intent.EXTRA_TEXT, desc + url);
-            weiboIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(app.appLogo)));
-            startActivity(weiboIntent);
-        } else {
-            ToastUtil.showToast("你没有安装QQ客户端");
-        }
+        Tencent mTencent = Tencent.createInstance("1104610980", getApplicationContext());
+        Bundle bundle = new Bundle();
+
+        bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+        // 这条分享消息被好友点击后的跳转URL。
+
+        bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, url);
+//            if (data.getString(IMAGE_URL) != null) {
+//                bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, data.getString(IMAGE_URL));
+//            }
+
+        // 分享的标题。注：PARAM_TITLE、PARAM_IMAGE_URL、PARAM_SUMMARY不能全为空，最少必须有一个是有值的。
+        bundle.putString(QQShare.SHARE_TO_QQ_TITLE, "大家快来使用水头助手吧");
+        // 分享的图片URL
+
+        // 分享的消息摘要，最长50个字
+        bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, "水头助手");
+        // 手Q客户端顶部，替换“返回”按钮文字，如果为空，用返回代替
+        bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, getResources().getString(R.string.app_name));
+        // 标识该消息的来源应用，值为应用名称+AppId。
+        // bundle.putString(QQShare.SHARE_TO_QQ_,
+        // getResources().getString(R.string.app_name));
+
+        mTencent.shareToQQ(this, bundle, new BaseUiListener());
+        this.finish();
 
     }
 
-    IUiListener qqShareListener = new IUiListener() {
+    private class BaseUiListener implements IUiListener {
+        @Override
+        public void onError(UiError e) {
+            ToastUtil.showToast(e.errorMessage);
+        }
+
         @Override
         public void onCancel() {
 
         }
 
         @Override
-        public void onComplete(Object response) {
-            ToastUtil.showToast("分享成功");
-        }
+        public void onComplete(Object arg0) {
 
-        @Override
-        public void onError(UiError e) {
         }
-    };
+    }
 
     private void initView() {
         sharewxfriend = (LinearLayout) findViewById(R.id.share_wx_friend);

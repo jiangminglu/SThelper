@@ -219,6 +219,7 @@ public class MainActivity extends BaseAction {
                             int shop_id = Integer.parseInt(tag + "");
                             intent.setClass(mActivity, StoreInfoAction.class);
                             intent.putExtra("shop_id", shop_id);
+                            intent.putExtra("isMy",true);
                         } catch (Exception e) {
                             intent.setClass(mActivity, OpenStoreAction.class);
                             intent.putExtra("status", tag + "");

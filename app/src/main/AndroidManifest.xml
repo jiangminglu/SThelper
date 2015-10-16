@@ -4,6 +4,8 @@
     android:versionCode="1"
     android:versionName="st" >
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -172,6 +174,15 @@
             android:name=".business.profile.ChangePwdAction"
             android:label="@string/title_activity_change_pwd_action" >
         </activity>
+
+        <meta-data
+            android:name="TA_APPKEY"
+            android:value="1104610980" />
+        <meta-data
+            android:name="InstallChannel"
+            android:value="play" />
+
     </application>
+
 
 </manifest>
