@@ -4,25 +4,36 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sthelper.sthelper.R;
 import com.sthelper.sthelper.util.ToastUtil;
+import com.sthelper.sthelper.util.Util;
 import com.tencent.connect.share.QQShare;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.open.utils.ThreadManager;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class InviteAction extends BaseAction {
 
-
+    private IWXAPI api;
     LinearLayout sharewxfriend;
     LinearLayout sharemessage;
     LinearLayout shareqq;
@@ -30,13 +41,14 @@ public class InviteAction extends BaseAction {
     LinearLayout shareweibo;
     private String title = "水头助手";
     private String desc = "快来使用水头助手";
-    private String url = "http://www.baidu.com";
+    private String url = "http://120.26.49.208/";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite_action);
         initActionBar("邀请好友");
+        api = WXAPIFactory.createWXAPI(this, "wx3cace427704022f0");
         initView();
     }
 
@@ -82,41 +94,6 @@ public class InviteAction extends BaseAction {
         }
     };
 
-    /**
-     * 分享信息到朋友
-     *
-     * @param file,假如图片的路径为path，那么file = new File(path);
-     */
-    private void shareToFriend(File file) {
-        Intent intent = new Intent();
-        ComponentName comp = new ComponentName("com.tencent.mm",
-                "com.tencent.mm.ui.tools.ShareImgUI");
-        intent.setComponent(comp);
-        intent.setAction("android.intent.action.SEND");
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_TEXT, "我是文字");
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-        startActivity(intent);
-    }
-
-    /**
-     * 分享信息到朋友圈
-     *
-     * @param file，假如图片的路径为path，那么file = new File(path);
-     */
-    private void shareToTimeLine(File file) {
-        Intent intent = new Intent();
-        ComponentName componentName = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");
-        intent.setComponent(componentName);
-
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-        intent.putExtra(Intent.EXTRA_TEXT, "固定字段");
-        intent.setType("image/*");
-
-        startActivity(intent);
-    }
-
     private void initView() {
         sharewxfriend = (LinearLayout) findViewById(R.id.share_wx_friend);
         sharemessage = (LinearLayout) findViewById(R.id.share_message);
@@ -135,9 +112,9 @@ public class InviteAction extends BaseAction {
         @Override
         public void onClick(View view) {
             if (view == sharewxfriend) {
-                shareToFriend(new File(app.appLogo));
+                send2wx(true);
             } else if (view == sharewxpost) {
-                shareToTimeLine(new File(app.appLogo));
+                send2wx(false);
             } else if (view == shareweibo) {
                 sinaShare();
             } else if (view == shareqq) {
@@ -196,5 +173,21 @@ public class InviteAction extends BaseAction {
             ToastUtil.showToast("你没有安装微博客户端");
         }
 
+    }
+
+    private void send2wx(boolean flag) {
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo);
+        thumb = Bitmap.createScaledBitmap(thumb, 50, 50, true);
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = "http://www.baidu.com";
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = "水头助手";
+        msg.description = "";
+        msg.thumbData = Util.bmpToByteArray(thumb, true);
+        req.transaction = "webpage";
+        req.message = msg;
+        req.scene = flag ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
+        api.sendReq(req);
     }
 }

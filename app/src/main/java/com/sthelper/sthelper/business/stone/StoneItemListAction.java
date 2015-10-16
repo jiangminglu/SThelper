@@ -15,6 +15,7 @@ import com.sthelper.sthelper.api.UserApi;
 import com.sthelper.sthelper.bean.StoneItemBean;
 import com.sthelper.sthelper.business.BaseAction;
 import com.sthelper.sthelper.business.adapter.StoneItemAdapter;
+import com.sthelper.sthelper.util.ToastUtil;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -68,6 +69,9 @@ public class StoneItemListAction extends BaseAction {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }else{
+                    String error = response.optString("error");
+                    ToastUtil.showToast(error+"");
                 }
 
             }
