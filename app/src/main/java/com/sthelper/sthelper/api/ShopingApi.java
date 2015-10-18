@@ -315,4 +315,10 @@ public class ShopingApi extends BaseApi {
         get("User", "openclose", params, handler);
     }
 
+    public void getShopOpenStatus(int shop_id, JsonHttpResponseHandler handler) {
+        RequestParams params = new RequestParams();
+        params.put("shop_ids", shop_id);
+        get("Data", "closedshop", params, handler);
+    }
+
 }

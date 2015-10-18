@@ -27,6 +27,7 @@ import com.sthelper.sthelper.util.SPUtil;
 import com.sthelper.sthelper.util.ToastUtil;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -81,6 +82,7 @@ public class StoreInfoAction extends BaseAction {
             shop_id = bean.shop_id;
         }
         getInfo();
+        getStatus();
     }
 
     private void init() {
@@ -208,6 +210,30 @@ public class StoreInfoAction extends BaseAction {
                     invalidateOptionsMenu();
                 } else {
                     ToastUtil.showToast("操作失败");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
+
+    private void getStatus(){
+        ShopingApi api = new ShopingApi();
+        api.getShopOpenStatus(shop_id,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if(response.optInt("ret")==0){
+                    JSONArray array = response.optJSONArray("result");
+                    if(array!=null&& array.length()>0){
+                        isOpen = false;
+                    }else{
+                        isOpen = true;
+                    }
+                    invalidateOptionsMenu();
                 }
             }
 
