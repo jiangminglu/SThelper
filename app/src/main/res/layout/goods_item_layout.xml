@@ -5,7 +5,11 @@
                 android:background="#ffffff"
                 android:descendantFocusability="blocksDescendants"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -311,7 +311,7 @@ public class TakingOrderAction extends BaseAction {
             textView.setPadding(20, 24, 20, 24);
             textView.setText(goods.cate_name);
             textView.setGravity(Gravity.LEFT);
-            textView.setTextSize(14);
+            textView.setTextSize(16);
             textView.setLines(1);
             textView.setEllipsize(TextUtils.TruncateAt.END);
             textView.setTextColor(Color.BLACK);
