@@ -108,9 +108,9 @@ public class InviteAction extends BaseAction {
         @Override
         public void onClick(View view) {
             if (view == sharewxfriend) {
-                send2wx(true);
-            } else if (view == sharewxpost) {
                 send2wx(false);
+            } else if (view == sharewxpost) {
+                send2wx(true);
             } else if (view == shareweibo) {
                 sinaShare();
             } else if (view == shareqq) {
@@ -145,38 +145,13 @@ public class InviteAction extends BaseAction {
 
     }
 
-    private void qq() {
-        Intent weiboIntent = new Intent(Intent.ACTION_SEND);
-        weiboIntent.setType("image/*");
-        PackageManager pm = getPackageManager();
-        List<ResolveInfo> matches = pm.queryIntentActivities(weiboIntent,
-                PackageManager.MATCH_DEFAULT_ONLY);
-        String packageName = "com.sina.weibo";
-        ResolveInfo info = null;
-        for (ResolveInfo each : matches) {
-            String pkgName = each.activityInfo.applicationInfo.packageName;
-            if (packageName.equals(pkgName)) {
-                info = each;
-                break;
-            }
-        }
-        if (info != null) {
-            weiboIntent.setClassName(packageName, info.activityInfo.name);
-            weiboIntent.putExtra(Intent.EXTRA_TEXT, desc + url);
-            weiboIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(app.appLogo)));
-            startActivity(weiboIntent);
-        } else {
-            ToastUtil.showToast("你没有安装微博客户端");
-        }
-
-    }
 
     private void send2wx(boolean flag) {
         Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo);
         thumb = Bitmap.createScaledBitmap(thumb, 50, 50, true);
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://www.baidu.com";
+        webpage.webpageUrl = url;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "水头助手";
         msg.description = "";

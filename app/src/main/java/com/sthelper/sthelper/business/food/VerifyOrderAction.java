@@ -303,7 +303,7 @@ public class VerifyOrderAction extends BaseAction implements View.OnClickListene
      */
     private void pay(String desc, float price) {
         // 订单
-        String orderInfo = getOrderInfo("水头商品", desc, price + "");
+        String orderInfo = getOrderInfo("测试的商品", "该测试商品的详细描述", "0.01");
 
         // 对订单做RSA 签名
         String sign = sign(orderInfo);
@@ -343,6 +343,7 @@ public class VerifyOrderAction extends BaseAction implements View.OnClickListene
      * create the order info. 创建订单信息
      */
     public String getOrderInfo(String subject, String body, String price) {
+
         // 签约合作者身份ID
         String orderInfo = "partner=" + "\"" + Config.PARTNER + "\"";
 
@@ -464,7 +465,7 @@ public class VerifyOrderAction extends BaseAction implements View.OnClickListene
 
                         } else {
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Toast.makeText(mActivity, "支付失败",
+                            Toast.makeText(mActivity, payResult.getMemo() + "",
                                     Toast.LENGTH_SHORT).show();
 
                         }
